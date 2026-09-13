@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" class="motion-safe:scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Christos Birkitt — AI Governance &amp; Technical Risk Architect</title>
+  <meta name="description" content="Christos Birkitt, AI Governance &amp; Technical Risk Architect. Architectural boundaries that separate signal from projection in high-stakes algorithmic environments." />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Christos Birkitt — AI Governance &amp; Technical Risk Architect" />
+  <meta property="og:description" content="The central problem of modern enterprise is not lack of information; it is contaminated interpretation." />
+
+  <!-- Favicon: a boundary. Inline SVG, no extra file to host. -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='8' y='8' width='48' height='48' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E" />
+
+  <!-- Type: IBM Plex Mono for headers and data, IBM Plex Sans for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#000000',      // page
+            paper: '#ffffff',    // primary text, ledger frame, button
+            silver: '#b0b0b0',   // secondary text
+            graphite: '#7f7f7f', // section labels, metadata keys
+            rule: '#262626',     // hairlines
+            signal: '#46a758',   // live data, focus, selection. The only color on the page.
+          },
+          fontFamily: {
+            mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+            sans: ['"IBM Plex Sans"', 'system-ui', '-apple-system', '"Segoe UI"', 'Helvetica', 'Arial', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    ::selection { background: #46a758; color: #000; }
+    a:focus-visible { outline: 2px solid #46a758; outline-offset: 3px; }
+    html { -webkit-text-size-adjust: 100%; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-ink font-sans text-paper antialiased">
+  <a href="#thesis" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-paper focus:px-4 focus:py-2 focus:font-mono focus:text-[13px] focus:text-ink">Skip to content</a>
+
+  <!-- Status line -->
+  <header class="sticky top-0 z-50 border-b border-rule bg-ink">
+    <div class="mx-auto flex h-12 max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
+      <a href="#top" class="font-mono text-[13px] font-medium text-paper">Christos Birkitt</a>
+      <nav aria-label="Sections" class="hidden items-center gap-7 font-mono text-[13px] text-silver md:flex">
+        <a href="#thesis" class="hover:text-paper">Thesis</a>
+        <a href="#competencies" class="hover:text-paper">Competencies</a>
+        <a href="#artifact" class="hover:text-paper">Artifact</a>
+        <a href="#credentials" class="hover:text-paper">Credentials</a>
+      </nav>
+      <time id="clock" class="font-mono text-[13px] tabular-nums text-signal">
+        <span id="clock-date" class="hidden sm:inline"></span> <span id="clock-time"></span>
+      </time>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Header -->
+    <section class="border-b border-rule">
+      <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-32">
+        <h1 class="font-mono text-[length:clamp(2.75rem,8.5vw,6.5rem)] font-medium uppercase leading-[0.95] tracking-[-0.035em] text-paper">
+          Christos<br />Birkitt
+        </h1>
+        <p class="mt-8 font-mono text-[15px] text-paper sm:text-[17px]">AI Governance &amp; Technical Risk Architect</p>
+      </div>
+    </section>
+
+    <!-- Thesis -->
+    <section id="thesis" class="scroll-mt-12 border-b border-rule">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
+        <h2 class="mb-8 font-mono text-[13px] text-graphite md:sticky md:top-20 md:mb-0 md:self-start">Thesis</h2>
+        <p class="max-w-[30ch] font-sans text-[length:clamp(1.375rem,2.6vw,2.125rem)] leading-[1.3] tracking-[-0.01em] text-paper">
+          The central problem of modern enterprise is not lack of information; it is contaminated interpretation. I build the architectural boundaries to separate signal from projection in high-stakes algorithmic environments.
+        </p>
+      </div>
+    </section>
+
+    <!-- Competencies -->
+    <section id="competencies" class="scroll-mt-12 border-b border-rule">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
+        <h2 class="mb-8 font-mono text-[13px] text-graphite md:sticky md:top-20 md:mb-0 md:self-start">Competencies</h2>
+        <ul class="grid grid-cols-1 gap-px border border-rule bg-rule sm:grid-cols-2">
+          <li class="bg-ink p-6 md:p-8">
+            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Federal Infrastructure Compliance (OBO)</h3>
+            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Compliance architecture for federally owned infrastructure and the operational systems that depend on it: controls, accreditation posture, and evidence.</p>
+          </li>
+          <li class="bg-ink p-6 md:p-8">
+            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Clinical Data Privacy</h3>
+            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Governance of protected health information across its full lifecycle: minimization, de-identification, access control, and audit.</p>
+          </li>
+          <li class="bg-ink p-6 md:p-8">
+            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Algorithmic Risk Modeling</h3>
+            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Quantifying model failure modes, exposure, and control effectiveness in systems that make or inform consequential decisions.</p>
+          </li>
+          <li class="bg-ink p-6 md:p-8">
+            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Agile Delivery</h3>
+            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Product ownership and iterative delivery inside regulated programs, where every increment has to carry its own evidence.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Artifact -->
+    <section id="artifact" class="scroll-mt-12 border-b border-rule">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
+        <h2 class="mb-8 font-mono text-[13px] text-graphite md:sticky md:top-20 md:mb-0 md:self-start">Artifact</h2>
+        <article class="border border-paper">
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-4 border-b border-rule px-6 py-5 font-mono text-[12px] sm:grid-cols-4 md:px-8">
+            <div>
+              <dt class="text-graphite">Document</dt>
+              <dd class="mt-1 text-paper">Audit methodology</dd>
+            </div>
+            <div>
+              <dt class="text-graphite">Format</dt>
+              <dd class="mt-1 text-paper">PDF</dd>
+            </div>
+            <div>
+              <dt class="text-graphite">Access</dt>
+              <dd class="mt-1 text-paper">By request</dd>
+            </div>
+            <div>
+              <dt class="text-graphite">Revision</dt>
+              <dd class="mt-1 text-paper">1.0</dd>
+            </div>
+          </dl>
+          <div class="px-6 py-10 md:px-8 md:py-14">
+            <h3 class="font-mono text-[length:clamp(1.375rem,3.4vw,2.5rem)] font-medium leading-[1.15] tracking-[-0.02em] text-paper">
+              The Reality Ledger:<br />Distinguishing Semantic Signal from Projection in LLMs.
+            </h3>
+            <h4 class="mt-10 font-mono text-[12px] text-graphite">Abstract</h4>
+            <p class="mt-3 max-w-[62ch] font-sans text-[15px] leading-relaxed text-silver sm:text-base">
+              This methodology formalizes a ledger-based audit procedure for separating semantically grounded output from confabulated projection in large language model deployments. It specifies the evidentiary standard, control boundaries, and quantitative thresholds an enterprise must satisfy before an algorithmic output is permitted to inform a consequential decision.
+            </p>
+            <a href="mailto:you@example.com?subject=Request%3A%20Reality%20Ledger%20audit%20methodology%20(PDF)"
+               class="mt-10 inline-block bg-paper px-6 py-4 font-mono text-[13px] font-medium text-ink ring-1 ring-inset ring-paper hover:bg-ink hover:text-paper">
+              Request Full Audit Methodology PDF
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Credentials -->
+  <footer id="credentials" class="scroll-mt-12">
+    <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
+      <h2 class="mb-8 font-mono text-[13px] text-graphite md:mb-0 md:self-start">Credentials</h2>
+      <div>
+        <ul class="grid grid-cols-1 gap-8 font-mono sm:grid-cols-3">
+          <li>
+            <p class="text-[15px] font-medium text-paper">PSPO I</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-graphite">Professional Scrum Product Owner<br />Scrum.org</p>
+          </li>
+          <li>
+            <p class="text-[15px] font-medium text-paper">AIGP</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-graphite">Artificial Intelligence Governance Professional<br />IAPP</p>
+          </li>
+          <li>
+            <p class="text-[15px] font-medium text-paper">U.S. Department of State</p>
+            <p class="mt-1 text-[12px] leading-relaxed text-graphite">Security clearance history</p>
+          </li>
+        </ul>
+        <div class="mt-16 flex flex-col gap-3 border-t border-rule pt-6 font-mono text-[12px] text-graphite sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; <span id="year">2026</span> Christos Birkitt</p>
+          <a href="mailto:you@example.com" class="hover:text-paper">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var clock = document.getElementById('clock');
+      var dateEl = document.getElementById('clock-date');
+      var timeEl = document.getElementById('clock-time');
+      function tick() {
+        var iso = new Date().toISOString(); // e.g. 2026-09-13T14:32:07.000Z
+        dateEl.textContent = iso.slice(0, 10);
+        timeEl.textContent = iso.slice(11, 19) + ' UTC';
+        clock.setAttribute('datetime', iso.slice(0, 19) + 'Z');
+      }
+      tick();
+      setInterval(tick, 1000);
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
