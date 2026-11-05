@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A self-contained, synthetic Reality Ledger reviewer and release-control exercise.">
+  <title>Reality Ledger | Reviewer Release Workbench</title>
+  <style>
+    :root{--navy:#172d43;--ink:#213548;--muted:#536574;--teal:#0b6864;--teal-pale:#e7f3ef;--paper:#fff;--canvas:#f3f5f4;--line:#d5dedf;--amber:#805013;--amber-pale:#fff3d9;--red:#983749;--red-pale:#fceef0;--focus:#c46d00;--radius:14px}
+    *{box-sizing:border-box}
+    [hidden]{display:none!important}
+    html{scroll-behavior:smooth;scroll-padding-top:24px}
+    body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--teal);text-underline-offset:3px}
+    button,input,select,textarea{font:inherit}
+    button,input,select,textarea,summary{touch-action:manipulation}
+    button{min-height:46px;border:1px solid transparent;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;line-height:1.35}
+    button.primary{background:var(--teal);color:white}
+    button.secondary{background:white;color:var(--navy);border-color:var(--line)}
+    button:hover:not(:disabled){filter:brightness(.95)}
+    button:disabled{cursor:default;background:#e4eae9;color:#52646b;border-color:#c9d3d2}
+    :focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+    input,select,textarea{max-width:100%;width:100%;border:1px solid #83949e;border-radius:7px;background:white;color:var(--ink);padding:10px 11px;min-height:45px}
+    input[type=checkbox]{width:21px;height:21px;min-height:21px;margin:2px 0 0;flex:0 0 21px;accent-color:var(--teal)}
+    input[readonly]{background:#eef2f2;border-color:var(--line)}
+    textarea{resize:vertical;min-height:112px}
+    input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{border:2px solid var(--red)}
+    fieldset{min-width:0;border:0;margin:0;padding:0}
+    fieldset:disabled input,fieldset:disabled select,fieldset:disabled textarea{color:var(--ink);opacity:1;background:#f2f5f4}
+    fieldset:disabled input[type=checkbox]{opacity:1}
+    label{display:block;font-weight:650}
+    h1,h2,h3,h4,p{margin-top:0}
+    h1{font-size:clamp(30px,4.4vw,48px);line-height:1.12;letter-spacing:-.035em;margin-bottom:14px;max-width:800px}
+    h2{font-size:clamp(23px,3vw,31px);line-height:1.23;letter-spacing:-.02em;margin-bottom:12px}
+    h3{font-size:19px;line-height:1.3;margin-bottom:10px}
+    h4{font-size:16px;line-height:1.4;margin-bottom:7px}
+    p{margin-bottom:14px}
+    ul,ol{padding-left:22px}
+    li+li{margin-top:7px}
+    code,.mono{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;font-size:.85em;overflow-wrap:anywhere}
+    code{padding:2px 4px;border-radius:4px;background:#edf1f2}
+    pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.5;margin:12px 0 0;padding:14px;border:1px solid var(--line);background:#f6f8f8;border-radius:7px;max-height:28rem;overflow:auto}
+    blockquote{margin:10px 0 14px;border-left:3px solid #97b6b1;padding-left:13px}
+    blockquote p:last-child{margin-bottom:0}
+    .skip-link{position:absolute;left:12px;top:-100px;padding:12px;background:white;z-index:5}
+    .skip-link:focus{top:12px}
+    .masthead{background:var(--navy);color:white;padding:25px 0 29px}
+    .container{width:min(1120px,100%);margin:0 auto;padding:0 30px}
+    .brand-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:32px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:.14em}
+    .brand svg{flex:0 0 24px}
+    .tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #708a99;border-radius:99px;padding:5px 11px;font-size:12px;font-weight:650;letter-spacing:.025em}
+    .masthead .subtitle{max-width:760px;color:#d9e6ec;font-size:18px;line-height:1.55;margin-bottom:20px}
+    .masthead .footline{font-size:12px;color:#d2dfe4;margin-bottom:0}
+    main{padding-top:26px;padding-bottom:35px}
+    .notice{border:1px solid var(--line);background:white;border-radius:10px;padding:15px 18px;font-size:14px}
+    .notice strong{color:var(--navy)}
+    .notice p:last-child{margin-bottom:0}
+    .notice.teal{background:var(--teal-pale);border-color:#bdd7cc}
+    .notice.amber{background:var(--amber-pale);border-color:#e0c697;color:#69440f}
+    .notice.red{background:var(--red-pale);border-color:#dfb4bc}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:20px 0 24px}
+    .toolbar p{font-size:13px;color:var(--muted);margin:0}
+    .stepper{list-style:none;padding:0;margin:0 0 26px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stepper li{display:flex;gap:12px;align-items:flex-start;border-top:3px solid var(--line);padding:12px 0 0;margin:0;color:var(--muted);font-size:14px}
+    .stepper li[aria-current=step]{border-color:var(--teal);color:var(--navy)}
+    .stepper li.complete{border-color:var(--teal);color:var(--navy)}
+    .step-number{border:1px solid currentColor;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;flex:0 0 28px;font-size:13px;font-weight:750}
+    .stepper strong{display:block}
+    .stepper small{display:block;margin-top:2px;font-size:12px}
+    section{margin-bottom:32px}
+    .section-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+    .eyebrow{text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:800;color:var(--teal);margin:0 0 9px}
+    .lede{color:var(--muted);max-width:850px}
+    .small{font-size:13px;color:var(--muted)}
+    .hint{font-size:13px;line-height:1.5;color:var(--muted);margin:7px 0 0;font-weight:400}
+    .grid-two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:23px;min-width:0}
+    .source-card{border-top:4px solid #87aaa3}
+    .source-label{font-size:12px;font-weight:800;color:var(--teal);letter-spacing:.03em}
+    .source-card p,.source-card blockquote{font-size:14px}
+    .source-card .source-state{display:block;font-size:12px;color:var(--muted);margin:0 0 8px}
+    .source-card details{margin-top:12px}
+    details summary{cursor:pointer;color:var(--teal);font-weight:700;min-height:36px;padding:5px 0}
+    details+details{margin-top:10px}
+    .metric-strip{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .metric-strip span{background:#eef3f2;border-radius:6px;padding:7px 10px;font-size:12px}
+    .metric-strip b{font-size:15px;display:block;color:var(--navy)}
+    .review-stack{display:grid;gap:18px;margin:22px 0}
+    .review-card{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+    .review-card legend{float:left;width:100%;font-size:19px;font-weight:750;color:var(--navy);margin-bottom:9px}
+    .review-card legend+*{clear:both}
+    .review-card .obligation-tag{color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.04em;display:block;margin-bottom:3px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:17px 0}
+    .field{min-width:0}
+    .field-wide{grid-column:1/-1}
+    .check-list{display:grid;gap:10px;margin:15px 0}
+    .check{display:flex;gap:11px;align-items:flex-start;font-size:14px;font-weight:450}
+    .check span{min-width:0}
+    .check strong{font-weight:700}
+    .mode-note{border-left:3px solid #b4c7cc;padding:9px 12px;background:#f4f7f7;font-size:13px;margin-top:12px}
+    .error-summary{border:2px solid var(--red);background:var(--red-pale);padding:18px;border-radius:9px;margin:18px 0}
+    .error-summary h3{color:var(--red);font-size:17px}
+    .error-summary ul{margin:9px 0 0}
+    .error-summary a{color:#822438}
+    .form-footer{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-top:5px}
+    .form-footer p{max-width:680px;font-size:13px;color:var(--muted);margin:0}
+    .lock-note{padding:20px;border:1px dashed #91a4ad;border-radius:12px;margin-top:28px;background:#edf2f3}
+    .lock-note p{margin-bottom:0;font-size:14px;color:var(--muted)}
+    .recorded-note{border:1px solid #a5c8ba;background:var(--teal-pale);padding:17px;border-radius:10px;margin:18px 0}
+    .recorded-note p{margin:0}
+    .original-output{background:white;border:1px solid var(--line);border-left:5px solid var(--red);padding:22px;border-radius:10px;margin:20px 0}
+    .original-output blockquote{border:0;padding:0;margin:10px 0;font-size:17px}
+    .finding-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 24px}
+    .finding{padding:16px;background:white;border:1px solid var(--line);border-radius:10px;min-width:0}
+    .finding h3{font-size:15px;margin-bottom:7px}
+    .finding p{font-size:13px;margin:0;color:var(--muted)}
+    .repair-block{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:18px 0}
+    .repair-block legend{font-size:19px;font-weight:750;padding:0 7px 0 0;max-width:100%}
+    .preview{background:#edf4f3;border:1px solid #b4ceca;border-radius:12px;padding:22px;margin:22px 0}
+    .preview p:last-child{margin-bottom:0}
+    .preview-status{display:inline-flex;background:white;color:var(--teal);border:1px solid #bdd4cf;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:800;margin-bottom:12px}
+    .comparison{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+    .assessment{border:1px solid var(--line);border-top:5px solid var(--red);background:white;border-radius:12px;padding:23px;min-width:0}
+    .assessment.revised{border-top-color:var(--teal)}
+    .assessment .score{font-size:45px;letter-spacing:-.05em;font-weight:800;color:var(--navy);line-height:1.1;margin:18px 0 8px}
+    .assessment .score span{font-size:13px;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:5px}
+    .assessment .score.pending{font-size:29px;letter-spacing:-.02em}
+    .badge{display:inline-block;border-radius:5px;padding:4px 8px;font-size:11px;letter-spacing:.02em;font-weight:800;overflow-wrap:anywhere}
+    .badge.blocked{background:var(--red-pale);color:var(--red)}
+    .badge.pending{background:#edf0f2;color:#455965}
+    .badge.supervised{background:var(--teal-pale);color:#07524e}
+    .action-name{font-size:13px;font-weight:650;min-height:45px}
+    .assessment .explanation{font-size:13px;margin:14px 0}
+    .assessment .id-line{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+    th,td{text-align:left;padding:8px 5px;border-bottom:1px solid var(--line);vertical-align:top}
+    th{font-weight:750;color:var(--navy)}
+    .comparison-note{margin-top:15px}
+    .gate-list{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+    .gate-chip{font-size:10px;border:1px solid var(--line);border-radius:5px;padding:4px 6px;background:#f7f9f9}
+    .gate-chip.fail{border-color:#d9acb6;color:#842d3e;background:#fcf1f3}
+    .gate-chip.pass{border-color:#aecabf;color:#155d52;background:#edf7f1}
+    .history-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+    .history-list{list-style:none;padding:0;margin:20px 0}
+    .history-list li{border:1px solid var(--line);border-radius:9px;background:white;padding:13px 17px;margin:10px 0}
+    .event-meta{font-size:12px;color:var(--muted);margin:3px 0;overflow-wrap:anywhere}
+    .history-list summary{font-size:14px;overflow-wrap:anywhere}
+    .hash-status{font-size:12px;color:var(--muted);max-width:300px;text-align:right}
+    .page-footer{font-size:12px;color:var(--muted);padding:23px 0 8px;border-top:1px solid var(--line)}
+    .page-footer p{margin-bottom:8px}
+    .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+    @media(max-width:850px){.grid-three{grid-template-columns:1fr}.source-card{padding:20px}.source-card blockquote{max-width:680px}.container{padding:0 23px}}
+    @media(max-width:620px){.container{padding:0 16px}.masthead{padding-top:19px}.brand-row{margin-bottom:25px}.masthead .subtitle{font-size:16px}.toolbar{align-items:flex-start;flex-direction:column}.toolbar button{width:100%}.stepper{gap:16px}.stepper li{font-size:12px;gap:7px}.step-number{width:24px;height:24px;flex-basis:24px}.stepper small{font-size:11px}.section-top{display:block}.grid-two,.form-grid,.finding-grid,.comparison{grid-template-columns:1fr}.card,.review-card,.repair-block,.preview,.assessment{padding:18px}.form-footer{align-items:stretch;flex-direction:column}.form-footer button{width:100%}.history-heading{display:block}.hash-status{text-align:left;max-width:none}.action-name{min-height:0}.brand{font-size:11px}.tag{font-size:10px}.notice{padding:14px}.review-card legend,.repair-block legend{font-size:18px}.comparison{gap:15px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{body{background:white}.masthead{background:white;color:var(--navy);border-bottom:2px solid var(--navy)}.masthead .subtitle,.masthead .footline{color:var(--ink)}.toolbar,.skip-link{display:none}.container{width:100%;padding:0 12px}.card,.review-card,.repair-block,.assessment,.finding{break-inside:avoid}.history-list pre{max-height:none;overflow:visible}button{display:none}.comparison,.finding-grid{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#workbench">Skip to the review workbench</a>
+  <header class="masthead">
+    <div class="container">
+      <div class="brand-row">
+        <div class="brand"><svg width="24" height="25" viewBox="0 0 24 25" fill="none" aria-hidden="true"><rect x="1" y="1" width="22" height="23" rx="3" stroke="#bad8d3" stroke-width="1.5"/><path d="M6 7h12M6 12h12M6 17h7" stroke="#bad8d3" stroke-width="1.5"/></svg>THE REALITY LEDGER</div>
+        <span class="tag">RL-ILL-001 · constructed exercise</span>
+      </div>
+      <p class="eyebrow" style="color:#a9d3c9">Reviewer release workbench</p>
+      <h1>Establish the evidence.<br>Then assess the recommendation.</h1>
+      <p class="subtitle">Record your treatment of three material exceptions before the AI memo is revealed. Repair the simulated evidence path, then assess a separately restricted action.</p>
+      <p class="footline">Christos Birkitt · Reality Ledger RL-BASE-1.0 · Case cutoff: 3 November 2026</p>
+    </div>
+  </header>
+  <main id="workbench" class="container">
+    <div class="notice">
+      <p><strong>All records, scores, events, and authorities in this exercise are synthetic.</strong> Recorded input does not authenticate a reviewer or verify a source. This local demonstration cannot authorize an acquisition or a production release.</p>
+    </div>
+    <div class="toolbar">
+      <p><strong>Session only.</strong> Events are appended in this open page. Reloading starts a new session.<br>Export becomes available after the initial evidence review is recorded.</p>
+      <button class="secondary" id="export-button" type="button" disabled>Export session JSON</button>
+    </div>
+    <nav aria-label="Review stages">
+      <ol class="stepper">
+        <li id="step-one" aria-current="step"><span class="step-number" aria-hidden="true">1</span><div><strong>Pre-Recommendation Exception Resolution</strong><small id="step-one-status">Blinded Exception Verification · active</small></div></li>
+        <li id="step-two"><span class="step-number" aria-hidden="true">2</span><div><strong>Repair and restricted reassessment</strong><small id="step-two-status">Locked until the initial review is recorded</small></div></li>
+      </ol>
+    </nav>
+
+    <section id="initial-stage" aria-labelledby="initial-heading">
+      <p class="eyebrow">Stage 1 · Blinded Exception Verification</p>
+      <h2 id="initial-heading">Resolve how each exception will be handled.</h2>
+      <p class="lede">Use the source packet below. The generated recommendation and all numeric ratings remain hidden until you record evidence-linked dispositions. The base acquisition profile requires current utility, flood, and litigation evidence before unconditional approval.</p>
+      <div class="grid-three" aria-label="Constructed evidence packet">
+        <article class="card source-card">
+          <span class="source-label">D-01 · utility instrument</span>
+          <h3>Access is provisional.</h3>
+          <span class="source-state">Parcel B · received and extracted</span>
+          <blockquote><p>Parcel B utility access is provisional. The easement expires on 31 December 2026 unless renewed in writing. No renewal is recorded in this packet.</p></blockquote>
+          <p class="small">O-01 requires the status, expiry, and renewal condition to remain visible or to be closed by applicable, authorized renewal evidence.</p>
+        </article>
+        <article class="card source-card">
+          <span class="source-label">D-02 + D-03 · flood evidence</span>
+          <h3>The addendum replaces the baseline.</h3>
+          <span class="source-state">Same Parcel B and flood subject · cutoff 3 November 2026</span>
+          <p><strong>D-02, 2022:</strong> Parcel B is classified as Low-to-Moderate flood exposure for this assessment.</p>
+          <blockquote><p><strong>D-03, 2025:</strong> This addendum replaces the 2022 flood classification for Parcel B. Updated mapping places Parcel B in the High Flood Risk category.</p></blockquote>
+          <p class="small">D-03 was excluded by a stale metadata filter. Its express, applicable supersession establishes precedence; a newer date alone would not.</p>
+        </article>
+        <article class="card source-card">
+          <span class="source-label">D-04 + D-05 · docket and events</span>
+          <h3>The docket failed extraction.</h3>
+          <div class="metric-strip" aria-label="Docket processing state"><span><b>8</b>pages received</span><span><b>0</b>characters extracted</span></div>
+          <blockquote><p><strong>D-04, auditor-visible excerpt:</strong> A civil proceeding affecting the recorded owner appears on the attached docket. The current status and effect on acquisition require legal review.</p></blockquote>
+          <p><strong>D-05:</strong> The attachment was received, but extraction returned no text and raised no alert.</p>
+          <p class="small">This is a known processing failure. It does not establish the proceeding's current legal status, and it cannot support litigation clearance.</p>
+        </article>
+      </div>
+      <div class="notice teal" style="margin-top:18px">
+        <p><strong>Carry</strong> preserves a limitation and respects it in the action. <strong>Resolve</strong> requires evidence meeting the closure criterion. <strong>Restrict</strong> narrows or defers the action while the question remains open. A promise to check later cannot close a pre-release condition.</p>
+      </div>
+
+      <form id="initial-form" novalidate>
+        <fieldset id="initial-fields">
+          <legend class="sr-only">Initial source-based exception review</legend>
+          <div class="form-grid">
+            <div class="field"><label for="reviewer-reference">Synthetic reviewer reference</label><input id="reviewer-reference" name="reviewer-reference" maxlength="80" placeholder="For example, Training reviewer A" autocomplete="off" aria-describedby="reviewer-hint"><p class="hint" id="reviewer-hint">A recorded identifier, not a verified identity.</p></div>
+            <div class="field"><label for="reviewer-role">Recorded review role</label><select id="reviewer-role" name="reviewer-role"><option value="">Choose a role</option value="designated_domain_reviewer">Designated domain reviewer — synthetic authority</option><option value="unverified_reviewer">Unverified reviewer — cannot complete this exercise</option></select></div>
+          </div>
+          <div class="review-stack">
+            <fieldset class="review-card" id="o1-card">
+              <legend><span class="obligation-tag">O-01 · utility access</span>Preserve the provisional condition.</legend>
+              <p class="small">The base packet contains no renewal. An unrelated citation cannot turn this obligation into a resolved condition.</p>
+              <div class="form-grid">
+                <div class="field"><label for="o1-mode">Disposition</label><select id="o1-mode"><option value="">Choose a disposition</option><option value="carry">Carry the provisional condition</option><option value="resolve">Resolve using qualifying renewal evidence</option><option value="restrict">Restrict the action pending renewal</option></select></div>
+                <div class="field"><label for="o1-evidence">Evidence IDs</label><input id="o1-evidence" maxlength="250" placeholder="D-01" autocomplete="off" spellcheck="false" aria-describedby="o1-evidence-hint"><p class="hint" id="o1-evidence-hint">D-01 is required. No qualifying renewal record exists in this base fixture.</p></div>
+              </div>
+              <div class="check-list">
+                <label class="check"><input type="checkbox" id="o1-status"><span>Preserve the <strong>provisional utility status</strong>.</span></label>
+                <label class="check"><input type="checkbox" id="o1-expiry"><span>Preserve the <strong>31 December 2026 expiry</strong>.</span></label>
+                <label class="check"><input type="checkbox" id="o1-renewal"><span>Preserve the <strong>written-renewal requirement</strong>; no renewal is in the packet.</span></label>
+              </div>
+              <div class="mode-note" id="o1-mode-note" aria-live="polite">Choose how this source condition constrains the next action.</div>
+              <label for="o1-rationale">Decision-specific rationale</label><textarea id="o1-rationale" maxlength="1800" aria-describedby="o1-rationale-hint" placeholder="Explain the utility condition and its effect on the permitted action."></textarea><p class="hint" id="o1-rationale-hint">Name the evidence basis and consequence. “Reviewed and approved” is insufficient.</p>
+            </fieldset>
+            <fieldset class="review-card" id="o2-card">
+              <legend><span class="obligation-tag">O-02 · flood classification</span>Use the applicable superseding record.</legend>
+              <p class="small">Resolving the precedence question does not eliminate High Flood Risk or clear an acquisition.</p>
+              <div class="form-grid">
+                <div class="field"><label for="o2-mode">Disposition</label><select id="o2-mode"><option value="">Choose a disposition</option><option value="carry">Carry the current High Flood Risk finding</option><option value="resolve">Resolve precedence using the applicable D-03</option><option value="restrict">Restrict the action with the current risk disclosed</option></select></div>
+                <div class="field"><label for="o2-evidence">Evidence IDs</label><input id="o2-evidence" maxlength="250" placeholder="D-02, D-03" autocomplete="off" spellcheck="false" aria-describedby="o2-evidence-hint"><p class="hint" id="o2-evidence-hint">Both D-02 and D-03 are required to document the supersession.</p></div>
+              </div>
+              <div class="check-list">
+                <label class="check"><input type="checkbox" id="o2-applicability"><span>Check the <strong>same Parcel B, flood subject, and applicable effective period</strong>.</span></label>
+                <label class="check"><input type="checkbox" id="o2-precedence"><span>Apply D-03's <strong>explicit replacement of D-02</strong> and retain High Flood Risk.</span></label>
+              </div>
+              <label for="o2-rationale">Decision-specific rationale</label><textarea id="o2-rationale" maxlength="1800" placeholder="Explain why D-03 governs the flood finding and what remains material."></textarea>
+            </fieldset>
+            <fieldset class="review-card" id="o3-card">
+              <legend><span class="obligation-tag">O-03 · docket processing and legal review</span>Keep litigation clearance unresolved.</legend>
+              <p class="small">Recovery and legal assessment are distinct. This walkthrough supports an informational restriction while the docket's current legal effect remains open.</p>
+              <div class="form-grid">
+                <div class="field"><label for="o3-mode">Disposition</label><select id="o3-mode"><option value="">Choose a disposition</option><option value="carry">Carry the exception without an action restriction</option><option value="resolve">Resolve litigation clearance</option><option value="restrict">Restrict to an informational diligence memo</option></select></div>
+                <div class="field"><label for="o3-evidence">Evidence IDs</label><input id="o3-evidence" maxlength="250" placeholder="D-04, D-05" autocomplete="off" spellcheck="false" aria-describedby="o3-evidence-hint"><p class="hint" id="o3-evidence-hint">D-04 identifies the required review; D-05 documents the extraction failure.</p></div>
+              </div>
+              <div class="check-list">
+                <label class="check"><input type="checkbox" id="o3-extraction"><span>Record the known <strong>zero-character extraction of eight received pages</strong>.</span></label>
+                <label class="check"><input type="checkbox" id="o3-legal-open"><span>Keep <strong>legal status and acquisition implications unresolved</strong>; do not infer no litigation.</span></label>
+              </div>
+              <div class="mode-note" id="o3-mode-note" aria-live="polite">This base fixture requires an explicit action restriction. Page recovery alone cannot close legal review.</div>
+              <label for="o3-rationale">Decision-specific rationale</label><textarea id="o3-rationale" maxlength="1800" placeholder="Explain the extraction gap, continuing legal question, and action restriction."></textarea>
+            </fieldset>
+          </div>
+          <div class="notice teal">
+            <label class="check"><input type="checkbox" id="initial-restriction"><span>Record only the proposed action <code>restricted_informational_diligence_memo</code>, with continued diligence and escalation. <strong>Unconditional acquisition approval remains unavailable.</strong></span></label>
+          </div>
+          <div id="initial-errors" class="error-summary" role="alert" tabindex="-1" hidden></div>
+          <div class="form-footer" style="margin-top:20px">
+            <button id="initial-submit" class="primary" type="submit">Record initial dispositions and reveal the memo</button>
+            <p>No minimum duration or click count is required. The checks validate explicit entries and their relationships; they do not prove understanding or authenticate evidence.</p>
+          </div>
+        </fieldset>
+      </form>
+      <div id="initial-recorded" class="recorded-note" role="status" hidden></div>
+      <div id="locked-stage-note" class="lock-note"><h3>Recommendation and numeric ratings withheld</h3><p>Stage 2 opens after all three evidence-linked dispositions are recorded. This is a presentation sequence for the exercise, not a security boundary.</p></div>
+    </section>
+
+    <section id="reassessment-stage" aria-labelledby="reassessment-heading" hidden>
+      <p class="eyebrow">Stage 2 · repair and reassess a different action</p>
+      <h2 id="reassessment-heading" tabindex="-1">Inspect the recommendation. Restrict the release.</h2>
+      <p class="lede">Your initial dispositions have been recorded. The original memo is now visible. The repair controls below construct a follow-up scenario; they do not run OCR, retrieve records, or establish legal clearance.</p>
+      <article class="original-output">
+        <p class="eyebrow" style="color:var(--red)">Original generated memo · constructed text</p>
+        <blockquote id="original-memo"></blockquote>
+        <p class="small" style="margin-bottom:0">D-05 also records approval with the required exception-resolution fields uncompleted. The fixture assumes no additional review record. Its fourteen-second interval is context, not a finding rule.</p>
+      </article>
+      <div class="finding-grid" aria-label="Four manuscript findings">
+        <article class="finding"><h3>F-01 · Qualification loss</h3><p>D-01's provisional status, expiry, and renewal condition disappear from the unconditional utility-clearance claim.</p></article>
+        <article class="finding"><h3>F-02 · Supersession omission</h3><p>The stale filter excludes applicable D-03, and the memo presents D-02's replaced flood finding as current.</p></article>
+        <article class="finding"><h3>F-03 · Unsupported negative</h3><p>The docket was not processed, yet the memo asserts a negative across county filings without an adequate search record.</p></article>
+        <article class="finding"><h3>F-04 · Review deficiency</h3><p>The approval event lacks required verification and exception dispositions. No psychological conclusion is inferred.</p></article>
+      </div>
+
+      <form id="reassessment-form" novalidate>
+        <fieldset id="reassessment-fields">
+          <legend class="sr-only">Construct the repaired informational reassessment</legend>
+          <div class="grid-two">
+            <fieldset class="repair-block">
+              <legend>D-04 · recover and check the attachment</legend>
+              <p class="small">Constructed recovery evidence: <code>SYN-ASSUMED-DOCKET-EXTRACTION-QA</code>.</p>
+              <label for="recovered-pages">Pages recovered and reconciled</label><input id="recovered-pages" inputmode="numeric" maxlength="2" placeholder="Enter the count from the manifest" autocomplete="off" aria-describedby="recovered-pages-hint"><p class="hint" id="recovered-pages-hint">The manifest requires all eight pages. A nonempty text result alone is insufficient.</p>
+              <div class="check-list">
+                <label class="check"><input type="checkbox" id="docket-text-recovered"><span>Simulate recovery of the relevant text from <strong>every received page</strong>.</span></label>
+                <label class="check"><input type="checkbox" id="docket-source-qa"><span>Simulate comparison of <strong>all eight pages, attachments, and relevant extracted content against the source images</strong>.</span></label>
+                <label class="check"><input type="checkbox" id="docket-legal-open"><span>Record that <strong>legal status and acquisition effects remain open</strong> after recovery.</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="repair-block">
+              <legend>D-03 · repair retrieval and check applicability</legend>
+              <p class="small">Constructed repair record: <code>SYN-ASSUMED-FILTER-REPAIR-D03</code>.</p>
+              <div class="check-list">
+                <label class="check"><input type="checkbox" id="flood-filter-repaired"><span>Simulate correction of the <strong>stale metadata filter</strong> that excluded D-03.</span></label>
+                <label class="check"><input type="checkbox" id="flood-in-retrieval"><span>Simulate a retrieval check showing <strong>D-03 reaches the revised evidence set</strong>.</span></label>
+                <label class="check"><input type="checkbox" id="flood-applicable"><span>Verify the declared <strong>same entity, flood subject, effective period, and explicit D-02 replacement</strong>. Newest-by-date is not the rule.</span></label>
+                <label class="check"><input type="checkbox" id="flood-high-retained"><span>Retain <strong>High Flood Risk</strong> in the revised memo and subsequent action record.</span></label>
+              </div>
+            </fieldset>
+          </div>
+          <article class="preview" aria-labelledby="preview-heading">
+            <span id="preview-status" class="preview-status">DRAFT · repair evidence incomplete</span>
+            <h3 id="preview-heading">Revised output preview</h3>
+            <div id="revised-preview"></div>
+            <p class="small" style="margin-top:14px">This text responds to the simulation controls. The fixed reassessment ratings below are separate, assumed manuscript values.</p>
+          </article>
+          <fieldset class="repair-block">
+            <legend>Review the restricted informational action</legend>
+            <div class="form-grid">
+              <div class="field"><label for="revised-action">Reassessed action</label><input id="revised-action" readonly value="restricted_informational_diligence_memo"></div>
+              <div class="field"><label for="revised-profile">Separate action profile</label><input id="revised-profile" readonly value="SYN-INFORMATIONAL-ACTION-PROFILE"></div>
+              <div class="field field-wide"><label for="final-evidence">Evidence IDs for the revised review</label><input id="final-evidence" maxlength="700" autocomplete="off" spellcheck="false" placeholder="D-01, D-03, D-04, SYN-ASSUMED-DOCKET-EXTRACTION-QA, SYN-ASSUMED-FILTER-REPAIR-D03" aria-describedby="final-evidence-hint"><p class="hint" id="final-evidence-hint">All five listed IDs are required; the two repair IDs become constructed records when this submission is accepted.</p></div>
+              <div class="field field-wide"><label for="final-rationale">Decision-specific review rationale</label><textarea id="final-rationale" maxlength="2400" placeholder="Explain why the revised memo supports continued diligence, what remains unresolved, and why acquisition approval is still blocked."></textarea></div>
+              <div class="field field-wide"><label for="escalation-owner">Synthetic owner for continued legal review</label><input id="escalation-owner" maxlength="120" placeholder="For example, Designated legal reviewer — training role" autocomplete="off"></div>
+            </div>
+            <div class="check-list">
+              <label class="check"><input type="checkbox" id="reviewed-revised-output"><span>Record review of <strong>SYN-MEMO-AFTER-v1</strong>, its three material claims, and the carried or restricted obligations.</span></label>
+              <label class="check"><input type="checkbox" id="profile-permits"><span>Assume the separate informational profile was approved before reassessment and permits <strong>continued diligence with the disclosed unresolved conditions</strong>.</span></label>
+              <label class="check"><input type="checkbox" id="final-restriction"><span>Retain the <strong>provisional utility condition, High Flood Risk, and unresolved legal effect</strong>. The original acquisition recommendation remains blocked.</span></label>
+            </div>
+          </fieldset>
+          <div id="reassessment-errors" class="error-summary" role="alert" tabindex="-1" hidden></div>
+          <div class="form-footer">
+            <button id="reassessment-submit" type="submit" class="primary">Record the assumed restricted reassessment</button>
+            <p>Completing these fields unlocks a fixed illustrative assessment. It does not independently earn a score, validate the framework, or grant release authority.</p>
+          </div>
+        </fieldset>
+      </form>
+      <div id="reassessment-recorded" class="recorded-note" role="status" hidden></div>
+
+      <div class="comparison" aria-label="Original and separate assumed reassessment">
+        <article class="assessment">
+          <p class="eyebrow" style="color:var(--red)">Original · fixed assumed adjudication</p>
+          <h3>Unconditional acquisition approval</h3>
+          <p class="action-name"><code>unconditional_acquisition_approval</code></p>
+          <div class="score" id="original-score"></div>
+          <div id="original-disposition" class="badge blocked"></div>
+          <p class="explanation">The source conditions and control failures block this action. Its assessment is preserved separately throughout this session.</p>
+          <div id="original-gates" class="gate-list" aria-label="Original gate states"></div>
+          <details><summary>View original ratings and assessment identity</summary><div id="original-rating-table"></div><p class="id-line" id="original-assessment-id"></p></details>
+        </article>
+        <article class="assessment revised">
+          <p class="eyebrow">Separate action · assumed reassessment</p>
+          <h3>Restricted informational diligence memo</h3>
+          <p class="action-name"><code>restricted_informational_diligence_memo</code></p>
+          <div class="score pending" id="revised-score">Unassessed</div>
+          <div id="revised-disposition" class="badge pending">HOLD · unknown ratings and gates</div>
+          <p class="explanation" id="revised-explanation">The assumed reassessment stays unavailable until the simulated repairs and required review inputs are complete. Unknowns are retained.</p>
+          <div id="revised-gates" class="gate-list" aria-label="Reassessment gate states"></div>
+          <details><summary>View reassessment ratings and identity</summary><div id="revised-rating-table"></div><p class="id-line" id="revised-assessment-id"></p></details>
+        </article>
+      </div>
+      <div class="notice amber comparison-note"><p><strong>Different actions, different evidence requirements.</strong> The comparison is not a measured performance improvement. An informational memo may support diligence and escalation while the acquisition recommendation remains blocked. Neither candidate classification grants release authority.</p></div>
+    </section>
+
+    <section id="history-section" aria-labelledby="history-heading">
+      <div class="history-heading">
+        <div><p class="eyebrow">Append-only demonstration trail</p><h2 id="history-heading">Keep the original finding visible.</h2></div>
+        <p id="hash-status" class="hash-status" role="status">Preparing the session record…</p>
+      </div>
+      <p class="small">The page only appends events; it offers no reset or overwrite control. Where Web Crypto is available, each event includes the previous event's SHA-256 hash. This is a <strong>tamper-evident demonstration</strong>, not immutable storage, an external timestamp, or identity authentication. A whole chain can be regenerated; retain a trusted copy separately to compare later exports. Reloading does not preserve this record.</p>
+      <ol id="history-list" class="history-list" aria-label="Session event history"></ol>
+      <p id="export-status" class="small" role="status"></p>
+    </section>
+    <div id="live-status" class="sr-only" role="status" aria-live="polite"></div>
+    <noscript><div class="notice red"><p>This exercise needs local JavaScript to validate entries and reveal Stage 2. JavaScript is disabled; no review has been recorded and no release result is available.</p></div></noscript>
+    <footer class="page-footer">
+      <p><strong>Reality Ledger · Reviewer Release Workbench 0.1.0</strong> · Reference profile RL-BASE-1.0 · Instructional fixture RL-ILL-001.</p>
+      <p>All content and logic are bundled in this file. It makes no network requests, uses no external dependencies, and stores no session in persistent browser storage. The original Python scorer is unchanged; the local JavaScript mirrors its deterministic routing rules. Source truth, legal sufficiency, and reviewer authority remain outside this demonstration.</p>
+    </footer>
+  </main>
+  <script type="application/json" id="case-before">{
+  "schema_version": "1.0",
+  "profile": {"id": "RL-BASE-1.0", "version": "1.0"},
+  "transaction_id": "RL-ILL-001",
+  "assessment_id": "RL-ILL-001-UNCONDITIONAL-ACQUISITION-BEFORE",
+  "assessment_kind": "illustrative",
+  "audit_boundary": {
+    "decision": "Whether the fictional memo can support unconditional acquisition approval in the constructed $45 million facility-acquisition scenario.",
+    "source_universe": "The five constructed manuscript records D-01 through D-05: provisional utility access, the 2022 flood baseline, its explicitly superseding 2025 addendum for Parcel B, the eight-page scanned docket attachment, and workflow/review events. The associated memo, local action profile, and lineage packet are also assumed available for audit.",
+    "as_of": "2026-11-03",
+    "limitations": [
+      "Every artifact ID refers to a stated synthetic case fact, not a real acquisition record.",
+      "Scores and gate states are assigned for illustration; they are not measurements of a deployed system.",
+      "The local acquisition profile prohibits unconditional approval while the required utility, flood, or litigation diligence conditions remain unresolved.",
+      "The separate assumed reassessment changes the permitted action to a restricted informational release; it does not clear this acquisition recommendation."
+    ]
+  },
+  "vectors": {
+    "V1": {"score": 1, "rationale": "Identifiable sources do not support the material clearance and negative assertions. The memo makes an unqualified no-litigation assertion although the known docket attachment D-04 failed extraction.", "evidence_ids": ["D-01", "D-04", "D-05", "SYN-MEMO-BEFORE"]},
+    "V2": {"score": 1, "rationale": "The memo removes D-01's provisional utility status, 31 December 2026 expiry, and written-renewal condition without resolving evidence.", "evidence_ids": ["D-01", "SYN-MEMO-BEFORE"]},
+    "V3": {"score": 1, "rationale": "The applicable 2025 addendum D-03 is excluded by a stale metadata filter, and the required docket review is omitted from the decision basis.", "evidence_ids": ["D-02", "D-03", "D-04", "D-05"]},
+    "V4": {"score": 1, "rationale": "D-05 records an approval event with the required decision-specific verification and exception-resolution fields uncompleted; the fixture stipulates that no additional review record exists. The 14-second interval is not used to infer the reviewer's mental state.", "evidence_ids": ["D-05", "SYN-ACQUISITION-ACTION-PROFILE"]},
+    "V5": {"score": 3, "rationale": "The synthetic record preserves the minimum source-version, retrieval, prompt, output, and reviewer-event lineage needed to reconstruct the evidence state.", "evidence_ids": ["SYN-LINEAGE-PACKET"]}
+  },
+  "gates": {
+    "PROVENANCE": {"state": "fail", "rationale": "The negative claim lacks adequate scoped support, and the decision-changing provisional condition was removed.", "evidence_ids": ["SYN-MEMO-BEFORE", "D-04", "D-01"]},
+    "COVERAGE": {"state": "fail", "rationale": "The known docket extraction failure and omission of the applicable addendum leave the unconditional-acquisition evidence requirements unmet.", "evidence_ids": ["D-03", "D-04", "D-05"]},
+    "REVIEW": {"state": "fail", "rationale": "An approval event exists, but the required recorded decision-specific verification and exception dispositions are absent; the fixture stipulates no additional review record. The finding concerns that documented control requirement.", "evidence_ids": ["D-05", "SYN-ACQUISITION-ACTION-PROFILE"]},
+    "LINEAGE": {"state": "pass", "rationale": "The minimum decision evidence state is reconstructible from the stated synthetic lineage packet.", "evidence_ids": ["SYN-LINEAGE-PACKET"]},
+    "PROFILE": {"state": "fail", "rationale": "The predeclared local acquisition rule requires resolution of utility, flood, and litigation diligence conditions before unconditional approval. The proposed memo does not meet that rule.", "evidence_ids": ["SYN-ACQUISITION-ACTION-PROFILE", "SYN-MEMO-BEFORE", "D-05"]}
+  }
+}
+</script>
+  <script type="application/json" id="case-after">{
+  "schema_version": "1.0",
+  "profile": {"id": "RL-BASE-1.0", "version": "1.0"},
+  "transaction_id": "RL-ILL-001",
+  "assessment_id": "RL-ILL-001-INFORMATIONAL-ASSUMED-REASSESSMENT",
+  "assessment_kind": "illustrative",
+  "audit_boundary": {
+    "decision": "Whether the assumed corrected fictional memo may proceed to supervised review for a restricted informational release recommending continued diligence and escalation. Unconditional acquisition approval remains outside the permitted action.",
+    "source_universe": "The same five constructed manuscript records D-01 through D-05, assuming verified recovery of all eight docket pages, assessment of the applicable 2025 flood addendum, preservation of the provisional utility condition, and completed review of the restricted informational memo. Its revised local action profile and new lineage records are assumed available.",
+    "as_of": "2026-11-03",
+    "limitations": [
+      "This is an illustrative assumed reassessment; no remediation was implemented on a real acquisition workflow.",
+      "Every after-state evidence ID is a hypothetical record that would have to exist and be examined in a real assessment.",
+      "All scores of 3 are assumptions, not empirical improvement estimates or approval for acquisition or deployment.",
+      "The decision boundary has changed from unconditional acquisition approval to restricted informational release. The original recommendation remains blocked until its own requirements are met.",
+      "The illustrative informational action profile is assumed approved before this reassessment; unresolved legal status and acquisition implications are disclosed and routed for continued diligence. Comparing these different action boundaries does not measure a performance improvement."
+    ]
+  },
+  "vectors": {
+    "V1": {"score": 3, "rationale": "Assume the restricted memo's material claims are supported by identified evidence, the universal no-litigation claim is removed, and the recovered docket's unresolved legal status is accurately attributed.", "evidence_ids": ["D-01", "D-03", "D-04", "SYN-ASSUMED-CLAIM-MAP-AFTER"]},
+    "V2": {"score": 3, "rationale": "Assume the corrected workflow preserves material qualifiers at each relevant handoff, including provisional utility status, expiry, and unresolved legal implications; its recommended action is limited to continued diligence and escalation.", "evidence_ids": ["D-01", "D-04", "SYN-ASSUMED-MEMO-AFTER", "SYN-ASSUMED-HANDOFF-RECORD-AFTER"]},
+    "V3": {"score": 3, "rationale": "Assume the manifest is reconciled, all eight docket pages are checked, and the superseding flood addendum is addressed. Remaining legal-status questions are disclosed and compatible with the approved informational action; they do not establish acquisition clearance.", "evidence_ids": ["D-03", "D-04", "SYN-ASSUMED-MANIFEST-AFTER", "SYN-ASSUMED-DOCKET-EXTRACTION-QA", "SYN-INFORMATIONAL-ACTION-PROFILE"]},
+    "V4": {"score": 3, "rationale": "Assume an authorized reviewer verifies the restricted memo's material statements, records the unresolved conditions and evidence-linked rationale, and limits the next action to continued diligence and escalation.", "evidence_ids": ["SYN-ASSUMED-REVIEW-LOG-AFTER", "SYN-INFORMATIONAL-ACTION-PROFILE"]},
+    "V5": {"score": 3, "rationale": "Assume source versions, corrected handoffs, reviewed output, and the changed decision boundary are reconstructible, with the original blocked recommendation preserved separately.", "evidence_ids": ["SYN-ASSUMED-LINEAGE-PACKET-AFTER", "SYN-LINEAGE-PACKET"]}
+  },
+  "gates": {
+    "PROVENANCE": {"state": "pass", "rationale": "Assume the corrected claims and retained qualifications support the restricted informational action and no longer imply unconditional acquisition clearance.", "evidence_ids": ["SYN-ASSUMED-CLAIM-MAP-AFTER", "SYN-ASSUMED-MEMO-AFTER"]},
+    "COVERAGE": {"state": "pass", "rationale": "Assume the evidence required for the approved informational release is accounted for, with remaining diligence questions disclosed and carried into the action restriction.", "evidence_ids": ["SYN-ASSUMED-MANIFEST-AFTER", "SYN-ASSUMED-DOCKET-EXTRACTION-QA", "SYN-INFORMATIONAL-ACTION-PROFILE"]},
+    "REVIEW": {"state": "pass", "rationale": "Assume the required evidence-linked verification of the restricted informational memo and the authorized review record are complete.", "evidence_ids": ["SYN-ASSUMED-REVIEW-LOG-AFTER", "SYN-INFORMATIONAL-ACTION-PROFILE"]},
+    "LINEAGE": {"state": "pass", "rationale": "Assume the corrected output and changed decision boundary are reconstructible without overwriting the original blocked acquisition recommendation.", "evidence_ids": ["SYN-ASSUMED-LINEAGE-PACKET-AFTER", "SYN-LINEAGE-PACKET"]},
+    "PROFILE": {"state": "pass", "rationale": "Assume the preapproved local informational action profile permits a memo recommending continued diligence with explicit unresolved conditions. This pass applies only to that revised action; the unconditional-acquisition rule remains unmet.", "evidence_ids": ["SYN-INFORMATIONAL-ACTION-PROFILE", "SYN-ASSUMED-REVIEW-LOG-AFTER", "SYN-ASSUMED-MANIFEST-AFTER"]}
+  }
+}
+</script>
+  <script id="workbench-core">
+(function (root) {
+  "use strict";
+  var VERSION = "0.1.0";
+  var VECTOR_IDS = ["V1", "V2", "V3", "V4", "V5"];
+  var GATE_IDS = ["PROVENANCE", "COVERAGE", "REVIEW", "LINEAGE", "PROFILE"];
+  var WEIGHTS = [30, 20, 20, 15, 15];
+  var ACTION = "restricted_informational_diligence_memo";
+  var ACTION_PROFILE = "SYN-INFORMATIONAL-ACTION-PROFILE";
+  var CUTOFF = "2026-11-03";
+  var QA_ID = "SYN-ASSUMED-DOCKET-EXTRACTION-QA";
+  var FILTER_ID = "SYN-ASSUMED-FILTER-REPAIR-D03";
+  var OUTPUT_VERSION = "SYN-MEMO-AFTER-v1";
+
+  function clone(value) { return JSON.parse(JSON.stringify(value)); }
+  function freezeDeep(value) {
+    if (value && typeof value === "object" && !Object.isFrozen(value)) {
+      Object.keys(value).forEach(function (key) { freezeDeep(value[key]); });
+      Object.freeze(value);
+    }
+    return value;
+  }
+  var EVIDENCE = freezeDeep({
+    "D-01": {id:"D-01",kind:"utility_instrument",entity_ids:["Parcel-B"],subject_keys:["utility_access"],effective_from:null,effective_to:"2026-12-31",provisional:true,renewal_record_id:null},
+    "D-02": {id:"D-02",kind:"flood_baseline",entity_ids:["Parcel-B"],subject_keys:["flood_classification"],effective_from:"2022-01-01",effective_to:null},
+    "D-03": {id:"D-03",kind:"flood_addendum",entity_ids:["Parcel-B"],subject_keys:["flood_classification"],effective_from:"2025-01-01",effective_to:null,supersedes:[{record_id:"D-02",entity_ids:["Parcel-B"],subject_keys:["flood_classification"],effective_from:"2025-01-01",effective_to:null,authority_evidence_ids:["D-03"]}]},
+    "D-04": {id:"D-04",kind:"docket_attachment",entity_ids:["Parcel-B"],expected_pages:8,received_pages:8,extracted_characters:0,legal_review_status:"open"},
+    "D-05": {id:"D-05",kind:"workflow_log",entity_ids:["Parcel-B"]}
+  });
+
+  function exactKeys(value, expected, path) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(path + ": expected an object");
+    var keys = Object.keys(value);
+    var missing = expected.filter(function (key) { return !Object.prototype.hasOwnProperty.call(value,key); });
+    var extra = keys.filter(function (key) { return expected.indexOf(key) === -1; });
+    if (missing.length || extra.length) throw new Error(path + ": unexpected shape; missing " + missing.join(", ") + "; extra " + extra.join(", "));
+  }
+  function requireText(value, path) {
+    if (typeof value !== "string" || !value.trim() || value !== value.trim()) throw new Error(path + ": expected nonblank trimmed text");
+  }
+  function requireEvidenceIds(value, path, required) {
+    if (!Array.isArray(value)) throw new Error(path + ": expected an array");
+    value.forEach(function (item,index) { requireText(item,path + "[" + index + "]"); });
+    if (new Set(value).size !== value.length) throw new Error(path + ": duplicate evidence IDs");
+    if (required && !value.length) throw new Error(path + ": assessed values require evidence IDs");
+  }
+  function validDate(value) {
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value) || value.slice(0,4) === "0000") return false;
+    var date = new Date(value + "T00:00:00Z");
+    return !Number.isNaN(date.getTime()) && date.toISOString().slice(0,10) === value;
+  }
+  function validateAudit(audit) {
+    exactKeys(audit,["schema_version","profile","transaction_id","assessment_id","assessment_kind","audit_boundary","vectors","gates"],"audit");
+    if (audit.schema_version !== "1.0") throw new Error("audit.schema_version: expected 1.0");
+    exactKeys(audit.profile,["id","version"],"audit.profile");
+    if (audit.profile.id !== "RL-BASE-1.0" || audit.profile.version !== "1.0") throw new Error("audit.profile: unexpected reference profile");
+    requireText(audit.transaction_id,"audit.transaction_id");
+    requireText(audit.assessment_id,"audit.assessment_id");
+    if (["illustrative","operational"].indexOf(audit.assessment_kind) === -1) throw new Error("audit.assessment_kind: unsupported value");
+    exactKeys(audit.audit_boundary,["decision","source_universe","as_of","limitations"],"audit.audit_boundary");
+    requireText(audit.audit_boundary.decision,"audit.audit_boundary.decision");
+    requireText(audit.audit_boundary.source_universe,"audit.audit_boundary.source_universe");
+    if (!validDate(audit.audit_boundary.as_of)) throw new Error("audit.audit_boundary.as_of: invalid calendar date");
+    if (!Array.isArray(audit.audit_boundary.limitations)) throw new Error("audit.audit_boundary.limitations: expected an array");
+    audit.audit_boundary.limitations.forEach(function (item,index) { requireText(item,"audit.audit_boundary.limitations[" + index + "]"); });
+    exactKeys(audit.vectors,VECTOR_IDS,"audit.vectors");
+    VECTOR_IDS.forEach(function (id) {
+      var vector = audit.vectors[id];
+      exactKeys(vector,["score","rationale","evidence_ids"],"audit.vectors." + id);
+      if (vector.score !== null && (!Number.isInteger(vector.score) || vector.score < 0 || vector.score > 4)) throw new Error("audit.vectors." + id + ": invalid score");
+      requireText(vector.rationale,"audit.vectors." + id + ".rationale");
+      requireEvidenceIds(vector.evidence_ids,"audit.vectors." + id + ".evidence_ids",vector.score !== null);
+    });
+    exactKeys(audit.gates,GATE_IDS,"audit.gates");
+    GATE_IDS.forEach(function (id) {
+      var gate = audit.gates[id];
+      exactKeys(gate,["state","rationale","evidence_ids"],"audit.gates." + id);
+      if (["pass","fail","unknown"].indexOf(gate.state) === -1) throw new Error("audit.gates." + id + ": invalid gate state");
+      requireText(gate.rationale,"audit.gates." + id + ".rationale");
+      requireEvidenceIds(gate.evidence_ids,"audit.gates." + id + ".evidence_ids",gate.state !== "unknown");
+    });
+  }
+
+  // This routing mirrors scorer.py. It never assigns a rating or a gate.
+  function evaluate(audit) {
+    validateAudit(audit);
+    var vectorScores = {}, gateStates = {};
+    VECTOR_IDS.forEach(function (id) { vectorScores[id] = audit.vectors[id].score; });
+    GATE_IDS.forEach(function (id) { gateStates[id] = audit.gates[id].state; });
+    var scores = VECTOR_IDS.map(function (id) { return vectorScores[id]; });
+    var rawEis = scores.some(function (score) { return score === null; }) ? null :
+      scores.reduce(function (sum,score,index) { return sum + WEIGHTS[index] * score; },0) / 4;
+    var blockers = [], unknowns = [];
+    GATE_IDS.forEach(function (id) {
+      var gate = audit.gates[id];
+      var item = {kind:"gate",id:id,rationale:gate.rationale,evidence_ids:gate.evidence_ids.slice()};
+      if (gate.state === "fail") blockers.push(Object.assign({code:"GATE_FAILED"},item));
+      else if (gate.state === "unknown") unknowns.push(Object.assign({code:"GATE_UNKNOWN"},item));
+    });
+    VECTOR_IDS.forEach(function (id) {
+      var vector = audit.vectors[id];
+      var item = {kind:"vector",id:id,rationale:vector.rationale,evidence_ids:vector.evidence_ids.slice()};
+      if (vector.score === null) unknowns.push(Object.assign({code:"VECTOR_UNASSESSED"},item));
+      else if (vector.score === 0) blockers.push(Object.assign({code:"VECTOR_ZERO"},item));
+    });
+    if (vectorScores.V1 !== null && vectorScores.V1 < 2) {
+      blockers.push({code:"PROVENANCE_BELOW_FLOOR",kind:"vector",id:"V1",rationale:audit.vectors.V1.rationale,evidence_ids:audit.vectors.V1.evidence_ids.slice()});
+    }
+    var disposition, reasons = [];
+    if (blockers.length) {
+      disposition = "BLOCKED";
+      reasons.push("At least one mandatory gate failed, a vector is zero, or V1 is below 2.");
+    } else if (unknowns.length) {
+      disposition = "HOLD";
+      reasons.push("A required assessment is unknown; no missing value is replaced or reweighted.");
+    } else if (rawEis < 70 || scores.some(function (score) { return score < 2; })) {
+      disposition = "REMEDIATE";
+      if (rawEis < 70) reasons.push("The diagnostic index is below 70.");
+      if (scores.some(function (score) { return score < 2; })) reasons.push("At least one vector is below the supervised-candidate floor of 2.");
+    } else if (rawEis >= 85 && scores.every(function (score) { return score >= 3; })) {
+      disposition = "STANDARD_REVIEW_CANDIDATE";
+      reasons.push("All gates pass, the diagnostic index is at least 85, and every vector is at least 3.");
+    } else {
+      disposition = "SUPERVISED_CANDIDATE";
+      reasons.push("All gates pass, the diagnostic index is at least 70, and every vector is at least 2.");
+    }
+    return {
+      schema_version:"1.0",profile:{id:"RL-BASE-1.0",version:"1.0"},transaction_id:audit.transaction_id,
+      assessment_id:audit.assessment_id,assessment_kind:audit.assessment_kind,
+      audit_boundary:clone(audit.audit_boundary),raw_eis:rawEis,disposition:disposition,
+      vector_scores:vectorScores,gate_states:gateStates,blockers:blockers,unknowns:unknowns,
+      routing_reasons:reasons,deployment_authorization:"not_assessed",
+      qualification:"Deterministic routing of supplied assessments only; evidence validity and deployment authorization are not established."
+    };
+  }
+  function unassessedAudit(template) {
+    var audit = clone(template);
+    VECTOR_IDS.forEach(function (id) { audit.vectors[id] = {score:null,rationale:"This exercise has not recorded the complete simulated repair and review inputs. No rating is assigned.",evidence_ids:[]}; });
+    GATE_IDS.forEach(function (id) { audit.gates[id] = {state:"unknown",rationale:"The required simulated reassessment is incomplete. No gate determination is supplied.",evidence_ids:[]}; });
+    return audit;
+  }
+
+  function parseEvidenceIds(value) {
+    if (typeof value !== "string") return [];
+    return Array.from(new Set(value.trim().split(/[\s,;]+/).filter(Boolean).map(function (id) { return id.toUpperCase(); })));
+  }
+  function meaningfulRationale(value) {
+    if (typeof value !== "string") return false;
+    var text = value.trim();
+    var words = text.toLowerCase().match(/[a-z0-9]+/g) || [];
+    var filler = new Set(["reviewed","review","and","approved","approve","checked","check","ok","okay","looks","look","good","complete","completed","done","all","it","is","the","i","have","has","been","as","required","everything","fine","yes","no","issues","none","n","a","this","that","was","with","to","for"]);
+    var specific = new Set(words.filter(function (word) { return !filler.has(word); }));
+    return text.length >= 40 && words.length >= 7 && specific.size >= 4;
+  }
+  function applicableSupersession(earlier,later,entity,subject,asOf,registry) {
+    if (!earlier || !later || !validDate(asOf)) return false;
+    if (!Array.isArray(later.entity_ids) || later.entity_ids.indexOf(entity) < 0 ||
+        !Array.isArray(later.subject_keys) || later.subject_keys.indexOf(subject) < 0 ||
+        !Array.isArray(earlier.entity_ids) || earlier.entity_ids.indexOf(entity) < 0 ||
+        !Array.isArray(earlier.subject_keys) || earlier.subject_keys.indexOf(subject) < 0) return false;
+    if (!validDate(later.effective_from) || later.effective_from > asOf ||
+        (later.effective_to !== null && (!validDate(later.effective_to) || later.effective_to < asOf))) return false;
+    return Array.isArray(later.supersedes) && later.supersedes.some(function (relation) {
+      return relation.record_id === earlier.id &&
+        Array.isArray(relation.entity_ids) && relation.entity_ids.indexOf(entity) >= 0 &&
+        Array.isArray(relation.subject_keys) && relation.subject_keys.indexOf(subject) >= 0 &&
+        validDate(relation.effective_from) && relation.effective_from <= asOf &&
+        (relation.effective_to === null || (validDate(relation.effective_to) && relation.effective_to >= asOf)) &&
+        Array.isArray(relation.authority_evidence_ids) && relation.authority_evidence_ids.length > 0 &&
+        relation.authority_evidence_ids.every(function (id) { return !!registry[id]; });
+    });
+  }
+  // This validates declared renewal attributes, not authenticity. No such
+  // record is supplied by the fixed UI fixture, so O-01 cannot resolve here.
+  function qualifyingRenewal(record,registry) {
+    if (!record || record.kind !== "utility_renewal" || record.supersedes_id !== "D-01" ||
+        !Array.isArray(record.entity_ids) || record.entity_ids.indexOf("Parcel-B") < 0 ||
+        !Array.isArray(record.subject_keys) || record.subject_keys.indexOf("utility_access") < 0 ||
+        record.written !== true || record.executed !== true) return false;
+    if (!validDate(record.effective_from) || !validDate(record.effective_to) ||
+        record.effective_from > CUTOFF || record.effective_to <= "2026-12-31" ||
+        record.effective_to < record.effective_from) return false;
+    if (record.authority_role !== "authorized_utility_grantor" ||
+        !Array.isArray(record.authority_evidence_ids) || !record.authority_evidence_ids.length) return false;
+    return record.authority_evidence_ids.every(function (id) {
+      var authority = registry[id];
+      return authority && authority.kind === "utility_authority" &&
+        authority.authority_role === "authorized_utility_grantor" &&
+        Array.isArray(authority.entity_ids) && authority.entity_ids.indexOf("Parcel-B") >= 0 &&
+        validDate(authority.effective_from) && authority.effective_from <= record.effective_from &&
+        (authority.effective_to === null || (validDate(authority.effective_to) && authority.effective_to >= record.effective_from));
+    });
+  }
+  function validationResult(errors) { return {valid:errors.length === 0,errors:errors}; }
+  function validateInitialReview(input,registry) {
+    registry = registry || EVIDENCE;
+    var errors = [];
+    function error(field,message) { errors.push({field:field,message:message}); }
+    if (!input || typeof input !== "object") return validationResult([{field:"reviewer-reference",message:"Supply the initial exception review."}]);
+    if (typeof input.reviewer_id !== "string" || input.reviewer_id.trim().length < 3 || input.reviewer_id.length > 80) error("reviewer-reference","Record a synthetic reviewer reference of 3–80 characters.");
+    if (input.reviewer_role !== "designated_domain_reviewer") error("reviewer-role","The exercise requires the designated domain reviewer role; recording that role does not authenticate it.");
+    if (input.proposed_action !== ACTION || input.restrictions_acknowledged !== true) error("initial-restriction","Explicitly restrict the proposed action to an informational diligence memo. The acquisition remains uncleared.");
+    var obligations = input.obligations || {};
+    var specs = [
+      {id:"O-01",prefix:"o1",required:["D-01"],allowed:["D-01"]},
+      {id:"O-02",prefix:"o2",required:["D-02","D-03"],allowed:["D-02","D-03"]},
+      {id:"O-03",prefix:"o3",required:["D-04","D-05"],allowed:["D-04","D-05"]}
+    ];
+    specs.forEach(function (spec) {
+      var item = obligations[spec.id] || {};
+      if (["carry","resolve","restrict"].indexOf(item.mode) < 0) error(spec.prefix + "-mode","Choose an explicit disposition for " + spec.id + ".");
+      var ids = Array.isArray(item.evidence_ids) ? item.evidence_ids : [];
+      var missing = spec.required.filter(function (id) { return ids.indexOf(id) < 0; });
+      if (missing.length) error(spec.prefix + "-evidence",spec.id + " requires " + missing.join(" and ") + "; an unrelated citation is insufficient.");
+      var invalid = ids.filter(function (id) {
+        var record = registry[id];
+        if (!record) return true;
+        if (spec.allowed.indexOf(id) >= 0) return false;
+        return !(spec.id === "O-01" && item.mode === "resolve" &&
+          (record.kind === "utility_renewal" || record.kind === "utility_authority"));
+      });
+      if (invalid.length || new Set(ids).size !== ids.length) error(spec.prefix + "-evidence","Use unique, obligation-relevant evidence IDs. Unrecognized or unrelated IDs: " + (invalid.join(", ") || "duplicate entries") + ".");
+      if (!meaningfulRationale(item.rationale)) error(spec.prefix + "-rationale","For " + spec.id + ", explain the evidence and action consequence in at least seven words and 40 characters. A generic approval phrase does not suffice.");
+    });
+    var o1 = obligations["O-01"] || {}, o2 = obligations["O-02"] || {}, o3 = obligations["O-03"] || {};
+    if (o1.mode === "resolve") {
+      var renewal = (o1.evidence_ids || []).some(function (id) { return qualifyingRenewal(registry[id],registry); });
+      if (!renewal) error("o1-mode","O-01 cannot resolve in this base fixture: no written, executed renewal matches Parcel B, the required time coverage, and grantor authority. Carry or restrict D-01 instead.");
+    } else {
+      if (!o1.preserved || o1.preserved.status !== true) error("o1-status","Preserve D-01's provisional utility status.");
+      if (!o1.preserved || o1.preserved.expiry !== true) error("o1-expiry","Preserve the 31 December 2026 expiry.");
+      if (!o1.preserved || o1.preserved.renewal !== true) error("o1-renewal","Preserve the written-renewal condition and the absence of renewal in this packet.");
+    }
+    if (o2.applicability_checked !== true) error("o2-applicability","Record the entity, subject, and effective-period applicability check.");
+    if (o2.precedence_retained !== true) error("o2-precedence","Apply D-03's explicit supersession and carry the High Flood Risk classification.");
+    if (!applicableSupersession(registry["D-02"],registry["D-03"],"Parcel-B","flood_classification",CUTOFF,registry)) error("o2-evidence","The supplied records do not establish an applicable, authority-linked D-03 replacement of D-02.");
+    if (o3.mode !== "restrict") error("o3-mode","O-03 must restrict this exercise to an informational memo. Extraction recovery is not legal clearance.");
+    if (o3.extraction_failure_recorded !== true) error("o3-extraction","Record the zero-character extraction of eight received pages.");
+    if (o3.legal_review_open !== true) error("o3-legal-open","Keep the docket's legal status and acquisition implications unresolved.");
+    return validationResult(errors);
+  }
+  function allEightPages(value) {
+    return (typeof value === "number" && Number.isInteger(value) && value === 8) ||
+      (typeof value === "string" && value === "8");
+  }
+  function repairsComplete(repairs) {
+    var docket = repairs && repairs.docket || {}, flood = repairs && repairs.flood || {};
+    return allEightPages(docket.pages_recovered) && docket.text_recovered === true &&
+      docket.source_qa === true && docket.legal_review_open === true &&
+      flood.filter_repaired === true && flood.returned === true &&
+      flood.applicability_confirmed === true && flood.high_risk_retained === true;
+  }
+  function validateReassessment(input,initial) {
+    var errors = [];
+    function error(field,message) { errors.push({field:field,message:message}); }
+    if (!initial || !validateInitialReview(initial).valid) error("reassessment-submit","A complete, recorded initial review is required before reassessment.");
+    if (!input || typeof input !== "object") return validationResult(errors.concat([{field:"reassessment-submit",message:"Supply the reassessment input."}]));
+    var docket = input.repairs && input.repairs.docket || {}, flood = input.repairs && input.repairs.flood || {};
+    if (!allEightPages(docket.pages_recovered)) error("recovered-pages","Recover and reconcile exactly all eight received docket pages.");
+    if (docket.text_recovered !== true) error("docket-text-recovered","Record recovery of relevant text from every received docket page.");
+    if (docket.source_qa !== true) error("docket-source-qa","Record source-image QA of all eight pages and relevant extracted content.");
+    if (docket.legal_review_open !== true) error("docket-legal-open","Keep legal assessment open after OCR recovery.");
+    if (flood.filter_repaired !== true) error("flood-filter-repaired","Record the simulated repair of the stale D-03 filter.");
+    if (flood.returned !== true) error("flood-in-retrieval","Record that D-03 reaches the revised retrieval result.");
+    if (flood.applicability_confirmed !== true) error("flood-applicable","Check Parcel B, flood scope, the effective period, and explicit supersession.");
+    if (flood.high_risk_retained !== true) error("flood-high-retained","Retain High Flood Risk in the revised claim and action record.");
+    if (input.action !== ACTION) error("revised-action","The revised action must be restricted_informational_diligence_memo.");
+    if (input.action_profile_id !== ACTION_PROFILE || input.profile_approved_assumption !== true) error("profile-permits","Record the separate preapproved informational-profile assumption.");
+    if (input.output_version !== OUTPUT_VERSION || input.output_reviewed !== true) error("reviewed-revised-output","Record review of the specified revised memo version and material obligations.");
+    if (input.restriction_acknowledged !== true) error("final-restriction","Retain every disclosed condition and the original acquisition block.");
+    if (initial && (input.reviewer_id !== initial.reviewer_id || input.reviewer_role !== initial.reviewer_role)) error("reviewed-revised-output","Bind this review to the recorded initial synthetic reviewer and role.");
+    var ids = Array.isArray(input.evidence_ids) ? input.evidence_ids : [];
+    var required = ["D-01","D-03","D-04",QA_ID,FILTER_ID];
+    var allowed = Object.keys(EVIDENCE).concat([QA_ID,FILTER_ID,ACTION_PROFILE]);
+    var missing = required.filter(function (id) { return ids.indexOf(id) < 0; });
+    if (missing.length) error("final-evidence","The revised review is missing: " + missing.join(", ") + ".");
+    if (ids.some(function (id) { return allowed.indexOf(id) < 0; }) || new Set(ids).size !== ids.length) error("final-evidence","Use unique evidence IDs from the stated source and constructed repair records.");
+    if (!meaningfulRationale(input.rationale)) error("final-rationale","Explain the evidence, unresolved conditions, and restricted action in at least seven words and 40 characters; generic approval is insufficient.");
+    if (typeof input.escalation_owner !== "string" || input.escalation_owner.trim().length < 3 || input.escalation_owner.length > 120) error("escalation-owner","Identify the synthetic owner for continued legal assessment.");
+    return validationResult(errors);
+  }
+  function buildPreview(repairs) {
+    var docket = repairs && repairs.docket || {}, flood = repairs && repairs.flood || {};
+    var docketReady = allEightPages(docket.pages_recovered) && docket.text_recovered === true && docket.source_qa === true;
+    var floodReady = flood.filter_repaired === true && flood.returned === true && flood.applicability_confirmed === true && flood.high_risk_retained === true;
+    return [
+      "Parcel B's utility access remains provisional and expires on 31 December 2026 unless renewed in writing.",
+      floodReady ? "The 2025 addendum supersedes the 2022 flood classification and identifies High Flood Risk." : "D-03 states that it replaces the 2022 flood finding with High Flood Risk. The simulated retrieval repair and applicability checks are not yet complete.",
+      docketReady ? "The eight docket pages are assumed recovered and checked against the source. The recovered docket still requires legal assessment of its current status and acquisition implications." : "The supplied eight-page docket attachment has not yet been fully recovered and verified in this simulation. Litigation clearance remains unresolved.",
+      "This memo supports continued diligence and escalation; it does not support unconditional acquisition approval."
+    ];
+  }
+
+  function canonicalStringify(value) {
+    if (value === null || typeof value === "string" || typeof value === "boolean") return JSON.stringify(value);
+    if (typeof value === "number" && Number.isFinite(value)) return JSON.stringify(value);
+    if (Array.isArray(value)) return "[" + value.map(canonicalStringify).join(",") + "]";
+    if (value && typeof value === "object") return "{" + Object.keys(value).sort().map(function (key) { return JSON.stringify(key) + ":" + canonicalStringify(value[key]); }).join(",") + "}";
+    throw new Error("Only finite JSON values can be recorded.");
+  }
+  async function sha256Hex(text,cryptoProvider) {
+    if (!cryptoProvider || !cryptoProvider.subtle || typeof TextEncoder === "undefined") return null;
+    var digest = await cryptoProvider.subtle.digest("SHA-256",new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(digest)).map(function (byte) { return byte.toString(16).padStart(2,"0"); }).join("");
+  }
+  async function createEvent(previous,type,payload,context,cryptoProvider) {
+    var sequence = previous ? previous.sequence + 1 : 1;
+    var event = {
+      schema_version:"1.0",session_id:context.session_id,event_id:context.session_id + "-E" + String(sequence).padStart(3,"0"),
+      sequence:sequence,type:type,recorded_at:context.recorded_at || new Date().toISOString(),
+      time_source:"untrusted_browser_clock",synthetic:true,
+      assessment_id:context.assessment_id || null,parent_assessment_id:context.parent_assessment_id || null,
+      actor_reference:context.actor_reference || "workbench_demo",actor_identity_authenticated:false,
+      previous_event_sha256:previous ? previous.event_sha256 : null,
+      hash_algorithm:cryptoProvider && cryptoProvider.subtle && typeof TextEncoder !== "undefined" ? "SHA-256" : "unavailable",
+      payload:clone(payload)
+    };
+    var digest = null;
+    if (event.hash_algorithm === "SHA-256") {
+      try { digest = await sha256Hex(canonicalStringify(event),cryptoProvider); }
+      catch (error) { event.hash_algorithm = "unavailable"; }
+    }
+    event.event_sha256 = digest;
+    return freezeDeep(event);
+  }
+  async function verifyEventChain(history,cryptoProvider) {
+    if (!Array.isArray(history)) return {valid:false,status:"invalid",reason:"History is not an array."};
+    if (!cryptoProvider || !cryptoProvider.subtle || typeof TextEncoder === "undefined") return {valid:null,status:"unverifiable",reason:"SHA-256 is unavailable in this environment."};
+    var previous = null;
+    for (var index = 0; index < history.length; index += 1) {
+      var event = history[index];
+      if (event.sequence !== index + 1) return {valid:false,status:"invalid",reason:"Sequence mismatch at event " + (index + 1) + "."};
+      if (index > 0 && event.session_id !== previous.session_id) return {valid:false,status:"invalid",reason:"Session identity changed within the chain."};
+      if (event.previous_event_sha256 !== (previous ? previous.event_sha256 : null)) return {valid:false,status:"invalid",reason:"Previous-event hash mismatch at event " + (index + 1) + "."};
+      if (event.hash_algorithm !== "SHA-256" || !event.event_sha256) return {valid:null,status:"unverifiable",reason:"An event was recorded without a SHA-256 hash."};
+      var data = clone(event), expected = data.event_sha256;
+      delete data.event_sha256;
+      var actual;
+      try { actual = await sha256Hex(canonicalStringify(data),cryptoProvider); }
+      catch (error) { return {valid:null,status:"unverifiable",reason:"SHA-256 verification failed in this environment."}; }
+      if (actual !== expected) return {valid:false,status:"invalid",reason:"Content hash mismatch at event " + (index + 1) + "."};
+      previous = event;
+    }
+    return {valid:true,status:"internally_consistent",reason:"Hashes and sequence match this supplied export. Authenticity, completeness, external time, and an external trust anchor are not established."};
+  }
+  root.RealityLedgerWorkbenchCore = freezeDeep({
+    version:VERSION,VECTOR_IDS:VECTOR_IDS,GATE_IDS:GATE_IDS,WEIGHTS:WEIGHTS,ACTION:ACTION,ACTION_PROFILE:ACTION_PROFILE,CUTOFF:CUTOFF,
+    QA_ID:QA_ID,FILTER_ID:FILTER_ID,OUTPUT_VERSION:OUTPUT_VERSION,EVIDENCE:EVIDENCE,
+    clone:clone,freezeDeep:freezeDeep,validDate:validDate,validateAudit:validateAudit,evaluate:evaluate,unassessedAudit:unassessedAudit,
+    parseEvidenceIds:parseEvidenceIds,meaningfulRationale:meaningfulRationale,applicableSupersession:applicableSupersession,
+    qualifyingRenewal:qualifyingRenewal,validateInitialReview:validateInitialReview,validateReassessment:validateReassessment,
+    allEightPages:allEightPages,repairsComplete:repairsComplete,buildPreview:buildPreview,canonicalStringify:canonicalStringify,
+    sha256Hex:sha256Hex,createEvent:createEvent,verifyEventChain:verifyEventChain
+  });
+}(globalThis));
+  </script>
+  <script id="workbench-app">
+(function () {
+  "use strict";
+  var core = globalThis.RealityLedgerWorkbenchCore;
+  var el = function (id) { return document.getElementById(id); };
+  var BEFORE = core.freezeDeep(JSON.parse(el("case-before").textContent));
+  var AFTER = core.freezeDeep(JSON.parse(el("case-after").textContent));
+  var BEFORE_RESULT = core.freezeDeep(core.evaluate(BEFORE));
+  var AFTER_RESULT = core.freezeDeep(core.evaluate(AFTER));
+  var UNKNOWN_RESULT = core.freezeDeep(core.evaluate(core.unassessedAudit(AFTER)));
+  var originalText = "Parcel B carries full commercial utility clearance. Flood exposure is Low-to-Moderate. No active civil litigation or encumbrances were found across county filings. The acquisition may proceed without further diligence conditions.";
+  var provider = null;
+  try { provider = globalThis.crypto || null; } catch (error) { provider = null; }
+  var sessionId = "RL-DEMO-" + (provider && typeof provider.randomUUID === "function" ? provider.randomUUID() : Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,10));
+  var history = Object.freeze([]);
+  var eventQueue = Promise.resolve();
+  var state = {phase:"initial_review",initial:null,reassessment:null};
+  var labels = {
+    session_created:"Session opened — synthetic fixture",
+    initial_validation_rejected:"Initial submission rejected — no disposition recorded",
+    initial_dispositions_recorded:"Initial evidence dispositions recorded",
+    original_assessment_revealed:"Original memo and fixed adjudication revealed",
+    reassessment_validation_rejected:"Reassessment submission rejected — assumptions remain unassessed",
+    docket_repair_recorded:"D-04 recovery and source QA recorded as simulated",
+    flood_repair_recorded:"D-03 filter repair and applicability recorded as simulated",
+    restricted_review_recorded:"Restricted memo review recorded",
+    assumed_reassessment_recorded:"Separate assumed informational reassessment recorded",
+    session_export_requested:"Session export requested"
+  };
+
+  function announce(message) { el("live-status").textContent = message; }
+  function appendEvent(type,payload,assessmentId,parentId) {
+    var task = eventQueue.then(async function () {
+      var previous = history.length ? history[history.length-1] : null;
+      var event = await core.createEvent(previous,type,payload,{
+        session_id:sessionId,assessment_id:assessmentId || null,parent_assessment_id:parentId || null,
+        actor_reference:state.initial ? state.initial.reviewer_id : "workbench_demo"
+      },provider);
+      history = Object.freeze(history.concat([event]));
+      renderHistory();
+      return event;
+    });
+    eventQueue = task.catch(function () {});
+    return task;
+  }
+  function renderHistory() {
+    var list = el("history-list");
+    list.replaceChildren();
+    history.forEach(function (event) {
+      var item = document.createElement("li"), details = document.createElement("details"), summary = document.createElement("summary");
+      summary.textContent = String(event.sequence).padStart(2,"0") + " · " + (labels[event.type] || event.type);
+      details.appendChild(summary);
+      var time = document.createElement("p");
+      time.className = "event-meta";
+      time.textContent = event.recorded_at + " · browser clock · synthetic event";
+      details.appendChild(time);
+      var link = document.createElement("p");
+      link.className = "event-meta";
+      link.textContent = "Assessment: " + (event.assessment_id || "session only") + " · Parent: " + (event.parent_assessment_id || "none");
+      details.appendChild(link);
+      var hash = document.createElement("p");
+      hash.className = "event-meta mono";
+      hash.textContent = event.event_sha256 ? "SHA-256 " + event.event_sha256 : "SHA-256 unavailable; this event has no cryptographic content hash.";
+      details.appendChild(hash);
+      var pre = document.createElement("pre");
+      pre.tabIndex = 0;
+      pre.setAttribute("aria-label","Complete event " + event.sequence + " JSON");
+      pre.textContent = JSON.stringify(event,null,2);
+      details.appendChild(pre);
+      item.appendChild(details);
+      list.appendChild(item);
+    });
+    var hashed = history.filter(function (event) { return !!event.event_sha256; }).length;
+    if (hashed === history.length && history.length) el("hash-status").textContent = history.length + " appended event" + (history.length === 1 ? "" : "s") + " · SHA-256 links recorded. No external trust anchor.";
+    else el("hash-status").textContent = history.length + " appended events · hashing unavailable for " + (history.length-hashed) + ". Session log only; no complete cryptographic chain.";
+  }
+  function readInitial() {
+    return {
+      reviewer_id:el("reviewer-reference").value.trim(),
+      reviewer_role:el("reviewer-role").value,
+      proposed_action:core.ACTION,
+      restrictions_acknowledged:el("initial-restriction").checked,
+      reviewed_material:"source_exceptions_only",
+      recommendation_was_withheld:true,
+      numeric_ratings_were_withheld:true,
+      obligations:{
+        "O-01":{mode:el("o1-mode").value,evidence_ids:core.parseEvidenceIds(el("o1-evidence").value),rationale:el("o1-rationale").value.trim(),preserved:{status:el("o1-status").checked,expiry:el("o1-expiry").checked,renewal:el("o1-renewal").checked}},
+        "O-02":{mode:el("o2-mode").value,evidence_ids:core.parseEvidenceIds(el("o2-evidence").value),rationale:el("o2-rationale").value.trim(),applicability_checked:el("o2-applicability").checked,precedence_retained:el("o2-precedence").checked},
+        "O-03":{mode:el("o3-mode").value,evidence_ids:core.parseEvidenceIds(el("o3-evidence").value),rationale:el("o3-rationale").value.trim(),extraction_failure_recorded:el("o3-extraction").checked,legal_review_open:el("o3-legal-open").checked}
+      }
+    };
+  }
+  function readRepairs() {
+    return {
+      docket:{source_record_id:"D-04",expected_pages:8,pages_recovered:el("recovered-pages").value.trim(),text_recovered:el("docket-text-recovered").checked,source_qa:el("docket-source-qa").checked,legal_review_open:el("docket-legal-open").checked,evidence_id:core.QA_ID},
+      flood:{source_record_id:"D-03",superseded_record_id:"D-02",entity_id:"Parcel-B",subject_key:"flood_classification",as_of:core.CUTOFF,filter_repaired:el("flood-filter-repaired").checked,returned:el("flood-in-retrieval").checked,applicability_confirmed:el("flood-applicable").checked,high_risk_retained:el("flood-high-retained").checked,evidence_id:core.FILTER_ID}
+    };
+  }
+  function readReassessment() {
+    return {
+      action:el("revised-action").value,action_profile_id:el("revised-profile").value,
+      parent_assessment_id:BEFORE.assessment_id,assessment_id:AFTER.assessment_id,repairs:readRepairs(),
+      reviewer_id:state.initial ? state.initial.reviewer_id : null,reviewer_role:state.initial ? state.initial.reviewer_role : null,
+      evidence_ids:core.parseEvidenceIds(el("final-evidence").value),rationale:el("final-rationale").value.trim(),
+      escalation_owner:el("escalation-owner").value.trim(),output_version:core.OUTPUT_VERSION,
+      output_reviewed:el("reviewed-revised-output").checked,profile_approved_assumption:el("profile-permits").checked,
+      restriction_acknowledged:el("final-restriction").checked,
+      retained_conditions:["provisional utility status","31 December 2026 utility expiry","written renewal requirement","High Flood Risk","unresolved docket legal status and acquisition implications"],
+      synthetic_assumption_only:true,identity_authenticated:false,original_action_authorized:false
+    };
+  }
+  function showErrors(containerId,errors,formId) {
+    var container = el(containerId);
+    el(formId).querySelectorAll("[aria-invalid]").forEach(function (field) { field.removeAttribute("aria-invalid"); });
+    container.replaceChildren();
+    if (!errors.length) { container.hidden = true; return; }
+    var heading = document.createElement("h3");
+    heading.textContent = "The submission has not been recorded as complete.";
+    var list = document.createElement("ul");
+    errors.forEach(function (error) {
+      var li = document.createElement("li"), link = document.createElement("a");
+      link.href = "#" + error.field;
+      link.textContent = error.message;
+      li.appendChild(link); list.appendChild(li);
+      if (el(error.field)) el(error.field).setAttribute("aria-invalid","true");
+    });
+    container.appendChild(heading); container.appendChild(list); container.hidden = false;
+    container.focus();
+  }
+  function renderRatings(containerId,result) {
+    var container = el(containerId);
+    var names = {V1:"Provenance",V2:"Uncertainty",V3:"Completeness",V4:"Human review",V5:"Lineage"};
+    var table = document.createElement("table"), caption = document.createElement("caption");
+    caption.className = "sr-only"; caption.textContent = "Vector ratings on a zero-to-four scale";
+    table.appendChild(caption);
+    var thead = document.createElement("thead"), tr = document.createElement("tr");
+    ["Vector","Rating / 4"].forEach(function (label) { var th = document.createElement("th"); th.scope = "col"; th.textContent = label; tr.appendChild(th); });
+    thead.appendChild(tr); table.appendChild(thead);
+    var tbody = document.createElement("tbody");
+    core.VECTOR_IDS.forEach(function (id) {
+      var row = document.createElement("tr"), name = document.createElement("th"), score = document.createElement("td");
+      name.scope = "row"; name.textContent = id + " · " + names[id];
+      score.textContent = result.vector_scores[id] === null ? "Unassessed" : String(result.vector_scores[id]);
+      row.appendChild(name); row.appendChild(score); tbody.appendChild(row);
+    });
+    table.appendChild(tbody); container.replaceChildren(table);
+  }
+  function renderGates(containerId,result) {
+    var container = el(containerId); container.replaceChildren();
+    core.GATE_IDS.forEach(function (id) {
+      var span = document.createElement("span");
+      span.className = "gate-chip " + result.gate_states[id];
+      span.textContent = id + " · " + result.gate_states[id].toUpperCase();
+      container.appendChild(span);
+    });
+  }
+  function renderResult(prefix,result) {
+    var score = el(prefix + "-score");
+    score.replaceChildren();
+    score.className = "score" + (result.raw_eis === null ? " pending" : "");
+    score.appendChild(document.createTextNode(result.raw_eis === null ? "Unassessed" : String(result.raw_eis)));
+    if (result.raw_eis !== null) { var label = document.createElement("span"); label.textContent = "EIS / 100"; score.appendChild(label); }
+    var disposition = el(prefix + "-disposition");
+    disposition.textContent = result.disposition + (result.raw_eis === null ? " · unknown ratings and gates" : "");
+    disposition.className = "badge " + (result.disposition === "BLOCKED" ? "blocked" : result.disposition === "HOLD" ? "pending" : "supervised");
+    renderGates(prefix + "-gates",result);
+    renderRatings(prefix + "-rating-table",result);
+    el(prefix + "-assessment-id").textContent = "Assessment: " + result.assessment_id;
+  }
+  function updatePreview() {
+    if (state.reassessment) return;
+    var repairs = readRepairs(), preview = el("revised-preview");
+    preview.replaceChildren();
+    core.buildPreview(repairs).forEach(function (text) { var p = document.createElement("p"); p.textContent = text; preview.appendChild(p); });
+    el("preview-status").textContent = core.repairsComplete(repairs) ? "SIMULATED REPAIRS COMPLETE · review still required" : "DRAFT · repair evidence incomplete";
+  }
+  function revealStageTwo() {
+    el("initial-fields").disabled = true;
+    el("initial-submit").textContent = "Initial dispositions recorded";
+    el("initial-recorded").replaceChildren();
+    var p = document.createElement("p");
+    p.textContent = "Recorded for " + state.initial.reviewer_id + ". The initial evidence dispositions remain fixed in this session. The original memo and numeric ratings are now visible.";
+    el("initial-recorded").appendChild(p); el("initial-recorded").hidden = false;
+    el("locked-stage-note").hidden = true;
+    el("reassessment-stage").hidden = false;
+    el("step-one").removeAttribute("aria-current"); el("step-one").classList.add("complete");
+    el("step-two").setAttribute("aria-current","step");
+    el("step-one-status").textContent = "Initial evidence dispositions recorded";
+    el("step-two-status").textContent = "Repair and restricted review · active";
+    el("export-button").disabled = false;
+    el("original-memo").textContent = originalText;
+    renderResult("original",BEFORE_RESULT); renderResult("revised",UNKNOWN_RESULT);
+    updatePreview();
+    el("reassessment-heading").focus();
+    announce("Initial dispositions recorded. Stage 2 is open. The original acquisition assessment remains blocked.");
+  }
+  el("o1-mode").addEventListener("change",function () {
+    var mode = el("o1-mode").value;
+    el("o1-mode-note").textContent = mode === "resolve" ?
+      "Resolve cannot pass in this base fixture. A qualifying written renewal would need matching Parcel B and utility scope, effective coverage, execution, and evidenced grantor authority. No such constructed record is supplied. Choose carry or restrict." :
+      mode === "restrict" ? "Record the utility condition and limit the action to continued diligence; do not retire the original condition." :
+      "Carry the provisional status, expiry, and written-renewal condition into the memo and the restricted action.";
+  });
+  el("o3-mode").addEventListener("change",function () {
+    el("o3-mode-note").textContent = el("o3-mode").value === "restrict" ?
+      "The informational restriction preserves the unresolved legal question. Stage 2 still requires all eight pages to be recovered and checked." :
+      "This base fixture requires restrict. Neither a successful OCR result nor a citation establishes litigation clearance; the legal assessment remains open.";
+  });
+  el("reassessment-form").addEventListener("input",updatePreview);
+  el("reassessment-form").addEventListener("change",updatePreview);
+
+  el("initial-form").addEventListener("submit",async function (event) {
+    event.preventDefault();
+    if (state.initial) return;
+    var input = readInitial(), result = core.validateInitialReview(input);
+    showErrors("initial-errors",result.errors,"initial-form");
+    if (!result.valid) {
+      await appendEvent("initial_validation_rejected",{decision_recorded:false,errors:result.errors,ratings_assigned:false},null,BEFORE.assessment_id);
+      announce("Initial review incomplete. Correct the listed evidence and disposition entries.");
+      return;
+    }
+    var button = el("initial-submit");
+    button.disabled = true; el("initial-form").setAttribute("aria-busy","true");
+    try {
+      await appendEvent("initial_dispositions_recorded",{
+        review:input,review_scope:"source evidence before recommendation reveal",ratings_assigned:false,
+        validation_scope:"Required structured entries and declared evidence relationships only; no identity or source authentication."
+      },sessionId + "-INITIAL-REVIEW",BEFORE.assessment_id);
+      state.initial = core.freezeDeep(core.clone(input));
+      await appendEvent("original_assessment_revealed",{
+        source:"unchanged embedded case_before.json",assessment:BEFORE,result:BEFORE_RESULT,
+        original_generated_memo:originalText,original_snapshot_replaced:false
+      },BEFORE.assessment_id,null);
+      state.phase = "reassessment";
+      revealStageTwo();
+    } catch (error) {
+      showErrors("initial-errors",[{field:"initial-submit",message:"The session could not complete its event record. No release is authorized. Export any recorded events if available; reload creates a separate session."}],"initial-form");
+      if (!state.initial) button.disabled = false;
+    } finally { el("initial-form").removeAttribute("aria-busy"); }
+  });
+  el("reassessment-form").addEventListener("submit",async function (event) {
+    event.preventDefault();
+    if (state.reassessment) return;
+    var input = readReassessment(), result = core.validateReassessment(input,state.initial);
+    showErrors("reassessment-errors",result.errors,"reassessment-form");
+    if (!result.valid) {
+      await appendEvent("reassessment_validation_rejected",{
+        assumptions_complete:false,errors:result.errors,ratings_assigned:false,
+        original_action_still_blocked:true
+      },AFTER.assessment_id,BEFORE.assessment_id);
+      announce("The assumed reassessment is incomplete. Its ratings and gates remain unknown.");
+      return;
+    }
+    var button = el("reassessment-submit");
+    button.disabled = true; el("reassessment-form").setAttribute("aria-busy","true");
+    try {
+      await appendEvent("docket_repair_recorded",{
+        record:input.repairs.docket,evidence_id:core.QA_ID,
+        operation:"simulated only; no OCR or source-file processing occurred",
+        legal_review_status:"open",litigation_clearance_established:false
+      },AFTER.assessment_id,BEFORE.assessment_id);
+      await appendEvent("flood_repair_recorded",{
+        record:input.repairs.flood,evidence_id:core.FILTER_ID,
+        operation:"simulated only; no retrieval pipeline was changed",
+        precedence_basis:"Explicit same-entity, same-subject, effective supersession; not newest-date sorting."
+      },AFTER.assessment_id,BEFORE.assessment_id);
+      await appendEvent("restricted_review_recorded",{
+        review:input,initial_dispositions:state.initial.obligations,
+        obligation_statuses:{"O-01":state.initial.obligations["O-01"].mode === "carry" ? "carried" : "restricted","O-02":state.initial.obligations["O-02"].mode === "resolve" ? "precedence_question_resolved_only" : state.initial.obligations["O-02"].mode === "carry" ? "carried" : "restricted","O-03":"restricted; legal_review_open"},
+        revised_output:core.buildPreview(input.repairs).join(" "),
+        original_action:"unconditional_acquisition_approval",original_action_still_blocked:true
+      },AFTER.assessment_id,BEFORE.assessment_id);
+      await appendEvent("assumed_reassessment_recorded",{
+        source:"unchanged embedded case_after.json",assessment:AFTER,result:AFTER_RESULT,
+        reassessed_action:core.ACTION,action_profile_id:core.ACTION_PROFILE,
+        score_basis:"Fixed assumed manuscript ratings, not earned or inferred from participant input.",
+        comparison_is_measured_improvement:false,original_assessment_id:BEFORE.assessment_id,
+        original_result_unchanged:BEFORE_RESULT,release_authorized:false
+      },AFTER.assessment_id,BEFORE.assessment_id);
+      state.reassessment = core.freezeDeep(core.clone(input)); state.phase = "complete";
+      el("reassessment-fields").disabled = true;
+      el("reassessment-submit").textContent = "Assumed restricted reassessment recorded";
+      el("preview-status").textContent = "RECORDED · constructed informational memo";
+      renderResult("revised",AFTER_RESULT);
+      el("revised-explanation").textContent = "Fixed assumed ratings for the separately restricted informational action. Complete simulation inputs unlock this comparison; they do not independently establish a score or authorize release.";
+      el("reassessment-recorded").replaceChildren();
+      var p = document.createElement("p");
+      p.textContent = "The separate assumed informational reassessment is recorded: EIS " + AFTER_RESULT.raw_eis + ", " + AFTER_RESULT.disposition + ". The original acquisition assessment remains EIS " + BEFORE_RESULT.raw_eis + ", " + BEFORE_RESULT.disposition + ". No release has been authorized.";
+      el("reassessment-recorded").appendChild(p); el("reassessment-recorded").hidden = false;
+      el("step-two").removeAttribute("aria-current"); el("step-two").classList.add("complete");
+      el("step-two-status").textContent = "Assumed informational reassessment recorded";
+      el("reassessment-recorded").setAttribute("tabindex","-1"); el("reassessment-recorded").focus();
+      announce(p.textContent);
+    } catch (error) {
+      showErrors("reassessment-errors",[{field:"reassessment-submit",message:"The session could not complete the reassessment event record. Any appended repair events remain visible; no new score or release is established."}],"reassessment-form");
+      button.disabled = false;
+    } finally { el("reassessment-form").removeAttribute("aria-busy"); }
+  });
+
+  function buildExport() {
+    var last = history.length ? history[history.length-1] : null;
+    return {
+      workbench_record_schema:"1.0",workbench_version:core.version,session_id:sessionId,
+      transaction_id:"RL-ILL-001",exported_at:new Date().toISOString(),synthetic:true,phase:state.phase,
+      storage:"Volatile in-session browser memory; reload starts a new session.",
+      trust_limitations:[
+        "Every source, event, authority, and score is synthetic.",
+        "Recorded reviewer identities and roles are assertions; they are not authenticated.",
+        "Entries are appended by this page. The browser, source file, or entire exported chain can be altered or regenerated.",
+        "A consistent hash chain does not establish completeness, source truth, external time, or an external trust anchor.",
+        "The embedded after assessment is an unchanged assumed fixture; it is not a measurement earned from participant input.",
+        "The original acquisition action remains blocked. No deployment or release is authorized."
+      ],
+      reference_scorer:"Unchanged Python scorer.py; local JavaScript routing mirrors its reference-profile rules.",
+      original_assessment:state.initial ? core.clone(BEFORE) : null,
+      original_result:state.initial ? core.clone(BEFORE_RESULT) : null,
+      reassessment:state.reassessment ? core.clone(AFTER) : null,
+      reassessment_result:state.reassessment ? core.clone(AFTER_RESULT) : null,
+      reassessed_action:state.reassessment ? core.ACTION : null,
+      parent_assessment_id:BEFORE.assessment_id,
+      initial_review:state.initial ? core.clone(state.initial) : null,
+      simulated_reassessment_inputs:state.reassessment ? core.clone(state.reassessment) : null,
+      events:core.clone(history),last_event_sha256:last ? last.event_sha256 : null,
+      hash_coverage:{events:history.length,hashed_events:history.filter(function (item) { return !!item.event_sha256; }).length},
+      deployment_authorization:"not_assessed"
+    };
+  }
+  el("export-button").addEventListener("click",async function () {
+    if (!state.initial) return;
+    var button = el("export-button"); button.disabled = true;
+    try {
+      await appendEvent("session_export_requested",{
+        phase:state.phase,format:"JSON",prior_event_count:history.length,
+        original_action_still_blocked:true,release_authorized:false
+      },state.reassessment ? AFTER.assessment_id : BEFORE.assessment_id,BEFORE.assessment_id);
+      var content = JSON.stringify(buildExport(),null,2) + "\n";
+      var blob = new Blob([content],{type:"application/json;charset=utf-8"});
+      var url = URL.createObjectURL(blob), anchor = document.createElement("a");
+      anchor.href = url; anchor.download = "Reality_Ledger_" + sessionId + ".json";
+      document.body.appendChild(anchor); anchor.click(); anchor.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); },1000);
+      el("export-status").textContent = "Export requested for " + history.length + " appended events. Keep the downloaded file; this page does not persist the session.";
+    } catch (error) {
+      el("export-status").textContent = "The browser could not complete the download. The in-session events remain visible; no persistent copy is claimed.";
+    } finally { button.disabled = false; }
+  });
+  globalThis.RealityLedgerWorkbench = Object.freeze({
+    version:core.version,core:core,
+    getHistory:function () { return core.clone(history); },
+    getState:function () { return {phase:state.phase,session_id:sessionId,initial_recorded:!!state.initial,reassessment_recorded:!!state.reassessment}; },
+    getResults:function () { return {original:state.initial ? core.clone(BEFORE_RESULT) : null,reassessment:state.reassessment ? core.clone(AFTER_RESULT) : null}; },
+    exportRecord:buildExport,
+    whenIdle:function () { return eventQueue.then(function () { return history.length; }); },
+    verifyHistory:function () { return core.verifyEventChain(history,provider); }
+  });
+  if (BEFORE_RESULT.raw_eis !== 32.5 || BEFORE_RESULT.disposition !== "BLOCKED" ||
+      AFTER_RESULT.raw_eis !== 75 || AFTER_RESULT.disposition !== "SUPERVISED_CANDIDATE") {
+    el("initial-fields").disabled = true;
+    el("hash-status").textContent = "Fixture validation failed; this exercise is unavailable.";
+    throw new Error("Embedded fixture results do not match the unchanged reference cases.");
+  }
+  appendEvent("session_created",{
+    fixture:"RL-ILL-001",source:"Constructed manuscript records D-01 through D-05",
+    recommendation_visible:false,numeric_ratings_visible:false,
+    initial_review_required:["O-01","O-02","O-03"],time_or_click_threshold_used:false,
+    storage:"in-session memory only",identity_authenticated:false
+  },null,BEFORE.assessment_id).catch(function () {
+    el("hash-status").textContent = "Session record could not initialize. No persistent or immutable storage is claimed.";
+  });
+}());
+  </script>
+</body>
+</html>

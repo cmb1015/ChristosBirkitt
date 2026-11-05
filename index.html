@@ -1,201 +1,635 @@
 <!doctype html>
-<html lang="en" class="motion-safe:scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Christos Birkitt — AI Governance &amp; Technical Risk Architect</title>
-  <meta name="description" content="Christos Birkitt, AI Governance &amp; Technical Risk Architect. Architectural boundaries that separate signal from projection in high-stakes algorithmic environments." />
-  <meta name="color-scheme" content="dark" />
-  <meta name="theme-color" content="#000000" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Christos Birkitt — AI Governance &amp; Technical Risk Architect" />
-  <meta property="og:description" content="The central problem of modern enterprise is not lack of information; it is contaminated interpretation." />
-
-  <!-- Favicon: a boundary. Inline SVG, no extra file to host. -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Crect x='8' y='8' width='48' height='48' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E" />
-
-  <!-- Type: IBM Plex Mono for headers and data, IBM Plex Sans for body -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
-
-  <!-- Tailwind CSS (Play CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#000000',      // page
-            paper: '#ffffff',    // primary text, ledger frame, button
-            silver: '#b0b0b0',   // secondary text
-            graphite: '#7f7f7f', // section labels, metadata keys
-            rule: '#262626',     // hairlines
-            signal: '#46a758',   // live data, focus, selection. The only color on the page.
-          },
-          fontFamily: {
-            mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
-            sans: ['"IBM Plex Sans"', 'system-ui', '-apple-system', '"Segoe UI"', 'Helvetica', 'Arial', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080808">
+  <title>Christos Birkitt | Program, Workflow &amp; AI Enablement</title>
+  <meta name="description" content="Christos Birkitt designs auditable AI workflows, evaluation rubrics, and cross-functional delivery programs for Legal, Insurance, Finance, and Public Sector operations. Explore enterprise delivery and the Reality Ledger legal pilot.">
+  <meta name="author" content="Christos Birkitt">
+  <link rel="canonical" href="https://christosbirkitt.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Christos Birkitt | Program, Workflow &amp; AI Enablement">
+  <meta property="og:description" content="Auditable AI workflows. Cross-functional delivery. Safe adoption. Inspect the delivery log, Reality Ledger protocol, and completed exploratory legal pilot.">
+  <meta property="og:url" content="https://christosbirkitt.com/">
+  <meta property="og:site_name" content="Christos Birkitt">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Christos Birkitt | Program, Workflow &amp; AI Enablement">
+  <meta name="twitter:description" content="Auditable AI workflows, evaluation rubrics, and delivery programs for Legal, Insurance, Finance, and Public Sector operations.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Cpath d='m14 20 12 12-12 12m20 0h16' fill='none' stroke='%23c0e6ce' stroke-width='5'/%3E%3C/svg%3E">
   <style>
-    ::selection { background: #46a758; color: #000; }
-    a:focus-visible { outline: 2px solid #46a758; outline-offset: 3px; }
-    html { -webkit-text-size-adjust: 100%; }
+    /* Self-contained: system fonts, inline styles, no scripts or build step. */
+    :root {
+      color-scheme: dark;
+      --bg: #080808;
+      --panel: #101010;
+      --ink: #efefeb;
+      --muted: #aaa9a4;
+      --line: #333431;
+      --accent: #c0e6ce;
+      --caution: #e9c6a0;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-padding-top: 1.5rem; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-underline-offset: .25em; text-decoration-thickness: 1px; }
+    a:hover { color: var(--accent); }
+    a:focus-visible, summary:focus-visible, [tabindex="0"]:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
+    ::selection { background: var(--accent); color: var(--bg); }
+    p, h1, h2, h3, h4, ul, ol, dl, blockquote { margin: 0; }
+    h1, h2, h3, h4 { line-height: 1.15; font-weight: 550; }
+    p + p { margin-top: 1rem; }
+    strong { font-weight: 650; color: var(--ink); }
+    code { font-family: var(--mono); font-size: .9em; overflow-wrap: anywhere; }
+    .wrap { width: min(100% - 5rem, 1240px); margin-inline: auto; }
+    .mono, .eyebrow, .micro, .text-link, .status, .command, .credentials, .module-index { font-family: var(--mono); }
+    .eyebrow { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; line-height: 1.6; }
+    .micro { font-size: .72rem; line-height: 1.65; color: var(--muted); }
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent); }
+    .skip-link {
+      position: absolute;
+      inset: 1rem auto auto 1rem;
+      z-index: 10;
+      padding: .7rem 1rem;
+      background: var(--ink);
+      color: var(--bg);
+      transform: translateY(-180%);
+    }
+    .skip-link:focus { transform: none; color: var(--bg); }
+    .masthead { border-bottom: 1px solid var(--line); }
+    .masthead-inner { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .brand { font-family: var(--mono); font-size: .75rem; letter-spacing: .07em; text-decoration: none; }
+    .brand-mark { display: inline-block; margin-right: .7rem; color: var(--accent); }
+    .main-nav { display: flex; align-items: center; gap: 1.8rem; flex-wrap: wrap; }
+    .main-nav a { font-family: var(--mono); font-size: .7rem; text-decoration: none; color: var(--muted); padding-block: .65rem; }
+    .main-nav a:hover { color: var(--ink); }
+    .main-nav span { color: var(--accent); margin-right: .35rem; }
+    .hero { padding-block: 2.6rem 0; }
+    .hero > .eyebrow { color: var(--accent); margin-bottom: .7rem; }
+    h1 { font-size: clamp(2.8rem, 5.3vw, 4.7rem); letter-spacing: -.055em; }
+    .credentials { display: flex; flex-wrap: wrap; list-style: none; padding: 0; gap: .35rem 0; margin-block: 1rem 1.65rem; font-size: .68rem; color: #c4c4bd; line-height: 1.75; }
+    .credentials li + li::before { content: "|"; color: #70716b; margin-inline: .65rem; }
+    .credentials .in-progress { color: var(--accent); }
+    .role { font-size: clamp(1.35rem, 2.5vw, 1.95rem); letter-spacing: -.025em; line-height: 1.25; }
+    .hero-lead { margin-top: .8rem; max-width: 940px; color: #c8c8c2; font-size: clamp(1rem, 1.6vw, 1.125rem); line-height: 1.65; }
+    .routes { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); margin-top: 1.7rem; }
+    .route { padding: 1.1rem 1.3rem; min-width: 0; }
+    .route + .route { border-left: 1px solid var(--line); }
+    .route h2 { font-size: 1.03rem; line-height: 1.4; margin-block: .35rem .55rem; letter-spacing: -.01em; }
+    .route h2 a { text-decoration: none; }
+    .route .micro { font-size: .65rem; }
+    .route-links { display: flex; flex-wrap: wrap; column-gap: 1rem; row-gap: .2rem; }
+    .text-link { font-size: .72rem; line-height: 1.8; }
+    .file-type { color: var(--muted); font-size: .65rem; }
+    .command-bar { margin-top: 1rem; border: 1px solid var(--line); }
+    .command-label { padding: .45rem .8rem; border-bottom: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: .64rem; letter-spacing: .07em; text-transform: uppercase; }
+    .command-label span { color: var(--accent); margin-right: .45rem; }
+    .commands { display: grid; grid-template-columns: .9fr 1.2fr 1.35fr 1.1fr; }
+    .command { min-width: 0; padding: .9rem 1rem; font-size: .7rem; line-height: 1.65; }
+    .command + .command { border-left: 1px solid var(--line); }
+    .command a { display: inline-block; text-decoration: none; }
+    .command a:hover { text-decoration: underline; }
+    .command-kicker { display: block; color: var(--muted); font-size: .6rem; letter-spacing: .06em; margin-bottom: .15rem; text-transform: uppercase; }
+    .command-symbol { color: var(--accent); }
+    .command-sub { display: block; color: var(--muted); font-size: .63rem; overflow-wrap: anywhere; }
+    .command-pair { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .module { margin-top: 4.7rem; padding-top: 1.4rem; border-top: 1px solid var(--line); scroll-margin-top: 1rem; }
+    .module-heading { display: grid; grid-template-columns: 155px 1fr; gap: 2rem; align-items: start; margin-bottom: 2rem; }
+    .module-index { color: var(--accent); font-size: .7rem; padding-top: .5rem; letter-spacing: .06em; }
+    .section-title { font-size: clamp(1.8rem, 3.6vw, 2.7rem); letter-spacing: -.04em; }
+    .section-deck { max-width: 790px; margin-top: .7rem; color: var(--muted); font-size: 1rem; }
+    .delivery-list { list-style: none; padding: 0; }
+    .delivery-item { display: grid; grid-template-columns: 155px 1fr; gap: 2rem; padding-block: 1.7rem; border-top: 1px solid var(--line); }
+    .delivery-meta { color: var(--muted); font-family: var(--mono); font-size: .65rem; line-height: 1.8; padding-top: .25rem; }
+    .delivery-meta span { display: block; }
+    .delivery-meta .sector { color: var(--accent); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .5rem; }
+    .delivery-content h3 { font-size: 1.23rem; line-height: 1.35; letter-spacing: -.018em; }
+    .delivery-role { font-family: var(--mono); color: #c5c5be; font-size: .76rem; line-height: 1.75; margin-block: .45rem .7rem; }
+    .delivery-content > p:last-child { color: #b7b8b1; max-width: 960px; font-size: .96rem; }
+    .delivery-item:first-child { background: var(--panel); padding-inline: 1.2rem; border: 1px solid var(--line); margin-bottom: .3rem; }
+    .delivery-item:first-child .delivery-content > p:last-child strong { color: var(--accent); }
+    .comparison-intro { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .8rem; }
+    .comparison-intro .micro { max-width: 730px; }
+    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .terminal { border: 1px solid var(--line); background: var(--panel); min-width: 0; }
+    .terminal-header { padding: 1.1rem 1.2rem; border-bottom: 1px solid var(--line); }
+    .terminal-header .eyebrow { color: var(--muted); margin-bottom: .4rem; }
+    .terminal-header h3 { font-family: var(--mono); font-size: .91rem; line-height: 1.5; }
+    .terminal-before .terminal-header h3 { color: var(--caution); }
+    .terminal-after .terminal-header h3 { color: var(--accent); }
+    .terminal-body { padding: 1.2rem; }
+    .case-label { font-family: var(--mono); font-size: .67rem; line-height: 1.7; color: var(--muted); margin-bottom: .65rem; }
+    .case-label strong { display: block; font-size: .75rem; font-weight: 500; }
+    .terminal-list { list-style: none; padding: 0; display: grid; gap: .75rem; font-size: .87rem; color: #c3c4bd; }
+    .terminal-list li { padding-left: 3.7rem; position: relative; }
+    .log-key { position: absolute; left: 0; top: .08rem; font-family: var(--mono); font-size: .67rem; color: var(--muted); }
+    .readout { border: 1px solid var(--line); margin-top: 1.1rem; padding: .8rem; font-family: var(--mono); }
+    .score { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem; margin-bottom: .35rem; font-size: .67rem; color: var(--muted); }
+    .score strong { font-size: 1.75rem; line-height: 1.2; font-weight: 500; letter-spacing: -.04em; }
+    .status { display: block; font-size: .65rem; letter-spacing: .025em; line-height: 1.8; }
+    .status-blocked { color: var(--caution); }
+    .status-supervised { color: var(--accent); }
+    .readout .micro { font-size: .64rem; margin-top: .3rem; }
+    .legal-case { border-top: 1px solid var(--line); margin-top: 1.3rem; padding-top: 1.1rem; }
+    .sequence { list-style: none; padding: 0; display: grid; gap: .8rem; }
+    .sequence li { border-left: 2px solid var(--line); padding-left: .8rem; }
+    .sequence span { display: block; font-family: var(--mono); font-size: .62rem; color: var(--muted); margin-bottom: .25rem; }
+    .sequence p { font-size: .86rem; line-height: 1.7; color: #c3c4bd; }
+    .sequence .hardened { border-color: var(--caution); }
+    .legal-case > p { font-size: .86rem; color: #c3c4bd; }
+    .legal-case .micro { margin-top: .8rem; color: var(--muted); font-size: .64rem; }
+    .pilot-metrics { display: grid; grid-template-columns: 1fr 1fr; margin-top: 1rem; gap: .8rem; }
+    .pilot-metrics div { padding-top: .65rem; border-top: 1px solid var(--line); }
+    .pilot-metrics dt { font-family: var(--mono); font-size: 1.5rem; line-height: 1.4; color: var(--accent); }
+    .pilot-metrics dd { margin: .2rem 0 0; color: #b6b7b0; font-size: .73rem; line-height: 1.6; }
+    .pilot-metrics .drift dt { color: var(--ink); }
+    .evidence-boundary { margin-top: 1rem; color: var(--muted); font-size: .77rem; max-width: 1000px; }
+    .executive-takeaways { margin-top: 2rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .executive-takeaways > .eyebrow { padding-top: 1rem; color: var(--accent); }
+    .takeaway-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; padding-block: 1.1rem 1.4rem; }
+    .takeaway h3 { font-size: 1rem; line-height: 1.4; margin-bottom: .5rem; }
+    .takeaway h3 span { font-family: var(--mono); color: var(--muted); font-size: .7rem; margin-right: .5rem; }
+    .takeaway p { color: var(--muted); font-size: .86rem; }
+    .artifact-line { display: flex; align-items: baseline; flex-wrap: wrap; column-gap: 1.2rem; row-gap: .65rem; margin-top: 1.2rem; }
+    .manuscript-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 3rem; margin-left: 187px; }
+    .manuscript-grid h3 { font-size: 1.35rem; letter-spacing: -.025em; line-height: 1.4; margin-bottom: .8rem; }
+    .manuscript-grid p { color: #b7b8b1; font-size: .95rem; }
+    .manuscript-grid .eyebrow { font-size: .65rem; color: var(--accent); margin-bottom: .7rem; }
+    .waiting-room { border-left: 1px solid var(--line); padding-left: 1.5rem; }
+    .waiting-room h3 { font-family: var(--mono); font-size: 1.05rem; }
+    .waiting-room ul { margin-top: 1rem; padding-left: 1.1rem; color: var(--muted); font-size: .84rem; }
+    .waiting-room li + li { margin-top: .45rem; }
+    .standards { margin-top: 2.6rem; }
+    .standards-title { font-family: var(--mono); font-size: .76rem; line-height: 1.6; margin-bottom: .8rem; color: var(--accent); }
+    .table-scroll { overflow-x: auto; border: 1px solid var(--line); }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: .82rem; }
+    caption { caption-side: top; text-align: left; padding: 1rem 1.1rem; background: var(--panel); color: var(--muted); font-size: .75rem; border-bottom: 1px solid var(--line); }
+    th, td { padding: 1rem 1.1rem; vertical-align: top; border-bottom: 1px solid var(--line); }
+    thead th { color: var(--muted); font-family: var(--mono); font-size: .65rem; font-weight: 400; letter-spacing: .04em; text-transform: uppercase; }
+    tbody th { width: 24%; font-weight: 500; line-height: 1.65; }
+    tbody td { width: 38%; color: #b7b8b1; }
+    tbody tr:last-child > * { border-bottom: 0; }
+    .standards-note { margin-top: .8rem; font-size: .74rem; color: var(--muted); }
+    .closing { margin-top: 4.7rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+    .closing-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-bottom: 1.3rem; }
+    .closing h2 { font-size: clamp(1.5rem, 3vw, 2.15rem); letter-spacing: -.035em; }
+    .closing p { font-size: .88rem; color: var(--muted); margin-top: .7rem; }
+    .footer-meta { padding-block: 1.4rem 2rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer-meta p, .footer-meta a { color: var(--muted); font-family: var(--mono); font-size: .64rem; }
+    @media (min-width: 1500px) { .hero { padding-top: 3.2rem; } }
+    @media (max-width: 1000px) {
+      .wrap { width: min(100% - 3rem, 1240px); }
+      .masthead-inner { gap: 1rem; }
+      .main-nav { gap: 1.1rem; }
+      .credentials li + li::before { margin-inline: .45rem; }
+      .commands { grid-template-columns: 1fr 1fr; }
+      .command:nth-child(3) { border-left: 0; }
+      .command:nth-child(n+3) { border-top: 1px solid var(--line); }
+      .module-heading, .delivery-item { grid-template-columns: 120px 1fr; gap: 1.5rem; }
+      .manuscript-grid { margin-left: 144px; gap: 1.8rem; grid-template-columns: 1fr; }
+      .waiting-room { padding: 1rem 1.2rem; background: var(--panel); }
+      .takeaway-grid { gap: 1.2rem; }
+      tbody th { width: 26%; }
+    }
+    @media (max-width: 700px) {
+      .wrap { width: calc(100% - 2.2rem); }
+      .masthead-inner { padding-block: .9rem .65rem; min-height: 0; flex-wrap: wrap; gap: .6rem; }
+      .brand { font-size: .65rem; }
+      .main-nav { width: 100%; justify-content: space-between; gap: .4rem; }
+      .main-nav a { font-size: .64rem; padding-block: .4rem; }
+      .main-nav span { margin-right: .15rem; }
+      .hero { padding-top: 1.7rem; }
+      h1 { font-size: clamp(2.4rem, 9.8vw, 4rem); }
+      .hero > .eyebrow { font-size: .6rem; }
+      .credentials { display: block; font-size: .65rem; margin-block: 1rem 1.4rem; }
+      .credentials li { padding-block: .12rem; }
+      .credentials li + li::before { content: none; }
+      .role { font-size: 1.37rem; line-height: 1.35; }
+      .hero-lead { font-size: .97rem; }
+      .routes { grid-template-columns: 1fr; margin-top: 1.4rem; }
+      .route { padding: 1rem; }
+      .route + .route { border-left: 0; border-top: 1px solid var(--line); }
+      .route h2 { font-size: 1rem; }
+      .command { padding: .85rem .75rem; }
+      .command-kicker { font-size: .56rem; }
+      .command-sub { font-size: .61rem; }
+      .module { margin-top: 3.3rem; }
+      .module-heading, .delivery-item { grid-template-columns: 1fr; gap: .7rem; }
+      .module-heading { margin-bottom: 1.5rem; }
+      .module-index { padding-top: 0; font-size: .63rem; }
+      .section-title { font-size: 2rem; }
+      .section-deck { font-size: .93rem; }
+      .delivery-item { padding-block: 1.4rem; }
+      .delivery-item:first-child { padding: 1.1rem; }
+      .delivery-meta { display: flex; align-items: baseline; gap: .5rem 1rem; flex-wrap: wrap; }
+      .delivery-meta .sector { margin-bottom: 0; }
+      .delivery-content h3 { font-size: 1.13rem; }
+      .delivery-role { font-size: .7rem; }
+      .delivery-content > p:last-child { font-size: .91rem; }
+      .comparison-intro { display: block; }
+      .comparison-intro > .eyebrow { margin-bottom: .5rem; }
+      .comparison { grid-template-columns: 1fr; }
+      .terminal-header, .terminal-body { padding: 1rem; }
+      .terminal-list { font-size: .84rem; }
+      .takeaway-grid { grid-template-columns: 1fr; gap: 1.3rem; }
+      .manuscript-grid { margin-left: 0; gap: 1.5rem; }
+      .manuscript-grid h3 { font-size: 1.2rem; }
+      .standards { margin-top: 2rem; }
+      .table-scroll { overflow-x: visible; }
+      table, caption, tbody, tr, th, td { display: block; width: 100%; }
+      thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+      tbody tr { border-bottom: 1px solid var(--line); padding-block: .3rem .8rem; }
+      tbody tr:last-child { border-bottom: 0; }
+      tbody th, tbody td { width: 100%; border: 0; padding: .5rem 1rem; }
+      tbody td::before { content: attr(data-label); display: block; font-family: var(--mono); color: var(--muted); font-size: .6rem; letter-spacing: .04em; text-transform: uppercase; margin-bottom: .3rem; }
+      .closing { margin-top: 3.3rem; }
+      .closing-heading { display: block; }
+      .closing-heading > .micro { margin-top: 1rem; }
+      .footer-meta { display: block; }
+      .footer-meta p + a { display: inline-block; margin-top: .6rem; }
+    }
+    @media (max-width: 360px) {
+      .commands { grid-template-columns: 1fr; }
+      .command + .command { border-left: 0; border-top: 1px solid var(--line); }
+      .main-nav a { font-size: .59rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+    @media print {
+      :root { color-scheme: light; --bg: #fff; --panel: #fff; --ink: #111; --muted: #444; --line: #bbb; --accent: #16432a; --caution: #643500; }
+      body { font-size: 10pt; background: #fff; color: #111; }
+      .wrap { width: 100%; }
+      .masthead, .skip-link, .hero > .command-bar, .footer-meta > a { display: none; }
+      .hero { padding-top: 0; }
+      .credentials, .hero-lead, .delivery-role, .delivery-content > p:last-child, .terminal-list, .sequence p, .legal-case > p, .pilot-metrics dd, .manuscript-grid p, tbody td { color: #333; }
+      h1 { font-size: 34pt; }
+      .module, .closing { margin-top: 2rem; }
+      .delivery-item, .terminal, .takeaway, tr { break-inside: avoid; }
+      .comparison, .manuscript-grid { grid-template-columns: 1fr; }
+      .manuscript-grid { margin-left: 0; }
+      .command-bar { break-inside: avoid; }
+      a { text-decoration: underline; }
+    }
   </style>
 </head>
-
-<body class="min-h-screen bg-ink font-sans text-paper antialiased">
-  <a href="#thesis" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-paper focus:px-4 focus:py-2 focus:font-mono focus:text-[13px] focus:text-ink">Skip to content</a>
-
-  <!-- Status line -->
-  <header class="sticky top-0 z-50 border-b border-rule bg-ink">
-    <div class="mx-auto flex h-12 max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
-      <a href="#top" class="font-mono text-[13px] font-medium text-paper">Christos Birkitt</a>
-      <nav aria-label="Sections" class="hidden items-center gap-7 font-mono text-[13px] text-silver md:flex">
-        <a href="#thesis" class="hover:text-paper">Thesis</a>
-        <a href="#competencies" class="hover:text-paper">Competencies</a>
-        <a href="#artifact" class="hover:text-paper">Artifact</a>
-        <a href="#credentials" class="hover:text-paper">Credentials</a>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="brand" href="#top" aria-label="Christos Birkitt — back to top"><span class="brand-mark" aria-hidden="true">&gt;_</span>CB / SOVEREIGN TERMINAL</a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#delivery-log"><span>01</span> Delivery</a>
+        <a href="#before-after"><span>02</span> Reality Ledger</a>
+        <a href="#human-judgment"><span>03</span> Human Judgment</a>
       </nav>
-      <time id="clock" class="font-mono text-[13px] tabular-nums text-signal">
-        <span id="clock-date" class="hidden sm:inline"></span> <span id="clock-time"></span>
-      </time>
     </div>
   </header>
 
-  <main id="top">
-    <!-- Header -->
-    <section class="border-b border-rule">
-      <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-32">
-        <h1 class="font-mono text-[length:clamp(2.75rem,8.5vw,6.5rem)] font-medium uppercase leading-[0.95] tracking-[-0.035em] text-paper">
-          Christos<br />Birkitt
-        </h1>
-        <p class="mt-8 font-mono text-[15px] text-paper sm:text-[17px]">AI Governance &amp; Technical Risk Architect</p>
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="name">
+      <p class="eyebrow">Program delivery / Workflow design / Safe AI adoption</p>
+      <h1 id="name">Christos Birkitt</h1>
+      <ul class="credentials" aria-label="Education, appointments, experience, and credential tracks">
+        <li>New York Metro Area</li>
+        <li>M.A. NYU (3.96 GPA)</li>
+        <li>Princeton GRIPHOS Research Fellow</li>
+        <li>U.S. Dept. of State (OBO — Secret Clearance)</li>
+        <li>NJ Superior Court Civil Division</li>
+        <li class="in-progress">PSPO I &amp; IAPP AIGP Tracks — In Progress</li>
+      </ul>
+      <p class="role">Program, Workflow &amp; AI Enablement Leader</p>
+      <p class="hero-lead">I design <strong>auditable AI workflows, evaluation rubrics, and cross-functional delivery programs</strong> for Legal, Insurance, Finance, and Public Sector operations—helping organizations ship and adopt AI safely.</p>
+
+      <div class="routes" aria-label="Choose your starting point">
+        <section class="route" aria-labelledby="executive-route">
+          <p class="micro">FOR HIRING MANAGERS, PMO LEADS &amp; CONSULTING PARTNERS</p>
+          <h2 id="executive-route"><a href="#delivery-log">Executive Delivery &amp; 3-Page Governance Brief <span aria-hidden="true">↘</span></a></h2>
+          <div class="route-links">
+            <a class="text-link" href="#delivery-log">Read delivery log</a>
+            <a class="text-link" href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Download executive brief <span class="file-type">PDF ↓</span></a>
+          </div>
+        </section>
+        <section class="route" aria-labelledby="protocol-route">
+          <p class="micro">FOR TECHNICAL, LEGAL-TECH &amp; EVALUATION DEEP DIVES</p>
+          <h2 id="protocol-route"><a href="#before-after">The Reality Ledger Protocol &amp; Completed Legal Pilot <span class="file-type">RL-5P-v0.2</span> <span aria-hidden="true">↘</span></a></h2>
+          <div class="route-links">
+            <a class="text-link" href="#before-after">Inspect before &amp; after</a>
+            <a class="text-link" href="./reviewer_release_workbench.html" target="_blank" rel="noopener">Interactive Release Workbench <span class="file-type">HTML ↗</span></a>
+            <a class="text-link" href="./Reality_Ledger_Method_v1_0.pdf" target="_blank" rel="noopener">Method <span class="file-type">PDF ↓</span></a>
+            <a class="text-link" href="./Reality_Ledger_Trial_Record_v0_2.json" download>Record <span class="file-type">JSON ↓</span></a>
+            <a class="text-link" href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Pilot <span class="file-type">DOCX ↓</span></a>
+          </div>
+        </section>
       </div>
+
+      <!-- Keep all linked companion documents and the workbench beside this index.html. -->
+      <nav class="command-bar" aria-label="Executive downloads and contact — top">
+        <p class="command-label"><span aria-hidden="true">&gt;_</span> Executive command bar</p>
+        <div class="commands">
+          <div class="command">
+            <span class="command-kicker">01 / Career</span>
+            <a href="./Christos_Birkitt_Resume.pdf" target="_blank" rel="noopener">Download Executive Resume <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
+          </div>
+          <div class="command">
+            <span class="command-kicker">02 / Governance</span>
+            <a href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Download 3-Page Reality Ledger Executive Brief <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
+          </div>
+          <div class="command">
+            <span class="command-kicker">03 / Evidence</span>
+            <span>Inspect Completed 5-Passage Pilot</span>
+            <div class="command-pair">
+              <a href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Worksheet <span class="file-type">DOCX ↓</span></a>
+              <a href="./Reality_Ledger_Trial_Record_v0_2.json" download>Record <span class="file-type">JSON ↓</span></a>
+            </div>
+          </div>
+          <div class="command">
+            <span class="command-kicker">04 / Contact</span>
+            <a href="mailto:cmbirkitt@gmail.com">Schedule 15-Minute Briefing <span class="command-symbol" aria-hidden="true">↗</span><span class="command-sub">cmbirkitt@gmail.com</span></a>
+          </div>
+        </div>
+      </nav>
     </section>
 
-    <!-- Thesis -->
-    <section id="thesis" class="scroll-mt-12 border-b border-rule">
-      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
-        <h2 class="mb-8 font-mono text-[13px] text-graphite md:sticky md:top-20 md:mb-0 md:self-start">Thesis</h2>
-        <p class="max-w-[30ch] font-sans text-[length:clamp(1.375rem,2.6vw,2.125rem)] leading-[1.3] tracking-[-0.01em] text-paper">
-          The central problem of modern enterprise is not lack of information; it is contaminated interpretation. I build the architectural boundaries to separate signal from projection in high-stakes algorithmic environments.
-        </p>
+    <section class="module" id="delivery-log" aria-labelledby="delivery-title">
+      <div class="module-heading">
+        <p class="module-index">MODULE 01 / DELIVERY</p>
+        <div>
+          <h2 class="section-title" id="delivery-title">Enterprise Delivery Log</h2>
+          <p class="section-deck">Workflow design, data operations, and cross-functional execution across legal practice, nonprofit programs, federal assets, and international administration.</p>
+        </div>
       </div>
+      <ol class="delivery-list">
+        <li class="delivery-item">
+          <div class="delivery-meta"><span class="sector">Legal / AI enablement</span><span>2023–Present</span><span>Independent advisory engagement</span></div>
+          <div class="delivery-content">
+            <h3>Plaintiff’s Litigation Practice (Confidential Client)</h3>
+            <p class="delivery-role">Litigation Operations &amp; Legal AI Enablement Consultant</p>
+            <p>Managed civil litigation intake, motion and evidentiary record organization, and case-review workflows alongside trial counsel, identifying high-friction bottlenecks in manual medical and deposition summarization. Introduced structured two-stage LLM prompt templates and a human-in-the-loop verification checklist, modeled on the Reality Ledger rubric, to audit AI-generated case summaries for dropped qualifications and attribution drift. <strong>Reduced attorney verification rework by approximately 35% across sampled review packets</strong> while training legal staff on safe AI adoption and FRCP Rule 11 inquiry guardrails.</p>
+          </div>
+        </li>
+        <li class="delivery-item">
+          <div class="delivery-meta"><span class="sector">Nonprofit / Data</span><span>2017–2023</span><span>Governance Policy Advisory: 2026</span></div>
+          <div class="delivery-content">
+            <h3>Forma FGC (NFP)</h3>
+            <p class="delivery-role">Project Manager &amp; Data / Technology Consultant</p>
+            <p>Personally designed and maintained SQL and Python workflows compiling raw geospatial and organizational data into structured geodatabases; managed website technology operations; and lectured alongside the FBI and DHS on data-protection protocols for at-risk populations affected by female genital cutting (FGM). Authored Forma FGC’s institutional <strong>AI and Data Ethics Governance Policy</strong> using NIST AI RMF 1.0 and ISO/IEC 42001 as alignment references.</p>
+          </div>
+        </li>
+        <li class="delivery-item">
+          <div class="delivery-meta"><span class="sector">Federal / Operations</span><span>2018–2019</span><span>U.S. Secret Clearance</span></div>
+          <div class="delivery-content">
+            <h3>U.S. Department of State</h3>
+            <p class="delivery-role">Bureau of Overseas Buildings Operations (OBO) — Program Specialist / Realty Specialist</p>
+            <p>Coordinated <strong>cross-functional workflows across diplomatic, legal, and technical stakeholders</strong> for international real estate acquisitions, facility planning, and geospatial/site risk analysis across high-security federal assets.</p>
+          </div>
+        </li>
+        <li class="delivery-item">
+          <div class="delivery-meta"><span class="sector">Higher education</span><span>New York / Athens</span></div>
+          <div class="delivery-content">
+            <h3>New York University</h3>
+            <p class="delivery-role">A.S. Onassis Program in Hellenic Studies &amp; NYU in Athens — Program Administrator</p>
+            <p>Redesigned administrative and student-intake workflows and managed budgets, vendor negotiations, and cross-border operations across New York and Athens to meet <strong>enrollment targets that increased by 100 percent</strong>.</p>
+          </div>
+        </li>
+        <li class="delivery-item">
+          <div class="delivery-meta"><span class="sector">Property / Digital ops</span><span>2016–2018</span></div>
+          <div class="delivery-content">
+            <h3>Anderson Group Associates / Century 21</h3>
+            <p class="delivery-role">Property &amp; Digital Operations Manager / Licensed Realtor</p>
+            <p>Managed commercial and residential transaction workflows, quantitative market valuations, client databases, and <strong>contract coordination alongside legal counsel</strong>.</p>
+          </div>
+        </li>
+        <li class="delivery-item">
+          <div class="delivery-meta"><span class="sector">Courts / Civil litigation</span><span>2015</span></div>
+          <div class="delivery-content">
+            <h3>N.J. Superior Court, Hudson County Civil Division</h3>
+            <p class="delivery-role">Judicial Intern — Chambers of Hon. Mary K. Costello</p>
+            <p>Reviewed, organized, and summarized <strong>civil litigation motions, evidentiary records, and legal memoranda</strong> to support judicial rulings.</p>
+          </div>
+        </li>
+      </ol>
     </section>
 
-    <!-- Competencies -->
-    <section id="competencies" class="scroll-mt-12 border-b border-rule">
-      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
-        <h2 class="mb-8 font-mono text-[13px] text-graphite md:sticky md:top-20 md:mb-0 md:self-start">Competencies</h2>
-        <ul class="grid grid-cols-1 gap-px border border-rule bg-rule sm:grid-cols-2">
-          <li class="bg-ink p-6 md:p-8">
-            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Federal Infrastructure Compliance (OBO)</h3>
-            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Compliance architecture for federally owned infrastructure and the operational systems that depend on it: controls, accreditation posture, and evidence.</p>
-          </li>
-          <li class="bg-ink p-6 md:p-8">
-            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Clinical Data Privacy</h3>
-            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Governance of protected health information across its full lifecycle: minimization, de-identification, access control, and audit.</p>
-          </li>
-          <li class="bg-ink p-6 md:p-8">
-            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Algorithmic Risk Modeling</h3>
-            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Quantifying model failure modes, exposure, and control effectiveness in systems that make or inform consequential decisions.</p>
-          </li>
-          <li class="bg-ink p-6 md:p-8">
-            <h3 class="font-mono text-[15px] font-medium leading-snug text-paper sm:text-base">Agile Delivery</h3>
-            <p class="mt-3 max-w-[42ch] font-sans text-[15px] leading-relaxed text-silver">Product ownership and iterative delivery inside regulated programs, where every increment has to carry its own evidence.</p>
-          </li>
-        </ul>
+    <section class="module" id="before-after" aria-labelledby="ledger-title">
+      <div class="module-heading">
+        <p class="module-index">MODULE 02 / EVIDENCE</p>
+        <div>
+          <h2 class="section-title" id="ledger-title">The Reality Ledger</h2>
+          <p class="section-deck">A 60-second view of an operational circuit breaker: preserve the conditions, check the evidence, and re-scope the action so work can proceed under review.</p>
+        </div>
       </div>
-    </section>
-
-    <!-- Artifact -->
-    <section id="artifact" class="scroll-mt-12 border-b border-rule">
-      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
-        <h2 class="mb-8 font-mono text-[13px] text-graphite md:sticky md:top-20 md:mb-0 md:self-start">Artifact</h2>
-        <article class="border border-paper">
-          <dl class="grid grid-cols-2 gap-x-6 gap-y-4 border-b border-rule px-6 py-5 font-mono text-[12px] sm:grid-cols-4 md:px-8">
-            <div>
-              <dt class="text-graphite">Document</dt>
-              <dd class="mt-1 text-paper">Audit methodology</dd>
+      <div class="comparison-intro">
+        <p class="eyebrow accent">Before / After</p>
+        <p class="micro">System case: RL-ILL-001, illustrative. Legal evidence: a constructed intake sequence and the completed exploratory pilot RL-5P-v0.2.</p>
+      </div>
+      <div class="comparison">
+        <article class="terminal terminal-before" aria-labelledby="before-title">
+          <header class="terminal-header">
+            <p class="eyebrow">Panel A / Pre-repair</p>
+            <h3 id="before-title">Unconstrained Workflow<br><span class="muted">Unguarded output</span></h3>
+          </header>
+          <div class="terminal-body">
+            <p class="case-label"><strong>RL-ILL-001 / System-level case</strong>Illustrative site-acquisition workflow</p>
+            <ul class="terminal-list">
+              <li><span class="log-key">D-01</span>Unconditional site-acquisition memo strips a <strong>60-day provisional utility easement expiry</strong>.</li>
+              <li><span class="log-key">D-02/03</span>Retrieves a superseded <strong>2022 flood report</strong> over the controlling <strong>2025 High Flood Risk addendum</strong>.</li>
+              <li><span class="log-key">D-04</span>Asserts “no active litigation” despite a <strong>0-character OCR drop on an 8-page docket</strong>.</li>
+              <li><span class="log-key">REVIEW</span>Records a <strong>14-second approval</strong> with no exception checks.</li>
+            </ul>
+            <div class="readout" aria-label="Pre-repair evaluation result">
+              <p class="score">EIS <strong>32.5</strong></p>
+              <p class="status status-blocked">DISPOSITION: BLOCKED</p>
+              <p class="micro">Gates failed: Provenance / Coverage / Review / Profile</p>
             </div>
-            <div>
-              <dt class="text-graphite">Format</dt>
-              <dd class="mt-1 text-paper">PDF</dd>
+            <div class="legal-case">
+              <p class="case-label"><strong>Legal intake / Constructed sequence</strong>How uncertainty hardens into an unsupported chronology</p>
+              <ol class="sequence">
+                <li><span>STAGE 1 / WITNESS TESTIMONY</span><p>“I remember water near Bay 3 around 11:30, but I cannot say whether that was Tuesday or Wednesday”</p></li>
+                <li><span>STAGE 2 / COMPRESSION</span><p>The day uncertainty is lost as the testimony is compressed.</p></li>
+                <li class="hardened"><span>STAGE 3 / UNESTABLISHED CAUSAL SEQUENCE</span><p>“Staff knew about water near Bay 3 by 11:30 on Tuesday, before the fall”</p></li>
+              </ol>
             </div>
-            <div>
-              <dt class="text-graphite">Access</dt>
-              <dd class="mt-1 text-paper">By request</dd>
+          </div>
+        </article>
+        <article class="terminal terminal-after" aria-labelledby="after-title">
+          <header class="terminal-header">
+            <p class="eyebrow">Panel B / Post-repair</p>
+            <h3 id="after-title">Reality-Ledger Governed Workflow<br><span class="muted">Audited output</span></h3>
+          </header>
+          <div class="terminal-body">
+            <p class="case-label"><strong>RL-ILL-001 / System-level case</strong>Same illustrative case, repaired evidence and restricted action</p>
+            <ul class="terminal-list">
+              <li><span class="log-key">D-04</span><strong>Re-OCR recovers the docket</strong> so the litigation claim can be checked against the record.</li>
+              <li><span class="log-key">D-03</span>Retrieval filter restores the controlling <strong>2025 High Flood Risk addendum</strong>.</li>
+              <li><span class="log-key">D-01</span>The provisional expiry is preserved in <code>Conditional_Caveats</code>.</li>
+              <li><span class="log-key">ACTION</span>Unconditional approval becomes a <strong>restricted informational diligence memo</strong>.</li>
+            </ul>
+            <div class="readout" aria-label="Post-repair evaluation result">
+              <p class="score">EIS <strong>75.0</strong></p>
+              <p class="status status-supervised">DISPOSITION: SUPERVISED CANDIDATE</p>
+              <p class="micro">Scorer &amp; workbench verification: 3,378 deterministic JS-to-Python routing parity checks + 166 unit tests (139 Python, 27 JS). Controlled 16-packet synthetic benchmark (RL-BENCH-0.1): 8/8 fault recall (0/8 false positives) vs. 3/8 for retrieved-context-only Baseline A and 0/8 withheld for mean-only Baseline B.</p>
             </div>
-            <div>
-              <dt class="text-graphite">Revision</dt>
-              <dd class="mt-1 text-paper">1.0</dd>
+            <div class="legal-case">
+              <p class="case-label"><strong>RL-5P-v0.2 / Completed exploratory legal pilot</strong>Manual evaluation / 5 passages / 10 AI summaries</p>
+              <p>Evaluated neutral and counter-framed summaries across five public civil opinions: <strong>Langford, Mendez, Thaqi, Cruz, and Pickens</strong>. Guardrailed prompts preserved uncertainty while manual review caught drift beyond binary checks.</p>
+              <dl class="pilot-metrics">
+                <div><dt>4/4</dt><dd>Speaker doubt preserved</dd></div>
+                <div><dt>4/4</dt><dd>Cross-record dispute preserved</dd></div>
+                <div><dt>0/5</dt><dd>Unsupported relational inferences under guardrailed prompts</dd></div>
+                <div class="drift"><dt>8/10</dt><dd>Outputs with subtle attribution, scope, or pronoun drift caught by manual review</dd></div>
+              </dl>
+              <p class="micro">Exploratory findings from this sample; not a generalized legal-performance estimate.</p>
             </div>
-          </dl>
-          <div class="px-6 py-10 md:px-8 md:py-14">
-            <h3 class="font-mono text-[length:clamp(1.375rem,3.4vw,2.5rem)] font-medium leading-[1.15] tracking-[-0.02em] text-paper">
-              The Reality Ledger:<br />Distinguishing Semantic Signal from Projection in LLMs.
-            </h3>
-            <h4 class="mt-10 font-mono text-[12px] text-graphite">Abstract</h4>
-            <p class="mt-3 max-w-[62ch] font-sans text-[15px] leading-relaxed text-silver sm:text-base">
-              This methodology formalizes a ledger-based audit procedure for separating semantically grounded output from confabulated projection in large language model deployments. It specifies the evidentiary standard, control boundaries, and quantitative thresholds an enterprise must satisfy before an algorithmic output is permitted to inform a consequential decision.
-            </p>
-            <a href="mailto:you@example.com?subject=Request%3A%20Reality%20Ledger%20audit%20methodology%20(PDF)"
-               class="mt-10 inline-block bg-paper px-6 py-4 font-mono text-[13px] font-medium text-ink ring-1 ring-inset ring-paper hover:bg-ink hover:text-paper">
-              Request Full Audit Methodology PDF
-            </a>
           </div>
         </article>
       </div>
-    </section>
-  </main>
+      <p class="evidence-boundary">The system repair is an illustrative demonstration; the intake sequence is constructed; the five-passage legal pilot is a completed manual evaluation. Scorer &amp; workbench verification: 3,378 deterministic JS-to-Python routing parity checks + 166 unit tests (139 Python, 27 JS). Controlled 16-packet synthetic benchmark (RL-BENCH-0.1): 8/8 fault recall (0/8 false positives) vs. 3/8 for retrieved-context-only Baseline A and 0/8 withheld for mean-only Baseline B. These controlled synthetic software results are separate from the pilot’s 10 manually evaluated legal summaries; post-adjudication routing uses supplied synthetic ratings.</p>
 
-  <!-- Credentials -->
-  <footer id="credentials" class="scroll-mt-12">
-    <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:grid md:grid-cols-[10rem_minmax(0,1fr)] md:gap-x-12 md:py-24">
-      <h2 class="mb-8 font-mono text-[13px] text-graphite md:mb-0 md:self-start">Credentials</h2>
-      <div>
-        <ul class="grid grid-cols-1 gap-8 font-mono sm:grid-cols-3">
-          <li>
-            <p class="text-[15px] font-medium text-paper">PSPO I</p>
-            <p class="mt-1 text-[12px] leading-relaxed text-graphite">Professional Scrum Product Owner<br />Scrum.org</p>
-          </li>
-          <li>
-            <p class="text-[15px] font-medium text-paper">AIGP</p>
-            <p class="mt-1 text-[12px] leading-relaxed text-graphite">Artificial Intelligence Governance Professional<br />IAPP</p>
-          </li>
-          <li>
-            <p class="text-[15px] font-medium text-paper">U.S. Department of State</p>
-            <p class="mt-1 text-[12px] leading-relaxed text-graphite">Security clearance history</p>
-          </li>
-        </ul>
-        <div class="mt-16 flex flex-col gap-3 border-t border-rule pt-6 font-mono text-[12px] text-graphite sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; <span id="year">2026</span> Christos Birkitt</p>
-          <a href="mailto:you@example.com" class="hover:text-paper">Contact</a>
+      <aside class="executive-takeaways" aria-labelledby="takeaway-title">
+        <h3 class="eyebrow" id="takeaway-title">Executive takeaway / Auditable velocity</h3>
+        <div class="takeaway-grid">
+          <div class="takeaway"><h3><span>01</span>Bounded Liability</h3><p>Blocks unverified negative claims and dropped conditions before sign-off, keeping the permitted action within the evidence.</p></div>
+          <div class="takeaway"><h3><span>02</span>Inspectable Audit Lineage</h3><p>Separates speaker doubt, cross-record disputes, and prompt sensitivity with SHA-256 artifact records.</p></div>
+          <div class="takeaway"><h3><span>03</span>Actionable Velocity</h3><p>Uses action re-scoping so teams can ship restricted diligence memos while unresolved exceptions remain under review.</p></div>
+        </div>
+      </aside>
+      <nav class="artifact-line" aria-label="Reality Ledger evidence downloads">
+        <a class="text-link" href="./reviewer_release_workbench.html" target="_blank" rel="noopener">Interactive Release Workbench <span class="file-type">HTML ↗</span></a>
+        <a class="text-link" href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Executive brief <span class="file-type">PDF ↓</span></a>
+        <a class="text-link" href="./Reality_Ledger_Method_v1_0.pdf" target="_blank" rel="noopener">Protocol / Method v1.0 <span class="file-type">PDF ↓</span></a>
+        <a class="text-link" href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Completed pilot worksheet <span class="file-type">DOCX ↓</span></a>
+        <a class="text-link" href="./Reality_Ledger_Trial_Record_v0_2.json" download>Trial record v0.2 <span class="file-type">JSON ↓</span></a>
+      </nav>
+    </section>
+
+    <section class="module" id="human-judgment" aria-labelledby="judgment-title">
+      <div class="module-heading">
+        <p class="module-index">MODULE 03 / GOVERNANCE</p>
+        <div>
+          <h2 class="section-title" id="judgment-title">Auditable velocity.<br>Human-in-the-loop circuit breakers.</h2>
+          <p class="section-deck">How do organizations protect reviewers from signing unverified machine summaries—and account for the operational time real review requires?</p>
         </div>
       </div>
-    </div>
-  </footer>
+      <div class="manuscript-grid">
+        <div>
+          <p class="eyebrow">Working manuscript</p>
+          <h3><cite>The Right to Hesitate:<br>AI, Art, and the Work of Judgment</cite></h3>
+          <p>The practical governance problem is the handoff from a fluent machine summary to a human decision. A useful circuit breaker makes missing evidence, dropped qualifications, and unresolved disputes visible before a reviewer signs.</p>
+          <p>The operational aim is <strong>auditable velocity</strong>: define what can proceed, what needs verification, and who owns the exception. A restricted informational memo can keep diligence moving while an unconditional approval remains blocked.</p>
+        </div>
+        <aside class="waiting-room" aria-labelledby="waiting-title">
+          <p class="eyebrow">The operational time cost of review</p>
+          <h3 id="waiting-title">The Waiting Room</h3>
+          <p>A circuit breaker must make room for real review. Verification needs time, an accountable reviewer, and a clear next action.</p>
+          <ul>
+            <li>Record what needs checking and who owns the decision.</li>
+            <li>Account for verification time, queue delay, and escalation.</li>
+            <li>Specify what restricted action can proceed while an exception remains open.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="standards">
+        <h3 class="standards-title">REFERENCE MAP / From governance principles to review controls</h3>
+        <div class="table-scroll">
+          <table>
+            <caption>Standards and legal references alongside their scope and a practical workflow interpretation. Reference links open the primary sources.</caption>
+            <thead><tr><th scope="col">Reference</th><th scope="col">Reference scope</th><th scope="col">Practical workflow interpretation</th></tr></thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">NIST AI RMF 1.0<br>MAP 2.3</a></th>
+                <td data-label="Reference scope">Scientific integrity and test, evaluation, verification, and validation (TEVV), including study design, data suitability, and construct validation.</td>
+                <td data-label="Workflow interpretation">Define the rubric, evidence set, uncertainty categories, and evaluation limits before scoring.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">NIST AI RMF 1.0<br>MEASURE 2.1, 2.3, 2.5</a></th>
+                <td data-label="Reference scope">Document test sets, metrics, and TEVV tools (2.1); evaluate under conditions resembling deployment (2.3); establish validity and reliability and document generalization limits (2.5).</td>
+                <td data-label="Workflow interpretation">Retain source passages, prompts, outputs, rubric decisions, and scorer versions. Evaluate against review tasks and keep the exploratory pilot distinct from scorer verification.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf#page=35">NIST AI 600-1<br>MS-2.5-001</a></th>
+                <td data-label="Reference scope">Suggested action: avoid projecting capabilities from narrow, unsystematic, or anecdotal assessments.</td>
+                <td data-label="Workflow interpretation">Report the five-passage pilot as exploratory. Preserve its sample size and denominators rather than treating it as broad validation.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf#page=35">NIST AI 600-1<br>MS-2.5-003</a></th>
+                <td data-label="Reference scope">Suggested action: check generated sources and citations during pre-deployment assessment and ongoing monitoring.</td>
+                <td data-label="Workflow interpretation">Inspect source support, controlling versions, and missing records before accepting a summary’s claims.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf#page=35">NIST AI 600-1<br>MS-2.5-005</a></th>
+                <td data-label="Reference scope">Suggested action: verify training and TEVV data provenance and the grounding of fine-tuning or retrieval data.</td>
+                <td data-label="Workflow interpretation">Track the provenance and versions of evaluation and retrieval artifacts. Artifact records alone do not establish coverage of training-data provenance.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://www.iso.org/standard/42001">ISO/IEC 42001:2023</a></th>
+                <td data-label="Reference scope">An organizational AI management system (AIMS): establishment, implementation, maintenance, and continual improvement.</td>
+                <td data-label="Workflow interpretation">Connect workflow controls to institutional policies, accountable owners, risk treatment, and continual improvement.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://www.uscourts.gov/sites/default/files/document/federal-rules-of-civil-procedure.pdf#page=37">FRCP Rule 11(b)</a></th>
+                <td data-label="Reference scope">Presenting papers to a federal court entails certifications following reasonable inquiry, including legal and factual support.</td>
+                <td data-label="Workflow interpretation">Preserve source checks, unresolved qualifications, and accountable attorney review before material enters court papers.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="standards-note">These references inform workflow design; this mapping is an implementation interpretation, not a certification or determination of legal compliance. The Waiting Room is the manuscript’s operational design concern, not a review-time method prescribed by these provisions.</p>
+      </div>
+    </section>
 
-  <script>
-    (function () {
-      var clock = document.getElementById('clock');
-      var dateEl = document.getElementById('clock-date');
-      var timeEl = document.getElementById('clock-time');
-      function tick() {
-        var iso = new Date().toISOString(); // e.g. 2026-09-13T14:32:07.000Z
-        dateEl.textContent = iso.slice(0, 10);
-        timeEl.textContent = iso.slice(11, 19) + ' UTC';
-        clock.setAttribute('datetime', iso.slice(0, 19) + 'Z');
-      }
-      tick();
-      setInterval(tick, 1000);
-      document.getElementById('year').textContent = new Date().getFullYear();
-    })();
-  </script>
+    <section class="closing" aria-labelledby="contact-title">
+      <div class="closing-heading">
+        <div>
+          <h2 id="contact-title">Put auditable AI delivery into practice.</h2>
+          <p>Discuss a program, a review workflow, or a safe AI adoption brief.</p>
+        </div>
+        <p class="micro">PROGRAM / WORKFLOW / AI ENABLEMENT</p>
+      </div>
+      <nav class="command-bar" aria-label="Executive downloads and contact — footer">
+        <p class="command-label"><span aria-hidden="true">&gt;_</span> Executive command bar</p>
+        <div class="commands">
+          <div class="command">
+            <span class="command-kicker">01 / Career</span>
+            <a href="./Christos_Birkitt_Resume.pdf" target="_blank" rel="noopener">Download Executive Resume <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
+          </div>
+          <div class="command">
+            <span class="command-kicker">02 / Governance</span>
+            <a href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Download 3-Page Reality Ledger Executive Brief <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
+          </div>
+          <div class="command">
+            <span class="command-kicker">03 / Evidence</span>
+            <span>Inspect Completed 5-Passage Pilot</span>
+            <div class="command-pair">
+              <a href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Worksheet <span class="file-type">DOCX ↓</span></a>
+              <a href="./Reality_Ledger_Trial_Record_v0_2.json" download>Record <span class="file-type">JSON ↓</span></a>
+            </div>
+          </div>
+          <div class="command">
+            <span class="command-kicker">04 / Contact</span>
+            <a href="mailto:cmbirkitt@gmail.com">Schedule 15-Minute Briefing <span class="command-symbol" aria-hidden="true">↗</span><span class="command-sub">cmbirkitt@gmail.com</span></a>
+          </div>
+        </div>
+      </nav>
+    </section>
+  </main>
+  <footer class="wrap footer-meta">
+    <p>© 2026 Christos Birkitt / Sovereign Terminal</p>
+    <a href="#top">Back to top ↑</a>
+  </footer>
 </body>
 </html>

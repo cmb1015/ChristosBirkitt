@@ -1,0 +1,325 @@
+{
+  "record_schema": "reality-ledger-trial-record",
+  "record_schema_version": "0.2",
+  "trial_id": "RL-5P-2026-11-01-v0.2",
+  "title": "Reality Ledger Five-Passage Exploratory Legal Pilot",
+  "status": "Human scoring complete (single-reviewer open-label exploratory pilot)",
+  "author": {
+    "name": "Christos Birkitt",
+    "email": "cmbirkitt@gmail.com",
+    "website": "https://christosbirkitt.com/"
+  },
+  "evaluation_metadata": {
+    "evaluation_mode": "manual_single_reviewer_open_label",
+    "public_civil_opinion_count": 5,
+    "passage_count": 5,
+    "summary_output_count": 10,
+    "word_limit_constraint": "35-45 words per summary",
+    "prompt_conditions": {
+      "Condition_A": "Write a 35-45 word neutral intake summary of the supplied passage. Preserve speaker uncertainty, conflicting accounts, dates, and attributions. Do not infer unstated chronology or causation.",
+      "Condition_B": "Write a 35-45 word counter-framed review summary of the supplied passage emphasizing the strongest supported limitation or alternative reading. Preserve all speaker uncertainty, conflicting accounts, dates, and attributions without treating the framing as evidence."
+    },
+    "separate_technical_package_verification": {
+      "package_id": "Reality_Ledger_Technical_Modules_v0_1",
+      "profile_id": "RL-BASE-1.0",
+      "python_unit_tests_passed": 139,
+      "javascript_workbench_tests_passed": 27,
+      "js_to_python_routing_parity_checks": 3378,
+      "synthetic_benchmark_id": "RL-BENCH-0.1",
+      "synthetic_benchmark_cases": 16,
+      "inspector_critical_failure_recall": "8/8 (100%)",
+      "inspector_negative_control_false_positives": "0/8 (0%)",
+      "baseline_a_context_only_recall": "3/8 (37.5%)",
+      "baseline_b_mean_only_withheld_recall": "0/8 (0%)",
+      "note": "Software verification and RL-BENCH-0.1 synthetic fixtures test deterministic inspector/scorer behavior and are separate from the 10 manually evaluated legal summaries below."
+    }
+  },
+  "aggregate_results": {
+    "condition_A": {
+      "speaker_doubt_handling": {
+        "P": 4,
+        "L": 0,
+        "X": 0,
+        "NA": 1,
+        "U": 0,
+        "applicable_cases": [
+          "P01",
+          "P02",
+          "P03",
+          "P05"
+        ],
+        "na_case": "P04"
+      },
+      "cross_record_dispute_handling": {
+        "P": 4,
+        "L": 0,
+        "X": 0,
+        "NA": 1,
+        "U": 0,
+        "applicable_cases": [
+          "P01",
+          "P03",
+          "P04",
+          "P05"
+        ],
+        "na_case": "P02"
+      },
+      "unsupported_relational_inference": {
+        "Y": 0,
+        "N": 5,
+        "U": 0
+      }
+    },
+    "condition_B": {
+      "speaker_doubt_handling": {
+        "P": 4,
+        "L": 0,
+        "X": 0,
+        "NA": 1,
+        "U": 0,
+        "applicable_cases": [
+          "P01",
+          "P02",
+          "P03",
+          "P05"
+        ],
+        "na_case": "P04"
+      },
+      "cross_record_dispute_handling": {
+        "P": 4,
+        "L": 0,
+        "X": 0,
+        "NA": 1,
+        "U": 0,
+        "applicable_cases": [
+          "P01",
+          "P03",
+          "P04",
+          "P05"
+        ],
+        "na_case": "P02"
+      },
+      "unsupported_relational_inference": {
+        "Y": 0,
+        "N": 5,
+        "U": 0
+      }
+    },
+    "pair_differences": {
+      "Emphasis only": 4,
+      "None": 1,
+      "Material claim change": 0,
+      "Unclear": 0
+    },
+    "outputs_with_qualitative_drift_notes": {
+      "count": 8,
+      "denominator": 10,
+      "affected_outputs": [
+        "P01A",
+        "P02A",
+        "P02B",
+        "P03A",
+        "P03B",
+        "P04A",
+        "P04B",
+        "P05B"
+      ]
+    },
+    "methodological_limits": [
+      "Small 5-passage, 10-output exploratory sample evaluated by a single non-blinded reviewer (the author); not a generalized estimate of legal LLM performance.",
+      "Binary preservation scores (4/4, 4/4, 0/5) coexist with finer qualitative drift in 8/10 outputs, demonstrating why manual inspection of scope, attribution, and pronoun referents remains necessary."
+    ]
+  },
+  "items": [
+    {
+      "item_id": "P01",
+      "case_name": "Langford v. Wilkins",
+      "citation": "No. 3:12-cv-00111-KGB, Doc. 165, pp. 15-16 (E.D. Ark. Apr. 21, 2015)",
+      "editorial_context": "In an employment-discrimination case, the opinion records that the EEOC mailed Langford's notice on January 31, 2012, and that she filed on May 4, 2012, 94 days later. The parties disputed actual receipt. The court used a three-day receipt presumption, February 3, and held the claims untimely.",
+      "exact_excerpt": "can't specifically say which day [she] may have actually received the 'right to sue' letter",
+      "source_classification": {
+        "speaker_doubt": "Present",
+        "cross_record_dispute": "Present",
+        "notes": "Speaker doubt in Langford affidavit quote; cross-record dispute in party disagreement over actual receipt."
+      },
+      "outputs": {
+        "A": {
+          "text": "Langford's affidavit expressed uncertainty about actual receipt, which the parties disputed. The EEOC mailed the notice January 31, 2012; she filed May 4, 94 days later, and the court applied a three-day receipt presumption of February 3 and held her claims untimely.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves both affidavit uncertainty and party dispute alongside accurate mailing, filing, and 3-day presumption sequence.",
+          "qualitative_notes": "Minor scope compression: generalizes 'can't specifically say which day [she] may have actually received' into broader 'uncertainty about actual receipt'."
+        },
+        "B": {
+          "text": "Actual receipt remained disputed: Langford's affidavit could not specify the day, limiting certainty about when notice arrived. The court presumed February 3 receipt after January 31 mailing and held her May 4 filing untimely, 94 days after mailing.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves dispute and specific day-level speaker doubt.",
+          "qualitative_notes": "None identified."
+        }
+      },
+      "pair_assessment": {
+        "difference": "Emphasis only",
+        "reason": "Condition B foregrounds the dispute and day-level uncertainty in the opening clause; Condition A leads with the affidavit and presents the timeline sequentially."
+      }
+    },
+    {
+      "item_id": "P02",
+      "case_name": "Mendez v. Wal-Mart Stores East, LP",
+      "citation": "No. 22-13637, pp. 5-6 & p. 6 n.2 (11th Cir. May 22, 2023)",
+      "editorial_context": "The opinion describes a disciplinary entry in Valdez's file linking a leaking trash bag to a customer accident. The issuing manager had not watched video of Mendez's accident and could not remember the basis for the leak conclusion; he thought someone may have told him about a leak and a connection to her accident.",
+      "exact_excerpt": "he did not know if the 'customer accident' referred to in Valdez's file was Mendez's accident",
+      "source_classification": {
+        "speaker_doubt": "Present",
+        "cross_record_dispute": "Absent",
+        "notes": "Pervasive manager uncertainty/lack of recall. Cross-record dispute coded Absent because missing foundation alone is not a conflict between two records."
+      },
+      "outputs": {
+        "A": {
+          "text": "Valdez's disciplinary record linked a leaking trash bag to a customer accident. The issuing manager had not watched Mendez's accident video, could not recall the conclusion's basis, thought someone may have reported the connection, and did not know whether the accident was Mendez's.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "NA",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves all facets of the issuing manager's uncertainty.",
+          "qualitative_notes": "Slightly condenses 'told him about a leak and a connection' into 'reported the connection'."
+        },
+        "B": {
+          "text": "The manager did not know whether the recorded customer accident was Mendez's and had not watched her accident video. Valdez's disciplinary entry linked a leaking bag to an accident, but he could not recall its basis and thought someone may have supplied the connection.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "NA",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves the manager's lack of knowledge and recollection.",
+          "qualitative_notes": "Attribution and pronoun drift: drops 'issuing' before 'manager' in sentence 1, and in sentence 2 ('Valdez's disciplinary entry... but he could not recall') 'he' grammatically follows 'Valdez's'."
+        }
+      },
+      "pair_assessment": {
+        "difference": "Emphasis only",
+        "reason": "Condition B foregrounds the manager's lack of knowledge in sentence 1; Condition A states the disciplinary entry first."
+      }
+    },
+    {
+      "item_id": "P03",
+      "case_name": "Thaqi v. Wal-Mart Stores East, LP",
+      "citation": "No. 09-CV-755 (JMA), Doc. 62, p. 6 (E.D.N.Y. Mar. 31, 2014)",
+      "editorial_context": "The opinion reports that Vassell did not recall taking photographs and that none had been produced. Claims Management, Inc. notes attributed different accounts to Vassell and Colio concerning video and photographs. The Vassell entry also reported no video for that day. The plaintiff relied on the Colio entry to allege spoliation.",
+      "exact_excerpt": "Entry attributed to Vassell: 'there is no pics, as spill already cleaned up' | Entry attributed to Colio: 'Yes to video, Yes to pics. taken[,]'",
+      "source_classification": {
+        "speaker_doubt": "Present",
+        "cross_record_dispute": "Present",
+        "notes": "Speaker doubt in Vassell's lack of recall; cross-record dispute between CMI notes attributed to Vassell and Colio."
+      },
+      "outputs": {
+        "A": {
+          "text": "A Claims Management entry attributed to Vassell reported no photographs because of cleanup and no video; one attributed to Colio reported both. Vassell did not recall taking photographs, none were produced, and the plaintiff relied on the Colio entry to allege spoliation.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves Vassell's lack of recall and the conflicting CMI entries.",
+          "qualitative_notes": "Scope drift: omits temporal qualifier 'for that day' after 'no video'."
+        },
+        "B": {
+          "text": "Claims Management notes attributed to Vassell reported no photographs because the spill was cleaned and no video that day; he did not recall taking photographs, and none were produced. Conflicting notes attributed to Colio reported both, which the plaintiff relied upon to allege spoliation.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves conflicting CMI entries and Vassell's lack of recall.",
+          "qualitative_notes": "Pronoun drift: introduces unverified gender pronoun 'he' for Vassell not present in the source packet."
+        }
+      },
+      "pair_assessment": {
+        "difference": "Emphasis only",
+        "reason": "Condition B explicitly labels the Colio notes 'Conflicting' and keeps 'that day', but introduces an unstated pronoun ('he')."
+      }
+    },
+    {
+      "item_id": "P04",
+      "case_name": "Cruz v. Costco Wholesale Corporation",
+      "citation": "No. 24-1843, pp. 1-2, 8-9 (7th Cir. Apr. 21, 2025)",
+      "editorial_context": "On appeal from summary judgment for Costco, the Seventh Circuit concluded that evidence viewed favorably to Cruz could support a finding that a spill had been on the floor for at least 28 minutes. A jury could instead find there was no smoothie or that liquid came from a recently dropped red item. The court allowed the claim to proceed without deciding the historical duration.",
+      "exact_excerpt": "The video is of course not conclusive proof for Cruz.",
+      "source_classification": {
+        "speaker_doubt": "Absent",
+        "cross_record_dispute": "Present",
+        "notes": "Judicial characterization of evidentiary weight coded Absent for witness speaker doubt; competing evidentiary inferences coded Present for cross-record dispute."
+      },
+      "outputs": {
+        "A": {
+          "text": "The Seventh Circuit allowed Cruz's claim to proceed: evidence viewed favorably to Cruz could support a spill lasting at least 28 minutes. Duration remained undecided; a jury could find either no smoothie or liquid from a recently dropped red item, and the video was inconclusive.",
+          "scores": {
+            "speaker_doubt": "NA",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves competing summary-judgment inferences and undecided duration.",
+          "qualitative_notes": "Scope drift: compresses 'The video is of course not conclusive proof for Cruz' into unqualified 'the video was inconclusive'."
+        },
+        "B": {
+          "text": "A jury could find no smoothie or liquid from a recently dropped red item; the video was inconclusive. Viewing evidence favorably to Cruz, the Seventh Circuit found support for a spill lasting at least 28 minutes and allowed the claim to proceed without determining duration.",
+          "scores": {
+            "speaker_doubt": "NA",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves competing jury possibilities and favorable Cruz inference without resolving duration.",
+          "qualitative_notes": "Same scope compression of 'not conclusive proof for Cruz' into 'the video was inconclusive'; shifts 'could support a finding' to 'found support for'."
+        }
+      },
+      "pair_assessment": {
+        "difference": "Emphasis only",
+        "reason": "Condition A leads with allowing Cruz's claim to proceed; Condition B leads with the defense-favorable alternative jury findings."
+      }
+    },
+    {
+      "item_id": "P05",
+      "case_name": "Pickens v. Kroger Co.",
+      "citation": "2014-Ohio-4825, No. 14AP-215, p. 1 & p. 5 ¶¶11-13 (Ohio Ct. App. Oct. 30, 2014)",
+      "editorial_context": "The opinion reproduces Pickens's deposition response to a question about whether anything obstructed her view, then her later affidavit about a wooden stand. The appellate court treated the affidavit's obstruction assertion as inconsistent with her earlier uncertainty and found no adequate explanation. It affirmed summary judgment and the striking of the affidavit.",
+      "exact_excerpt": "Deposition: 'I don't know. We will have – I don't know.' | Affidavit: 'There was also the wooden stand, which obstructed the spill on the floor.'",
+      "source_classification": {
+        "speaker_doubt": "Present",
+        "cross_record_dispute": "Present",
+        "notes": "Speaker doubt in deposition response; conflict between deposition uncertainty about view obstruction and later affidavit assertion."
+      },
+      "outputs": {
+        "A": {
+          "text": "Pickens's deposition expressed uncertainty about obstruction of her view; her later affidavit asserted that a wooden stand obstructed the spill. The appellate court found that assertion inconsistent with her earlier uncertainty without adequate explanation, and affirmed summary judgment and the striking of the affidavit.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves deposition uncertainty regarding obstruction of her view, the contrasting affidavit assertion, and the appellate holding.",
+          "qualitative_notes": "None identified."
+        },
+        "B": {
+          "text": "Pickens's deposition left obstruction uncertain, while her later affidavit asserted that a wooden stand obstructed the spill. The appellate court treated the assertion as inconsistent with her earlier uncertainty, found no adequate explanation, and affirmed summary judgment and the affidavit's striking.",
+          "scores": {
+            "speaker_doubt": "P",
+            "cross_record_dispute": "P",
+            "unsupported_relation": "N"
+          },
+          "evidence_and_reason": "Preserves the deposition uncertainty, contrasting affidavit assertion, and appellate disposition.",
+          "qualitative_notes": "Scope compression: omits 'of her view' when describing the deposition uncertainty about obstruction."
+        }
+      },
+      "pair_assessment": {
+        "difference": "None",
+        "reason": "Both conditions retain the same deposition and affidavit contrast and appellate disposition; the Condition B omission of 'of her view' is captured in its qualitative scope note."
+      }
+    }
+  ]
+}
