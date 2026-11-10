@@ -175,6 +175,8 @@
     .manuscript-grid .eyebrow { font-size: .65rem; color: var(--accent); margin-bottom: .7rem; }
     .manuscript-download { display: inline-block; max-width: 100%; margin-top: 1rem; padding: .55rem .75rem; border: 1px solid var(--line); text-decoration: none; overflow-wrap: break-word; word-wrap: break-word; }
     .manuscript-download:hover { background: var(--panel); }
+    .manuscript-actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: stretch; margin-top: 1rem; }
+    .manuscript-actions .manuscript-download { flex: 1 1 14rem; min-width: 0; margin-top: 0; }
     .manuscript-abstract { margin-top: 1rem; padding-block: .7rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .manuscript-abstract summary { cursor: pointer; color: var(--accent); font-family: var(--mono); font-size: .7rem; line-height: 1.65; }
     .manuscript-abstract[open] summary { margin-bottom: .8rem; }
@@ -591,12 +593,23 @@
           <h3><cite>The Right to Hesitate:<br>AI, Art, and the Work of Judgment</cite></h3>
           <p>The practical governance problem is the handoff from a fluent machine summary to a human decision. A useful circuit breaker makes missing evidence, dropped qualifications, and unresolved disputes visible before a reviewer signs.</p>
           <p>The operational aim is <strong>auditable velocity</strong>: define what can proceed, what needs verification, and who owns the exception. A restricted informational memo can keep diligence moving while an unconditional approval remains blocked.</p>
+          <div class="manuscript-actions">
           <a class="text-link manuscript-download" href="/papers/the-right-to-hesitate-excerpt.pdf" target="_blank" rel="noopener">Read Monograph Excerpt (PDF) <span class="file-type" aria-hidden="true">↓</span></a>
+            <a class="text-link manuscript-download opening-chapter-download" id="opening-chapter-download" href="/papers/the-fetish-of-fluency-chapter-one.pdf" target="_blank" rel="noopener">Read Opening Chapter: The Fetish of Fluency (PDF)</a>
+          </div>
           <details class="manuscript-abstract">
             <summary>Read research abstract</summary>
             <p class="abstract-title"><strong>Epistemic Hesitation as Operational Architecture: Deterministic Release Governance for High-Stakes Institutional AI</strong></p>
             <p>As frontier language models move from conversational assistants into institutional decision pipelines—across litigation, regulatory enforcement, and capital allocation—their primary failure mode shifts from obvious fabrication to fluent epistemic drift. Drawing on my working manuscript, The Right to Hesitate, this project argues that institutional safety cannot rely on post-hoc policy principles or single-metric leaderboards alone. Because probabilistic models flatten speaker doubt, contested evidentiary claims, and scope qualifications into confident prose, high-consequence workflows require formal architectural hesitation gates where machine fluency yields to accountable human judgment before irreversible downstream action occurs.</p>
             <p>To operationalize that theory, I built the Reality Ledger reference architecture, translating governance standards including the EU AI Act, NIST AI RMF, and ISO 42001 into schema-bound retrieval handoffs, cryptographic human adjudication bindings, and five non-compensatory release circuit breakers. In an exploratory civil-opinion evaluation pilot, the methodology surfaced subtle attribution, pronoun, and scope drift in 8/10 summaries while preserving 4/4 speaker-doubt and cross-record dispute instances with 0/5 unsupported relational inferences—informing two-stage prompt and checklist workflows that reduced attorney verification rework by approximately 35% under FRCP Rule 11 guardrails. Validated across 166 automated tests, 3,378 routing parity checks, and 8/8 critical fault detections on a 16-case synthetic benchmark, this work establishes a portable standard for auditable human-AI oversight.</p>
+          </details>
+          <details class="manuscript-abstract opening-chapter-preview" id="opening-chapter-preview">
+            <summary>Preview Opening Chapter</summary>
+            <p>A sentence can become more certain without anyone learning anything new.</p>
+            <p>Imagine a witness who remembers water near the entrance to a building. She cannot remember whether she saw it on Tuesday evening or Wednesday afternoon. The accident occurred on Wednesday morning. Her uncertainty belongs to the evidence. It determines what her recollection can establish about the sequence of events.</p>
+            <p>A summary arrives: “The witness observed water near the entrance before the accident.” The building is real. The witness is real. The water appears in her account. Even the citation may lead to the correct page. Yet the summary has settled a question that the witness left open. The word “before” has done the work of an investigation that never occurred.</p>
+            <p>I call this the fetish of fluency: the authority produced by a chain of decisions appears to belong to the prose itself. The sentence seems trustworthy because it has the composure of something already examined. Its orderly surface conceals the choices on which trust in it would have to rest, including the choice to preserve the witness’s doubt. The labor of establishing a claim has been displaced onto a quality of its presentation.</p>
+            <p>The word “before” should remain unavailable until someone can account for it.</p>
           </details>
           <p class="research-crossref">The working manuscript develops the theory; the <a href="#before-after">Reality Ledger showcase</a> and <a href="./Reality_Ledger_Method_v1_0.pdf" target="_blank" rel="noopener">technical method (PDF)</a> provide the companion implementation and evaluation context. This is a working manuscript, not a peer-reviewed publication claim.</p>
       </article>
