@@ -83,7 +83,8 @@
     .hero { padding-block: 2.6rem 0; }
     .hero > .eyebrow { color: var(--accent); margin-bottom: .7rem; }
     h1 { font-size: clamp(2.8rem, 5.3vw, 4.7rem); letter-spacing: -.055em; }
-    .credentials { display: flex; flex-wrap: wrap; list-style: none; padding: 0; gap: .35rem 0; margin-block: 1rem 1.65rem; font-size: .68rem; color: #c4c4bd; line-height: 1.75; }
+    .credentials { display: flex; flex-wrap: wrap; align-items: flex-start; list-style: none; padding: 0; gap: .35rem 0; margin-block: 1rem 1.65rem; font-size: .68rem; color: #c4c4bd; line-height: 1.75; }
+    .credentials > li { flex: 0 1 auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: break-word; word-wrap: break-word; }
     .credentials li + li::before { content: "|"; color: #70716b; margin-inline: .65rem; }
     .credentials .in-progress { color: var(--accent); }
     .role { font-size: clamp(1.35rem, 2.5vw, 1.95rem); letter-spacing: -.025em; line-height: 1.25; }
@@ -105,6 +106,7 @@
     .command + .command { border-left: 1px solid var(--line); }
     .command a { display: inline-block; text-decoration: none; }
     .command a:hover { text-decoration: underline; }
+    .command a.command-download { display: block; max-width: 100%; margin-top: .6rem; overflow-wrap: break-word; word-wrap: break-word; }
     .command-kicker { display: block; color: var(--muted); font-size: .6rem; letter-spacing: .06em; margin-bottom: .15rem; text-transform: uppercase; }
     .command-symbol { color: var(--accent); }
     .command-sub { display: block; color: var(--muted); font-size: .63rem; overflow-wrap: anywhere; }
@@ -171,6 +173,13 @@
     .manuscript-grid h3 { font-size: 1.35rem; letter-spacing: -.025em; line-height: 1.4; margin-bottom: .8rem; }
     .manuscript-grid p { color: #b7b8b1; font-size: .95rem; }
     .manuscript-grid .eyebrow { font-size: .65rem; color: var(--accent); margin-bottom: .7rem; }
+    .manuscript-download { display: inline-block; max-width: 100%; margin-top: 1rem; padding: .55rem .75rem; border: 1px solid var(--line); text-decoration: none; overflow-wrap: break-word; word-wrap: break-word; }
+    .manuscript-download:hover { background: var(--panel); }
+    .manuscript-abstract { margin-top: 1rem; padding-block: .7rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .manuscript-abstract summary { cursor: pointer; color: var(--accent); font-family: var(--mono); font-size: .7rem; line-height: 1.65; }
+    .manuscript-abstract[open] summary { margin-bottom: .8rem; }
+    .manuscript-abstract p { font-size: .86rem; line-height: 1.7; overflow-wrap: break-word; word-wrap: break-word; }
+    .manuscript-abstract .abstract-title { font-family: var(--mono); font-size: .72rem; color: var(--ink); }
     .waiting-room { border-left: 1px solid var(--line); padding-left: 1.5rem; }
     .waiting-room h3 { font-family: var(--mono); font-size: 1.05rem; }
     .waiting-room ul { margin-top: 1rem; padding-left: 1.1rem; color: var(--muted); font-size: .84rem; }
@@ -307,8 +316,8 @@
       <ul class="credentials" aria-label="Education, appointments, experience, and credential tracks">
         <li>New York Metro Area</li>
         <li>M.A. NYU (3.96 GPA)</li>
-        <li>Princeton GRIPHOS Research Fellow</li>
-        <li>U.S. Dept. of State (OBO — Secret Clearance)</li>
+        <li>Princeton GRIPHOS Research Fellow (Non-degree research)</li>
+        <li>U.S. Dept. of State (OBO) — Prior Secret Clearance (2018–2019)</li>
         <li>NJ Superior Court Civil Division</li>
         <li class="in-progress">PSPO I &amp; IAPP AIGP Tracks — In Progress</li>
       </ul>
@@ -348,6 +357,7 @@
           <div class="command">
             <span class="command-kicker">02 / Governance</span>
             <a href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Download 3-Page Reality Ledger Executive Brief <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
+            <a class="command-download" href="/papers/the-right-to-hesitate-excerpt.pdf" target="_blank" rel="noopener">Download Monograph Excerpt <span class="command-symbol" aria-hidden="true">↓</span></a>
           </div>
           <div class="command">
             <span class="command-kicker">03 / Evidence</span>
@@ -391,7 +401,7 @@
           </div>
         </li>
         <li class="delivery-item">
-          <div class="delivery-meta"><span class="sector">Federal / Operations</span><span>2018–2019</span><span>U.S. Secret Clearance</span></div>
+          <div class="delivery-meta"><span class="sector">Federal / Operations</span><span>2018–2019</span><span>Prior Secret Clearance (2018–2019)</span></div>
           <div class="delivery-content">
             <h3>U.S. Department of State</h3>
             <p class="delivery-role">Bureau of Overseas Buildings Operations (OBO) — Program Specialist / Realty Specialist</p>
@@ -399,7 +409,7 @@
           </div>
         </li>
         <li class="delivery-item">
-          <div class="delivery-meta"><span class="sector">Higher education</span><span>New York / Athens</span></div>
+          <div class="delivery-meta"><span class="sector">Higher education</span><span>September 2009–February 2013</span><span>New York / Athens</span></div>
           <div class="delivery-content">
             <h3>New York University</h3>
             <p class="delivery-role">A.S. Onassis Program in Hellenic Studies &amp; NYU in Athens — Program Administrator</p>
@@ -531,6 +541,13 @@
           <h3><cite>The Right to Hesitate:<br>AI, Art, and the Work of Judgment</cite></h3>
           <p>The practical governance problem is the handoff from a fluent machine summary to a human decision. A useful circuit breaker makes missing evidence, dropped qualifications, and unresolved disputes visible before a reviewer signs.</p>
           <p>The operational aim is <strong>auditable velocity</strong>: define what can proceed, what needs verification, and who owns the exception. A restricted informational memo can keep diligence moving while an unconditional approval remains blocked.</p>
+          <a class="text-link manuscript-download" href="/papers/the-right-to-hesitate-excerpt.pdf" target="_blank" rel="noopener">Read Monograph Excerpt (PDF) <span class="file-type" aria-hidden="true">↓</span></a>
+          <details class="manuscript-abstract">
+            <summary>Read research abstract</summary>
+            <p class="abstract-title"><strong>Epistemic Hesitation as Operational Architecture: Deterministic Release Governance for High-Stakes Institutional AI</strong></p>
+            <p>As frontier language models move from conversational assistants into institutional decision pipelines—across litigation, regulatory enforcement, and capital allocation—their primary failure mode shifts from obvious fabrication to fluent epistemic drift. Drawing on my working manuscript, The Right to Hesitate, this project argues that institutional safety cannot rely on post-hoc policy principles or single-metric leaderboards alone. Because probabilistic models flatten speaker doubt, contested evidentiary claims, and scope qualifications into confident prose, high-consequence workflows require formal architectural hesitation gates where machine fluency yields to accountable human judgment before irreversible downstream action occurs.</p>
+            <p>To operationalize that theory, I built the Reality Ledger reference architecture, translating governance standards including the EU AI Act, NIST AI RMF, and ISO 42001 into schema-bound retrieval handoffs, cryptographic human adjudication bindings, and five non-compensatory release circuit breakers. In an exploratory civil-opinion evaluation pilot, the methodology surfaced subtle attribution, pronoun, and scope drift in 8/10 summaries while preserving 4/4 speaker-doubt and cross-record dispute instances with 0/5 unsupported relational inferences—informing two-stage prompt and checklist workflows that reduced attorney verification rework by approximately 35% under FRCP Rule 11 guardrails. Validated across 166 automated tests, 3,378 routing parity checks, and 8/8 critical fault detections on a 16-case synthetic benchmark, this work establishes a portable standard for auditable human-AI oversight.</p>
+          </details>
         </div>
         <aside class="waiting-room" aria-labelledby="waiting-title">
           <p class="eyebrow">The operational time cost of review</p>
@@ -610,6 +627,7 @@
           <div class="command">
             <span class="command-kicker">02 / Governance</span>
             <a href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Download 3-Page Reality Ledger Executive Brief <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
+            <a class="command-download" href="/papers/the-right-to-hesitate-excerpt.pdf" target="_blank" rel="noopener">Download Monograph Excerpt <span class="command-symbol" aria-hidden="true">↓</span></a>
           </div>
           <div class="command">
             <span class="command-kicker">03 / Evidence</span>
