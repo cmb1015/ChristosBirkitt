@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Auditable AI workflows, evaluation rubrics, and delivery programs for Legal, Insurance, Finance, and Public Sector operations.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080808'/%3E%3Cpath d='m14 20 12 12-12 12m20 0h16' fill='none' stroke='%23c0e6ce' stroke-width='5'/%3E%3C/svg%3E">
   <style>
-    /* Self-contained: system fonts, inline styles, no scripts or build step. */
+    /* Self-contained: system fonts and inline CSS; optional video dialog, no build step. */
     :root {
       color-scheme: dark;
       --bg: #080808;
@@ -46,7 +46,7 @@
     }
     a { color: inherit; text-underline-offset: .25em; text-decoration-thickness: 1px; }
     a:hover { color: var(--accent); }
-    a:focus-visible, summary:focus-visible, [tabindex="0"]:focus-visible {
+    a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex="0"]:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 5px;
     }
@@ -294,17 +294,58 @@
       .command-bar { break-inside: avoid; }
       a { text-decoration: underline; }
     }
+
+    .operational-proof { margin-top: 1.3rem; padding: .85rem 1rem; border-left: 2px solid var(--accent); background: var(--panel); }
+    .operational-proof p { color: var(--muted); font-size: .8rem; line-height: 1.7; }
+    .operational-proof p + p { margin-top: .45rem; }
+    .operational-proof .illustrative-case { font-size: .75rem; }
+    .delivery-item:first-child { row-gap: .8rem; }
+    .delivery-private-proof { grid-column: 2; min-width: 0; max-width: 960px; }
+    .delivery-private-proof .micro { margin-top: .6rem; font-size: .68rem; }
+    .fluency-trap { margin-bottom: 1.5rem; padding: 1rem 1.2rem; border-left: 2px solid var(--caution); background: var(--panel); }
+    .fluency-trap h3 { color: var(--caution); font-size: 1.1rem; margin-bottom: .45rem; }
+    .fluency-trap p { color: var(--muted); font-size: .9rem; max-width: 1000px; }
+    .research-copy { max-width: 950px; margin-left: 187px; }
+    .research-copy h3 { font-size: 1.35rem; letter-spacing: -.025em; line-height: 1.4; margin-bottom: .8rem; }
+    .research-copy > p { color: #b7b8b1; font-size: .95rem; }
+    .research-copy > .eyebrow { font-size: .65rem; color: var(--accent); margin-bottom: .7rem; }
+    .research-copy .research-crossref { margin-top: 1.2rem; font-size: .8rem; color: var(--muted); }
+    .waiting-layout { display: block; max-width: 950px; }
+    .waiting-room .velocity-title { font-family: var(--mono); font-size: .88rem; line-height: 1.5; margin-top: 1.3rem; margin-bottom: .5rem; color: var(--accent); }
+    .waiting-room .velocity-framing { font-size: .8rem; margin-top: .8rem; }
+    .waiting-room .roi-caution { padding-top: .8rem; border-top: 1px solid var(--line); font-size: .84rem; }
+    .walkthrough-trigger, .walkthrough-close { appearance: none; color: var(--ink); background: transparent; border: 1px solid var(--line); padding: .55rem .75rem; font-family: var(--mono); font-size: .72rem; line-height: 1.6; cursor: pointer; }
+    .walkthrough-trigger:hover, .walkthrough-close:hover { color: var(--accent); border-color: var(--accent); }
+    .walkthrough-trigger[hidden], .walkthrough-dialog[hidden] { display: none !important; }
+    .walkthrough-dialog { width: min(960px, calc(100% - 2rem)); max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); overflow: auto; padding: 1.2rem; background: var(--panel); color: var(--ink); border: 1px solid var(--line); }
+    .walkthrough-dialog::backdrop { background: rgb(0 0 0 / .82); }
+    .walkthrough-dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: .7rem; }
+    .walkthrough-dialog h2 { font-size: clamp(1.15rem, 3vw, 1.6rem); line-height: 1.4; }
+    .walkthrough-close { min-height: 44px; flex: 0 0 auto; }
+    .walkthrough-dialog video { display: block; width: 100%; height: auto; max-height: 65vh; max-height: 65dvh; margin-block: 1rem; background: #000; }
+    @media (max-width: 1000px) { .research-copy { margin-left: 144px; } }
+    @media (max-width: 700px) {
+      .research-copy { margin-left: 0; }
+      .research-copy h3 { font-size: 1.2rem; }
+      .delivery-private-proof { grid-column: 1; }
+      .operational-proof { padding: .8rem; }
+      .operational-proof p { font-size: .76rem; }
+      .walkthrough-dialog { padding: 1rem; }
+      .walkthrough-dialog-header { flex-wrap: wrap; }
+    }
+    @media print { .walkthrough-trigger, .walkthrough-dialog { display: none !important; } }
   </style>
 </head>
 <body id="top">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="masthead">
     <div class="wrap masthead-inner">
-      <a class="brand" href="#top" aria-label="Christos Birkitt — back to top"><span class="brand-mark" aria-hidden="true">&gt;_</span>CB / SOVEREIGN TERMINAL</a>
+      <a class="brand" href="#top" aria-label="Christos Birkitt — back to top"><span class="brand-mark" aria-hidden="true">&gt;_</span>CB / AUDITABLE AI SYSTEMS</a>
       <nav class="main-nav" aria-label="Primary navigation">
         <a href="#delivery-log"><span>01</span> Delivery</a>
         <a href="#before-after"><span>02</span> Reality Ledger</a>
-        <a href="#human-judgment"><span>03</span> Human Judgment</a>
+        <a href="#research-working-papers"><span>03</span> Research</a>
+        <a href="#human-judgment"><span>04</span> Human Judgment</a>
       </nav>
     </div>
   </header>
@@ -325,6 +366,12 @@
       <p class="role">Program, Workflow &amp; AI Enablement Leader</p>
       <p class="hero-lead">I design <strong>auditable AI workflows, evaluation rubrics, and cross-functional delivery programs</strong> for Legal, Insurance, Finance, and Public Sector operations—helping organizations ship and adopt AI safely.</p>
 
+      <aside class="operational-proof" aria-label="Operational proof and its limits">
+        <p><strong>166 automated tests · 3,378 JS-to-Python routing parity checks.</strong> Controlled 16-case synthetic benchmark: <strong>8/8</strong> intended critical faults detected; <strong>0/8</strong> negative controls flagged.</p>
+        <p><strong>Completed exploratory legal pilot:</strong> manual review caught drift in <strong>8/10</strong> summaries; <strong>4/4</strong> applicable speaker-doubt and <strong>4/4</strong> cross-record-dispute instances preserved; <strong>0/5</strong> unsupported relational inferences under guardrails. Related litigation workflows: <strong>approximately 35%</strong> less attorney verification rework across sampled packets.</p>
+        <p class="illustrative-case"><strong>Illustrative $45M facility-acquisition data-room audit:</strong> a constructed workflow demonstration, not a claim of a completed real transaction.</p>
+      </aside>
+
       <div class="routes" aria-label="Choose your starting point">
         <section class="route" aria-labelledby="executive-route">
           <p class="micro">FOR HIRING MANAGERS, PMO LEADS &amp; CONSULTING PARTNERS</p>
@@ -342,7 +389,7 @@
             <a class="text-link" href="./reviewer_release_workbench.html" target="_blank" rel="noopener">Interactive Release Workbench <span class="file-type">HTML ↗</span></a>
             <a class="text-link" href="./Reality_Ledger_Method_v1_0.pdf" target="_blank" rel="noopener">Method <span class="file-type">PDF ↓</span></a>
             <a class="text-link" href="./Reality_Ledger_Trial_Record_v0_2.json" download>Record <span class="file-type">JSON ↓</span></a>
-            <a class="text-link" href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Pilot <span class="file-type">DOCX ↓</span></a>
+            <a class="text-link" href="./Reality_Ledger_Completed_Legal_Pilot_Worksheet.docx" download>Pilot <span class="file-type">DOCX ↓</span></a>
           </div>
         </section>
       </div>
@@ -364,7 +411,7 @@
             <span class="command-kicker">03 / Evidence</span>
             <span>Inspect Completed 5-Passage Pilot</span>
             <div class="command-pair">
-              <a href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Worksheet <span class="file-type">DOCX ↓</span></a>
+              <a href="./Reality_Ledger_Completed_Legal_Pilot_Worksheet.docx" download>Worksheet <span class="file-type">DOCX ↓</span></a>
               <a href="./Reality_Ledger_Trial_Record_v0_2.json" download>Record <span class="file-type">JSON ↓</span></a>
             </div>
           </div>
@@ -391,6 +438,10 @@
             <h3>Plaintiff’s Litigation Practice (Confidential Client)</h3>
             <p class="delivery-role">Litigation Operations &amp; Legal AI Enablement Consultant</p>
             <p>Managed civil litigation intake, motion and evidentiary record organization, and case-review workflows alongside trial counsel, identifying high-friction bottlenecks in manual medical and deposition summarization. Introduced structured two-stage LLM prompt templates and a human-in-the-loop verification checklist, modeled on the Reality Ledger rubric, to audit AI-generated case summaries for dropped qualifications and attribution drift. <strong>Reduced attorney verification rework by approximately 35% across sampled review packets</strong> while training legal staff on safe AI adoption and FRCP Rule 11 inquiry guardrails.</p>
+          </div>
+          <div class="delivery-private-proof">
+            <a class="text-link" href="./Reality_Ledger_Clean_Room_Litigation_Twin.pdf" download>Download clean-room litigation twin <span class="file-type">PDF ↓</span></a>
+            <p class="micro">Direct client contact is restricted to protect civil litigation work product and HIPAA-sensitive medical records. Independent consulting tenure since September 2023 is verifiable at the offer stage through redacted tax or invoicing records.</p>
           </div>
         </li>
         <li class="delivery-item">
@@ -444,6 +495,11 @@
           <p class="section-deck">A 60-second view of an operational circuit breaker: preserve the conditions, check the evidence, and re-scope the action so work can proceed under review.</p>
         </div>
       </div>
+      <aside class="fluency-trap" aria-labelledby="fluency-trap-title">
+        <h3 id="fluency-trap-title">The Fluency Trap</h3>
+        <p>A legacy tool’s visibly broken grammar announces its limits. A fluent model can resemble an overconfident associate: polished prose can hide missing records, dropped qualifications, or unsupported certainty.</p>
+        <p>Illustrative compression: <strong>“Tuesday or Wednesday” → “Tuesday, before the fall”</strong>. Day uncertainty hardens into an unsupported causal chronology. In the separate constructed system case, a 14-second approval appears fast while an OCR failure leaves litigation status unverified.</p>
+      </aside>
       <div class="comparison-intro">
         <p class="eyebrow accent">Before / After</p>
         <p class="micro">System case: RL-ILL-001, illustrative. Legal evidence: a constructed intake sequence and the completed exploratory pilot RL-5P-v0.2.</p>
@@ -455,7 +511,7 @@
             <h3 id="before-title">Unconstrained Workflow<br><span class="muted">Unguarded output</span></h3>
           </header>
           <div class="terminal-body">
-            <p class="case-label"><strong>RL-ILL-001 / System-level case</strong>Illustrative site-acquisition workflow</p>
+            <p class="case-label"><strong>RL-ILL-001 / System-level case</strong>Illustrative $45M facility-acquisition data-room audit</p>
             <ul class="terminal-list">
               <li><span class="log-key">D-01</span>Unconditional site-acquisition memo strips a <strong>60-day provisional utility easement expiry</strong>.</li>
               <li><span class="log-key">D-02/03</span>Retrieves a superseded <strong>2022 flood report</strong> over the controlling <strong>2025 High Flood Risk addendum</strong>.</li>
@@ -521,23 +577,24 @@
       </aside>
       <nav class="artifact-line" aria-label="Reality Ledger evidence downloads">
         <a class="text-link" href="./reviewer_release_workbench.html" target="_blank" rel="noopener">Interactive Release Workbench <span class="file-type">HTML ↗</span></a>
+        <button class="walkthrough-trigger" id="open-walkthrough" type="button" aria-haspopup="dialog" aria-controls="walkthrough-dialog" hidden><span aria-hidden="true">▶ </span>Watch the walkthrough</button>
         <a class="text-link" href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Executive brief <span class="file-type">PDF ↓</span></a>
         <a class="text-link" href="./Reality_Ledger_Method_v1_0.pdf" target="_blank" rel="noopener">Protocol / Method v1.0 <span class="file-type">PDF ↓</span></a>
-        <a class="text-link" href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Completed pilot worksheet <span class="file-type">DOCX ↓</span></a>
+        <a class="text-link" href="./Reality_Ledger_Completed_Legal_Pilot_Worksheet.docx" download>Completed pilot worksheet <span class="file-type">DOCX ↓</span></a>
         <a class="text-link" href="./Reality_Ledger_Trial_Record_v0_2.json" download>Trial record v0.2 <span class="file-type">JSON ↓</span></a>
+        <a class="text-link" href="#research-working-papers">Companion theory &amp; working paper <span aria-hidden="true">↘</span></a>
       </nav>
     </section>
 
-    <section class="module" id="human-judgment" aria-labelledby="judgment-title">
+    <section class="module" id="research-working-papers" aria-labelledby="research-title">
       <div class="module-heading">
-        <p class="module-index">MODULE 03 / GOVERNANCE</p>
+        <p class="module-index">MODULE 03 / RESEARCH</p>
         <div>
-          <h2 class="section-title" id="judgment-title">Auditable velocity.<br>Human-in-the-loop circuit breakers.</h2>
-          <p class="section-deck">How do organizations protect reviewers from signing unverified machine summaries—and account for the operational time real review requires?</p>
+          <h2 class="section-title" id="research-title">Research &amp; Working Papers</h2>
+          <p class="section-deck">The conceptual research companion to the operational showcase: institutional judgment, uncertainty, and accountable human review.</p>
         </div>
       </div>
-      <div class="manuscript-grid">
-        <div>
+      <article class="research-copy" aria-label="The Right to Hesitate working manuscript">
           <p class="eyebrow">Working manuscript</p>
           <h3><cite>The Right to Hesitate:<br>AI, Art, and the Work of Judgment</cite></h3>
           <p>The practical governance problem is the handoff from a fluent machine summary to a human decision. A useful circuit breaker makes missing evidence, dropped qualifications, and unresolved disputes visible before a reviewer signs.</p>
@@ -549,11 +606,27 @@
             <p>As frontier language models move from conversational assistants into institutional decision pipelines—across litigation, regulatory enforcement, and capital allocation—their primary failure mode shifts from obvious fabrication to fluent epistemic drift. Drawing on my working manuscript, The Right to Hesitate, this project argues that institutional safety cannot rely on post-hoc policy principles or single-metric leaderboards alone. Because probabilistic models flatten speaker doubt, contested evidentiary claims, and scope qualifications into confident prose, high-consequence workflows require formal architectural hesitation gates where machine fluency yields to accountable human judgment before irreversible downstream action occurs.</p>
             <p>To operationalize that theory, I built the Reality Ledger reference architecture, translating governance standards including the EU AI Act, NIST AI RMF, and ISO 42001 into schema-bound retrieval handoffs, cryptographic human adjudication bindings, and five non-compensatory release circuit breakers. In an exploratory civil-opinion evaluation pilot, the methodology surfaced subtle attribution, pronoun, and scope drift in 8/10 summaries while preserving 4/4 speaker-doubt and cross-record dispute instances with 0/5 unsupported relational inferences—informing two-stage prompt and checklist workflows that reduced attorney verification rework by approximately 35% under FRCP Rule 11 guardrails. Validated across 166 automated tests, 3,378 routing parity checks, and 8/8 critical fault detections on a 16-case synthetic benchmark, this work establishes a portable standard for auditable human-AI oversight.</p>
           </details>
+          <p class="research-crossref">The working manuscript develops the theory; the <a href="#before-after">Reality Ledger showcase</a> and <a href="./Reality_Ledger_Method_v1_0.pdf" target="_blank" rel="noopener">technical method (PDF)</a> provide the companion implementation and evaluation context. This is a working manuscript, not a peer-reviewed publication claim.</p>
+      </article>
+    </section>
+
+    <section class="module" id="human-judgment" aria-labelledby="judgment-title">
+      <div class="module-heading">
+        <p class="module-index">MODULE 04 / GOVERNANCE</p>
+        <div>
+          <h2 class="section-title" id="judgment-title">Auditable velocity.<br>Human-in-the-loop circuit breakers.</h2>
+          <p class="section-deck">How do organizations protect reviewers from signing unverified machine summaries—and account for the operational time real review requires?</p>
         </div>
+      </div>
+      <div class="manuscript-grid waiting-layout">
         <aside class="waiting-room" aria-labelledby="waiting-title">
           <p class="eyebrow">The operational time cost of review</p>
           <h3 id="waiting-title">The Waiting Room</h3>
           <p>A circuit breaker must make room for real review. Verification needs time, an accountable reviewer, and a clear next action.</p>
+          <h4 class="velocity-title">Verification-Adjusted Velocity</h4>
+          <p>Start with gross AI drafting time saved, then subtract the mandatory human time needed for source checking, exception routing, and rework.</p>
+          <p class="velocity-framing">Time budget: <strong>gross AI drafting time saved − (mandatory human source-checking time + exception-routing time + rework time)</strong>. This is an operating definition, not a measured pilot metric or a method prescribed by the references below.</p>
+          <p class="roi-caution">If mandatory review costs exceed the value of the gross drafting time saved, net ROI can be negative. A restricted informational diligence memo can preserve verified speed by releasing supported information while unresolved claims remain blocked. The negative-ROI case is conditional; no measured ROI result is claimed.</p>
           <ul>
             <li>Record what needs checking and who owns the decision.</li>
             <li>Account for verification time, queue delay, and escalation.</li>
@@ -634,7 +707,7 @@
             <span class="command-kicker">03 / Evidence</span>
             <span>Inspect Completed 5-Passage Pilot</span>
             <div class="command-pair">
-              <a href="./Interview_Scripts_and_Reality_Ledger_Pilot_v0_2.docx" download>Worksheet <span class="file-type">DOCX ↓</span></a>
+              <a href="./Reality_Ledger_Completed_Legal_Pilot_Worksheet.docx" download>Worksheet <span class="file-type">DOCX ↓</span></a>
               <a href="./Reality_Ledger_Trial_Record_v0_2.json" download>Record <span class="file-type">JSON ↓</span></a>
             </div>
           </div>
@@ -646,9 +719,55 @@
       </nav>
     </section>
   </main>
+  <dialog class="walkthrough-dialog" id="walkthrough-dialog" aria-labelledby="walkthrough-title" aria-describedby="walkthrough-description" hidden>
+    <div class="walkthrough-dialog-header">
+      <h2 id="walkthrough-title">Reality Ledger walkthrough</h2>
+      <button class="walkthrough-close" id="close-walkthrough" type="button">Close walkthrough</button>
+    </div>
+    <p class="micro" id="walkthrough-description">Constructed examples, implementation checks, and observed pilot findings are identified separately.</p>
+    <video id="walkthrough-video" controls playsinline preload="none" aria-label="Reality Ledger walkthrough video">Your browser does not support embedded video.</video>
+    <p class="micro"><a href="./voiceover.txt" target="_blank" rel="noopener">Read the narration draft (text)</a></p>
+  </dialog>
   <footer class="wrap footer-meta">
-    <p>© 2026 Christos Birkitt / Sovereign Terminal</p>
+    <p>© 2026 Christos Birkitt / Auditable AI Systems</p>
     <a href="#top">Back to top ↑</a>
   </footer>
+  <script>
+    // Set this single switch to true only after the real recording is supplied.
+    const REALITY_LEDGER_WALKTHROUGH_ENABLED = false;
+
+    (() => {
+      if (!REALITY_LEDGER_WALKTHROUGH_ENABLED) return;
+
+      const trigger = document.getElementById('open-walkthrough');
+      const dialog = document.getElementById('walkthrough-dialog');
+      const closeButton = document.getElementById('close-walkthrough');
+      const video = document.getElementById('walkthrough-video');
+      if (!trigger || !dialog || !closeButton || !video || typeof dialog.showModal !== 'function') return;
+
+      let returnFocus = null;
+      trigger.hidden = false;
+      dialog.hidden = false;
+
+      trigger.addEventListener('click', () => {
+        returnFocus = document.activeElement;
+        // No media URL is assigned while the feature is disabled or before opening.
+        if (!video.getAttribute('src')) video.setAttribute('src', './media/reality-ledger-walkthrough.mp4');
+        dialog.showModal();
+        closeButton.focus();
+      });
+
+      closeButton.addEventListener('click', () => dialog.close());
+      dialog.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        dialog.close();
+      });
+      dialog.addEventListener('close', () => {
+        video.pause();
+        if (returnFocus instanceof HTMLElement && returnFocus.isConnected) returnFocus.focus({ preventScroll: true });
+      });
+    })();
+  </script>
 </body>
 </html>
+
