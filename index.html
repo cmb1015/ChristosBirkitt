@@ -328,6 +328,23 @@
       .walkthrough-dialog-header { flex-wrap: wrap; }
     }
     @media print { .walkthrough-trigger, .walkthrough-dialog { display: none !important; } }
+
+    .evidence-gate { margin-top: 1.4rem; border: 1px solid var(--line); padding: 1.2rem; background: var(--panel); }
+    .evidence-gate > .eyebrow { color: var(--accent); font-size: .875rem; letter-spacing: .05em; }
+    .evidence-gate h3 { margin-block: .5rem .8rem; font-size: 1.3rem; line-height: 1.4; }
+    .evidence-gate p { color: var(--muted); font-size: 1rem; }
+    .evidence-gate .pilot-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-block: 1rem; }
+    .evidence-gate .pilot-metrics dt { font-size: 1.5rem; }
+    .evidence-gate .pilot-metrics dd { font-size: .875rem; }
+    .evidence-gate .scope-note { margin-top: 1rem; font-size: .875rem; }
+    .evidence-gate .text-link { display: inline-block; margin-top: 1rem; margin-right: 1.2rem; font-size: .875rem; }
+    .evidence-gate .design-rule { margin-top: 1rem; padding-left: 1rem; border-left: 2px solid var(--accent); }
+    .manuscript-epigraph { margin-top: 1.2rem; padding-left: 1rem; border-left: 2px solid var(--accent); }
+    .manuscript-grid .manuscript-epigraph p { color: var(--ink); font-size: 1rem; }
+    @media (max-width: 700px) {
+      .evidence-gate { padding: 1rem; }
+      .evidence-gate .pilot-metrics { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body id="top">
@@ -399,6 +416,7 @@
             <span class="command-kicker">02 / Governance</span>
             <a href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Download 3-Page Reality Ledger Executive Brief <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
             <a class="command-download" href="/papers/the-right-to-hesitate-excerpt.pdf" target="_blank" rel="noopener">Download Monograph Excerpt <span class="command-symbol" aria-hidden="true">↓</span></a>
+            <a class="command-download deployment-memo-download" href="/Week_One_Deployment_Memo.pdf" target="_blank" rel="noopener">Download 2-Page Week-One Deployment Memo PDF ↓</a>
           </div>
           <div class="command">
             <span class="command-kicker">03 / Evidence</span>
@@ -558,6 +576,22 @@
           </div>
         </article>
       </div>
+
+      <article class="evidence-gate" id="evidence-gate-pilot" aria-labelledby="evidence-gate-title">
+        <p class="eyebrow">RL-EG-2026-11-18 / Completed evidence-gate micro-pilot</p>
+        <h3 id="evidence-gate-title">When should an objection change the record?</h3>
+        <p>Nine scored decisions across three seeded records, using three fresh assistant instances with one underlying setup. Bare objections, supporting NARA/USGS/NASA excerpts, and off-target institutional excerpts tested whether the submitted evidence justified a narrow correction.</p>
+        <dl class="pilot-metrics">
+          <div><dt>9/9</dt><dd>Objections logged; history, objection, disposition, and evidence/reason checks each scored 9/9</dd></div>
+          <div><dt>3/3</dt><dd>Disputed fields revised with directly supporting evidence</dd></div>
+          <div><dt>0/6</dt><dd>Revisions on bare objections or off-target excerpts</dd></div>
+        </dl>
+        <p>In all six unresolved decisions, the model retained the challenged wording in the current entry and added a dispute flag.</p>
+        <p class="design-rule"><strong>Design takeaway:</strong> preserve the prior wording and objection in history, label unresolved claims <em>Disputed — not verified</em>, and leave the verified current value blank until evidence resolves the dispute. This is a proposed schema rule, not an implemented or measured export-safety result.</p>
+        <p class="scope-note">Single-setup prompt workflow demonstration scored by the designing assistant; no independent blind calibration, no ordinary-prompt control, and no execution of RL-BASE-1.0 Python/JS software. Motivated by the November 2026 <a href="https://www.ucl.ac.uk/news/2026/nov/ai-systems-are-easy-pressure-giving-false-climate-information" target="_blank" rel="noopener">UCL</a>/<a href="https://unesdoc.unesco.org/ark:/48223/pf0000400048" target="_blank" rel="noopener">UNESCO</a> study reporting 31–35 percentage-point accuracy drops across 15 models under repeated challenge, with roughly 80% of concessions at the first objection.</p>
+        <a class="text-link" href="/Reality_Ledger_Evidence_Gate_Pilot.pdf" target="_blank" rel="noopener">Read Evidence-Gate Pilot (PDF)</a>
+        <a class="text-link evidence-memo-download" href="/Week_One_Deployment_Memo.pdf" target="_blank" rel="noopener">Download 2-Page Week-One Deployment Memo PDF ↓</a>
+      </article>
       <p class="evidence-boundary">The system repair is an illustrative demonstration; the intake sequence is constructed; the five-passage legal pilot is a completed manual evaluation. Scorer &amp; workbench verification: 3,378 deterministic JS-to-Python routing parity checks + 166 unit tests (139 Python, 27 JS). Controlled 16-packet synthetic benchmark (RL-BENCH-0.1): 8/8 fault recall (0/8 false positives) vs. 3/8 for retrieved-context-only Baseline A and 0/8 withheld for mean-only Baseline B. These controlled synthetic software results are separate from the pilot’s 10 manually evaluated legal summaries; post-adjudication routing uses supplied synthetic ratings.</p>
 
       <aside class="executive-takeaways" aria-labelledby="takeaway-title">
@@ -612,6 +646,10 @@
             <p>The word “before” should remain unavailable until someone can account for it.</p>
           </details>
           <p class="research-crossref">The working manuscript develops the theory; the <a href="#before-after">Reality Ledger showcase</a> and <a href="./Reality_Ledger_Method_v1_0.pdf" target="_blank" rel="noopener">technical method (PDF)</a> provide the companion implementation and evaluation context. This is a working manuscript, not a peer-reviewed publication claim.</p>
+
+          <blockquote class="manuscript-epigraph">
+            <p>There is a difference between keeping a record of what someone said and letting it stand as what we know. A good record should preserve the objection without yielding to it, and preserve the old answer without continuing to vouch for it. When it changes, we should be able to see what gave it reason to change.</p>
+          </blockquote>
       </article>
         <aside class="waiting-room" aria-labelledby="waiting-title">
           <p class="eyebrow">The operational time cost of review</p>
@@ -696,6 +734,7 @@
             <span class="command-kicker">02 / Governance</span>
             <a href="./Reality_Ledger_Executive_Brief_v1_0.pdf" target="_blank" rel="noopener">Download 3-Page Reality Ledger Executive Brief <span class="command-symbol" aria-hidden="true">↓</span><span class="command-sub">PDF</span></a>
             <a class="command-download" href="/papers/the-right-to-hesitate-excerpt.pdf" target="_blank" rel="noopener">Download Monograph Excerpt <span class="command-symbol" aria-hidden="true">↓</span></a>
+            <a class="command-download deployment-memo-download" href="/Week_One_Deployment_Memo.pdf" target="_blank" rel="noopener">Download 2-Page Week-One Deployment Memo PDF ↓</a>
           </div>
           <div class="command">
             <span class="command-kicker">03 / Evidence</span>
